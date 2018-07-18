@@ -3,6 +3,7 @@ package com.quanqinle.myworld.controller;
 import com.quanqinle.myworld.entity.TaxRate;
 import com.quanqinle.myworld.service.TaxRateService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -35,5 +36,11 @@ public class TaxRateController {
 	@ResponseBody
 	public TaxRate getRateByIncome(@PathVariable float income) {
 		return taxRateService.getTaxRateByRange(income);
+	}
+
+	@GetMapping("/env")
+	@ResponseBody
+	public String getEnv(@Value("${user.dir:false}") String userDir) {
+		return "user.dir = " + userDir;
 	}
 }

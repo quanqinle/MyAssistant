@@ -1,0 +1,66 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "这是一个项目简单实例",
+    "version": "1.0",
+    "title": "某系统接口"
+  },
+  //    "basePath": "/api/v1",
+  "basePath": "/",
+  "paths": {
+    "/tax/list.json": {
+      "get": {
+        "summary": "获取所有税率详细信息",
+        "description": "传入订单编号，获取订单信息",
+        "responses": {
+          "200": {
+            "description": "获取用户信息成功"
+          }
+        }
+      }
+    },
+    "/tax/income/": {
+      "get": {
+        "summary": "获取税率详细信息",
+        "description": "传入收入，获取税率信息",
+        "parameters": [
+          {
+            "name": "income",
+            "in": "path",
+            "description": "收入",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "获取特定收入的税率信息成功"
+          }
+        }
+      }
+    },
+    "/tax/env": {
+      "get": {
+        "summary": "显示环境",
+        "description": "显示环境",
+        "responses": {
+          "200": {
+            "description": "获取环境信息成功"
+          }
+        }
+      }
+    },
+  },
+  "definitions": {
+    "order": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}
