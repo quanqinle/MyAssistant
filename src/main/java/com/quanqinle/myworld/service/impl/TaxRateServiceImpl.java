@@ -1,7 +1,7 @@
 package com.quanqinle.myworld.service.impl;
 
-import com.quanqinle.myworld.entity.TaxRate;
-import com.quanqinle.myworld.entity.TaxRateRepository;
+import com.quanqinle.myworld.entity.po.TaxRate;
+import com.quanqinle.myworld.dao.TaxRateRepository;
 import com.quanqinle.myworld.service.TaxRateService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;

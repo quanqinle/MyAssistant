@@ -1,6 +1,6 @@
 package com.quanqinle.myworld.controller;
 
-import com.quanqinle.myworld.entity.TaxRate;
+import com.quanqinle.myworld.entity.po.TaxRate;
 import com.quanqinle.myworld.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;

@@ -1,4 +1,4 @@
-package com.quanqinle.myworld.entity;
+package com.quanqinle.myworld.entity.po;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;

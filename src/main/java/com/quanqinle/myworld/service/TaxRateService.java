@@ -1,6 +1,6 @@
 package com.quanqinle.myworld.service;
 
-import com.quanqinle.myworld.entity.TaxRate;
+import com.quanqinle.myworld.entity.po.TaxRate;
 
 import java.util.List;
 
