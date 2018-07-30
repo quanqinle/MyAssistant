@@ -8,71 +8,96 @@ import javax.persistence.Id;
 /**
  * note:
  * 默认的自动对应
- *  Class(TaxRate) --> DB(tax_rate)
- *  field(rangeHighest) --> DB(range_highest)
+ * Class(TaxRate) --> DB(tax_rate)
+ * field(rangeHighest) --> DB(range_highest)
  */
 @Entity
 public class TaxRate {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private int id;
 
-    private float rate;
+	private double rate;
 
-    private float rangeLowest;
+	private double rangeLowest;
 
-    private float rangeHighest;
+	private double rangeHighest;
 
-    private float quickDeduction;
+	private double quickDeduction;
 
-    public int getId() {
-        return id;
-    }
+	public TaxRate() { //jpa必须的
+		// no-args constructor required by JPA spec
+		// this one is protected since it shouldn't be used directly
+	}
 
-    public void setId(int id) {
-        this.id = id;
-    }
+	public TaxRate(double rangeLowest, double rangeHighest, double rate, double quickDeduction) {
+		this.rate = rate;
+		this.rangeLowest = rangeLowest;
+		this.rangeHighest = rangeHighest;
+		this.quickDeduction = quickDeduction;
+	}
 
-    public float getRate() {
-        return rate;
-    }
+	public int getId() {
+		return id;
+	}
 
-    public void setRate(float rate) {
-        this.rate = rate;
-    }
+	public void setId(int id) {
+		this.id = id;
+	}
 
-    public float getRangeLowest() {
-        return rangeLowest;
-    }
+	public double getRate() {
+		return rate;
+	}
 
-    public void setRangeLowest(float rangeLowest) {
-        this.rangeLowest = rangeLowest;
-    }
+	public void setRate(double rate) {
+		this.rate = rate;
+	}
 
-    public float getRangeHighest() {
-        return rangeHighest;
-    }
+	public double getRangeLowest() {
+		return rangeLowest;
+	}
 
-    public void setRangeHighest(float rangeHighest) {
-        this.rangeHighest = rangeHighest;
-    }
+	public void setRangeLowest(double rangeLowest) {
+		this.rangeLowest = rangeLowest;
+	}
 
-    public float getQuickDeduction() {
-        return quickDeduction;
-    }
+	public double getRangeHighest() {
+		return rangeHighest;
+	}
 
-    public void setQuickDeduction(float quickDeduction) {
-        this.quickDeduction = quickDeduction;
-    }
+	public void setRangeHighest(double rangeHighest) {
+		this.rangeHighest = rangeHighest;
+	}
 
-    @Override
-    public String toString() {
-        return "TaxRate{" +
-                "id=" + id +
-                ", rate=" + rate +
-                ", rangeLowest=" + rangeLowest +
-                ", rangeHighest=" + rangeHighest +
-                ", quickDeduction=" + quickDeduction +
-                '}';
-    }
+	public double getQuickDeduction() {
+		return quickDeduction;
+	}
+
+	public void setQuickDeduction(double quickDeduction) {
+		this.quickDeduction = quickDeduction;
+	}
+
+	/**
+	 * 金额是否落入当前税率区间
+	 *
+	 * @param salary
+	 * @return
+	 */
+	public boolean isInRange(double salary) {
+		if (Double.compare(this.rangeLowest, salary) < 0 && Double.compare(salary, this.rangeHighest) <= 0) {
+			return true;
+		}
+		return false;
+	}
+
+	@Override
+	public String toString() {
+		return "TaxRate{" +
+				"id=" + id +
+				", rate=" + rate +
+				", rangeLowest=" + rangeLowest +
+				", rangeHighest=" + rangeHighest +
+				", quickDeduction=" + quickDeduction +
+				'}';
+	}
 }

@@ -8,6 +8,8 @@ Target Server Type    : MYSQL
 Date: 2018-07-27 10:27:40
 */
 
+CREATE SCHEMA `myworld` DEFAULT CHARACTER SET utf8mb4 ;
+
 /* ---- 个税 ----*/
 # DROP TABLE IF EXISTS t_individual_income_tax_rate;
 DROP TABLE IF EXISTS tax_rate;

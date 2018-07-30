@@ -28,7 +28,7 @@ public class CallRemoteRestController {
 	RestTemplateBuilder restTemplateBuilder;
 
 	@GetMapping("/getone/{income}")
-	public TaxRate testGetTaxRate(@PathVariable float income) throws Exception {
+	public TaxRate testGetTaxRate(@PathVariable float income) {
 		RestTemplate client = restTemplateBuilder.build();
 		String uri = base + "/income/{income}";
 		TaxRate rate = client.getForObject(uri, TaxRate.class, income);
@@ -37,7 +37,7 @@ public class CallRemoteRestController {
 	}
 
 	@PostMapping("/getall?offset={offset}")
-	public List<TaxRate> testGetTaxRates(@PathVariable long offset) throws Exception {
+	public List<TaxRate> testGetTaxRates(@PathVariable long offset) {
 		RestTemplate client = restTemplateBuilder.build();
 		String uri = base + "/list?offset={offset}";
 
@@ -49,7 +49,7 @@ public class CallRemoteRestController {
 	}
 
 	@GetMapping("/test")
-	public String testPost() throws Exception {
+	public String testPost() {
 		RestTemplate client = restTemplateBuilder.build();
 		String uri = "http://xxx.cn/user/login/password";
 		User user = new User();

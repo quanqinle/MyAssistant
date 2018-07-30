@@ -7,5 +7,5 @@ import java.util.List;
 public interface TaxRateService {
     public List<TaxRate> getAllTaxRate();
     public TaxRate getTaxRateById(int id);
-    public TaxRate getTaxRateByRange(float income);
+    public TaxRate getTaxRateByRange(double income);
 }
