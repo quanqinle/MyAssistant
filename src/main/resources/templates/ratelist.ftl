@@ -11,7 +11,7 @@
 <div class="container">
     <h2>个人所得税税率</h2>
 
-    <table>
+    <table  class="table table-bordered table-hover">
         <tr>
             <th>Id</th>
             <th>税率</th>
@@ -25,14 +25,13 @@
         <td>${rateobj.rate}</td>
         <td>${rateobj.rangeLowest}</td>
         <td>
-        <#if rateobj.rangeHighest == -1>
-            max
-        <#else>
-            ${rateobj.rangeHighest}
-        </#if>
+            <#if rateobj.rangeHighest == -1>
+                max
+            <#else>
+                ${rateobj.rangeHighest}
+            </#if>
         </td>
-        <td>${rateobj.quickDeduction}
-        <td>
+        <td>${rateobj.quickDeduction}</td>
     </tr>
     </#list>
     </table>
