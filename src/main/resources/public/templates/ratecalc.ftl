@@ -11,6 +11,7 @@ recommend sticking to 'spring' -->
     <script type="text/javascript" src="/dist/js/jquery.min.js"></script>
     <link type="text/css" rel="stylesheet" media="all" href="/dist/css/bootstrap.min.css"/>
     <script type="text/javascript" src="/dist/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="/js/vue.js"></script>
     <title>Hello World!</title>
     <script type="text/javascript">
         function checkInput(){
