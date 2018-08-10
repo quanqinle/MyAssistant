@@ -14,6 +14,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+/**
+ *
+ */
 @Controller
 @RequestMapping("/tax")
 public class TaxRateController {
@@ -31,7 +34,7 @@ public class TaxRateController {
 	@GetMapping("/list.html")
 	public String allRate(Model model) {
 		model.addAttribute("ratelist", taxRateService.getAllTaxRate());
-		return "/ratelist"; //properties中设置了缺省.ftl，所以跳转ratelist.ftl
+		return "/pages/ratelist"; //properties中设置了缺省.ftl，所以跳转ratelist.ftl
 	}
 
 	/**
@@ -41,9 +44,9 @@ public class TaxRateController {
 	@GetMapping("/calc")
 	public String calcTaxRate(Model model) {
 		// FIXME 据说：“在渲染页面之前，我们通过model.addAttribute("helloMessage", new HelloMessage());告诉页面绑定到一个空的HelloMessage对象，这样sayHello.html页面初始时就会显示一个空白的表单。”
-		// 实测无效，还是现实上次提交的结果
+		// 实测无效，还是显示上次提交的结果
 		model.addAttribute("taxrate", new TaxRate());
-		return "/ratecalc";
+		return "/pages/ratecalc";
 	}
 
 	/**
@@ -60,12 +63,12 @@ public class TaxRateController {
 		model.addAttribute("income", income);
 		model.addAttribute("taxes", tax);
 		model.addAttribute("taxrate", taxRate);
-		return "/ratecalc";
+		return "/page/ratecalc";
 	}
 
 	@GetMapping("/plan")
 	public String planForm() {
-		return "/ratecalc";
+		return "/pages/ratecalc";
 	}
 
 	@PostMapping("/plan")
@@ -73,7 +76,7 @@ public class TaxRateController {
 	                         int remainingMonths, Model model){
 		TaxPlan taxplan = TaxPlanUtils.calcBestTaxPlanQuickly(estimatedAnnualSalary, alreadyPaidSalary, remainingMonths);
 		model.addAttribute("taxplan", taxplan);
-		return "/ratecalc";
+		return "/pages/ratecalc";
 	}
 
 	@GetMapping("/income/{income}")

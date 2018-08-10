@@ -1,7 +1,11 @@
-<html>
+<#compress single_line=true>
+<#escape x as x?html>
+<#include "./common/macro.ftl">
+<!DOCTYPE html>
+<html lang="zh">
 <head>
-<meta charset="UTF-8">
-<title>错误</title>
+    <@meta/>
+    <title>错误</title>
 </head>
 <body>
 <%
@@ -13,3 +17,5 @@
 <i>此错误信息来自 error.ftl文件，通过ErrorController.java统一处理</i>
 </body>
 </html>
+</#escape>
+</#compress>

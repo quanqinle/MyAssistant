@@ -1,11 +1,20 @@
+<@compress single_line=true>
+<#escape x as x?html>
+<#include "../common/macro.ftl">
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh">
 <head>
+    <@meta/>
     <link rel="stylesheet" type="text/css" media="all" href="/dist/css/bootstrap.min.css"/>
-<#--<script type="text/javascript" src="/dist/js/jquery.min.js"></script>-->
+    <script type="text/javascript" src="/dist/js/jquery.min.js"></script>
     <script type="text/javascript" src="/dist/js/bootstrap.min.js"></script>
-    <meta charset="UTF-8">
-    <title>Hello World!</title>
+
+    <style>
+        th {
+            background-color: #4CAF50;
+            color: white;
+        }
+    </style>
 </head>
 <body>
 <div class="container">
@@ -38,3 +47,5 @@
 </div>
 </body>
 </html>
+</#escape>
+</@compress>
