@@ -61,7 +61,6 @@ public class ErrorController extends AbstractErrorController {
 			view.addObject("errorMessage", errorMessage);
 			view.addObject("cause", cause);
 			return view;
-
 		} else {
 			Map error = new HashMap();
 			error.put("success", false);
@@ -70,8 +69,6 @@ public class ErrorController extends AbstractErrorController {
 			writeJson(response, error);
 			return null;
 		}
-
-
 	}
 
 	protected boolean isJsonRequest(HttpServletRequest request) {
@@ -107,7 +104,6 @@ public class ErrorController extends AbstractErrorController {
 		}
 		return error;
 	}
-
 
 	@Override
 	public String getErrorPath() {

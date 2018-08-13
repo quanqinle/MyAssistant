@@ -74,7 +74,7 @@ public class TaxRateController {
 
 	@PostMapping("/opt_plan")
 	@ResponseBody
-	public HashMap<String, Object> planSubmit(double estimatedAnnualSalary, double alreadyPaidSalary, int remainingMonths) {
+	public HashMap<String, Object> planSubmit(Double estimatedAnnualSalary, Double alreadyPaidSalary, Integer remainingMonths) {
 		TaxPlan taxplan = TaxPlanUtils.calcBestTaxPlanQuickly(estimatedAnnualSalary, alreadyPaidSalary, remainingMonths);
 		HashMap<String, Object> result = new HashMap<>();
 		result.put("taxplan", taxplan);

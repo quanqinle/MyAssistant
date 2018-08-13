@@ -37,6 +37,11 @@ public class TaxRate {
 		this.quickDeduction = quickDeduction;
 	}
 
+	public TaxRate(int id, double rangeLowest, double rangeHighest, double rate, double quickDeduction) {
+		this(rangeLowest, rangeHighest, rate, quickDeduction);
+		this.id = id;
+	}
+
 	public int getId() {
 		return id;
 	}

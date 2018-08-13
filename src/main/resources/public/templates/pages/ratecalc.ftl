@@ -17,7 +17,7 @@ recommend sticking to 'spring' -->
     <script type="text/javascript">
         function checkInput() {
             var text = $("#income").val();
-            if (text == null || text == "") {
+            if (text == null || text === "") {
                 $("#calcBtn1st").attr("disabled", "true");
             } else {
                 $("#calcBtn1st").removeAttr("disabled");
@@ -32,7 +32,7 @@ recommend sticking to 'spring' -->
         <div class="panel-heading" data-toggle="collapse" data-parent="#accordion" href="#collapseOne"
              aria-expanded="true" aria-controls="collapseOne">个税计算器
         </div>
-        <div class="panel-body" id="collapseOne" class="panel-collapse collapse in" role="tabpanel"
+        <div class="panel-body panel-collapse collapse in" id="collapseOne" role="tabpanel"
              aria-labelledby="headingOne">
             <fieldset>
                 <div class="col-xs-4">
@@ -69,9 +69,9 @@ recommend sticking to 'spring' -->
         <div class="panel-heading" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo"
              aria-expanded="true" aria-controls="collapseTwo">个税统筹
         </div>
-        <div class="panel-body" id="collapseTwo" class="panel-collapse collapse in" role="tabpanel"
+        <div class="panel-body panel-collapse collapse in" id="collapseTwo" role="tabpanel"
              aria-labelledby="headingTwo">
-            <#--<form name="tax_avoidance" class="form-horizontal" role="form">-->
+            <div class="form-horizontal" id="tax_avoidance">
                 <div class="form-group">
                     <label for="estimatedAnnualSalary" class="col-sm-2 control-label">预估总年薪</label>
                     <div class="col-sm-10">
@@ -95,35 +95,36 @@ recommend sticking to 'spring' -->
                 </div>
                 <div class="form-group">
                     <div class="col-sm-offset-2 col-sm-10">
-                        <button type="submit" class="btn btn-primary" @click="optTaxPlan">筹划</button>
+                        <button type="submit" class="btn btn-primary" @click="optTaxPlan" :disabled="isPlanBtnDisabled" id="planBtn">
+                            筹划
+                        </button>
                     </div>
                 </div>
-            <#--</form>-->
 
-            <div v-if="isPlanVisible">
-                <br>
-                <p>月薪（税前）：{{taxplan.preTaxSalary}}</p>
-                <p>月纳税额：{{taxplan.salaryTaxes}}</p>
-                <p>年终奖（税前）：{{taxplan.preTaxBonus}}</p>
-                <p>年终奖纳税额：{{taxplan.bonusTaxes}}</p>
-                <p>全年总纳税额：{{taxplan.totalTaxes}}</p>
-                <table class="table table-bordered table-hover">
-                    <caption>适用税率</caption>
-                    <tr>
-                        <th>税率</th>
-                        <th>区间</th>
-                        <th>速扣数</th>
-                    </tr>
-                    <tr>
-                        <td>{{taxplan.salaryTaxRate.rate}}</td>
-                        <td>[{{taxplan.salaryTaxRate.rangeLowest}}, {{taxplan.salaryTaxRate.rangeHighest}})</td>
-                        <td>{{taxplan.salaryTaxRate.quickDeduction}}</td>
-                    </tr>
-                </table>
+                <div v-if="isPlanVisible">
+                    <br>
+                    <p>月薪（税前）：{{taxPlan.preTaxSalary}}</p>
+                    <p>月纳税额：{{taxPlan.salaryTaxes}}</p>
+                    <p>年终奖（税前）：{{taxPlan.preTaxBonus}}</p>
+                    <p>年终奖纳税额：{{taxPlan.bonusTaxes}}</p>
+                    <p>全年总纳税额：{{taxPlan.totalTaxes}}</p>
+                    <table class="table table-bordered table-hover">
+                        <caption>适用税率</caption>
+                        <tr>
+                            <th>税率</th>
+                            <th>区间</th>
+                            <th>速扣数</th>
+                        </tr>
+                        <tr>
+                            <td>{{taxPlan.salaryTaxRate.rate}}</td>
+                            <td>[{{taxPlan.salaryTaxRate.rangeLowest}}, {{taxPlan.salaryTaxRate.rangeHighest}})</td>
+                            <td>{{taxPlan.salaryTaxRate.quickDeduction}}</td>
+                        </tr>
+                    </table>
+                </div>
             </div>
         </div>
     </div>
-</div>
 </body>
 <script type="text/javascript">
     new Vue({
@@ -146,7 +147,7 @@ recommend sticking to 'spring' -->
                 alreadyPaidSalary: '',
                 remainingMonths: '',
                 isPlanVisible: false,
-                taxplan: {
+                taxPlan: {
                     preTaxSalary: 0,
                     preTaxBonus: 0,
                     taxableSalary: 0,
@@ -171,6 +172,14 @@ recommend sticking to 'spring' -->
                 },
             }
         },
+        computed: {
+            isPlanBtnDisabled() {
+                var self = this;
+                return (self.estimatedAnnualSalary != '' &&
+                        self.alreadyPaidSalary != '' &&
+                        self.remainingMonths != '');
+            }
+        },
         methods: {
             calcPrivTax() {
                 var self = this;
@@ -190,6 +199,7 @@ recommend sticking to 'spring' -->
                 var self = this;
                 $.ajax({
                     type: "post",
+                    // contentType : "application/json",
                     url: "/tax/opt_plan",
                     data: {
                         "estimatedAnnualSalary": self.estimatedAnnualSalary,
@@ -198,7 +208,11 @@ recommend sticking to 'spring' -->
                     },
                     success: function (result) {
                         self.isPlanVisible = true;
-                        self.taxplan = result.taxplan;
+                        self.taxPlan = result.taxplan;
+                    },
+                    error: function (e) {
+                        console.log("ERROR: ", e);
+                        display(e);
                     }
                 });
             }

@@ -34,14 +34,14 @@ public class TaxPlanUtils {
 	public static final List<TaxRate> TAX_RATES = new ArrayList<TaxRate>() {
 		private static final long serialVersionUID = 1L;
 		{
-			add(new TaxRate(0, 0, 0, 0));
-			add(new TaxRate(0, 1500, 0.03, 0));
-			add(new TaxRate(1500, 4500, 0.1, 105));
-			add(new TaxRate(4500, 9000, 0.2, 555));
-			add(new TaxRate(9000, 35000, 0.25, 1005));
-			add(new TaxRate(35000, 55000, 0.30, 2755));
-			add(new TaxRate(55000, 80000, 0.35, 5505));
-			add(new TaxRate(80000, Double.MAX_VALUE, 0.45, 13505));
+			add(new TaxRate(0, 0, 0, 0, 0));
+			add(new TaxRate(1, 0, 1500, 0.03, 0));
+			add(new TaxRate(2, 1500, 4500, 0.1, 105));
+			add(new TaxRate(3, 4500, 9000, 0.2, 555));
+			add(new TaxRate(4, 9000, 35000, 0.25, 1005));
+			add(new TaxRate(5, 35000, 55000, 0.30, 2755));
+			add(new TaxRate(6, 55000, 80000, 0.35, 5505));
+			add(new TaxRate(7, 80000, Double.MAX_VALUE, 0.45, 13505));
 		}
 	};
 
@@ -93,7 +93,7 @@ public class TaxPlanUtils {
 
 	/**
 	 * 获取税率表
-	 * @return
+	 * @return 税率表
 	 */
 	public static List<TaxRate> getTaxRateList() {
 		return TAX_RATES;
