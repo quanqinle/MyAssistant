@@ -36,7 +36,7 @@ public class MvcConfigurer implements WebMvcConfigurer {
 	// URI到视图的映射
 	@Override
 	public void addViewControllers(ViewControllerRegistry registry) {
-		registry.addViewController("/index.html").setViewName("/index.ftl");
+		registry.addViewController("/index.html").setViewName("/index-default"); //url不要加后缀ftl
 		registry.addRedirectViewController("/**/*.do", "/index.html");
 	}
 

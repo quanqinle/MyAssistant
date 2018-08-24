@@ -34,7 +34,6 @@ public class TaxRateServiceImpl implements TaxRateService {
 	@Override
 	@Cacheable(cacheNames = {"tax", "taxrate"})
 	public TaxRate getTaxRateByRange(double income) {
-//        return null;
 		if (income <= 0) {
 			return null;
 		}
