@@ -40,7 +40,7 @@ SET FOREIGN_KEY_CHECKS=0;
 DROP TABLE IF EXISTS user;
 CREATE TABLE user (
   id int(11) NOT NULL,
-  username varchar(20) NOT NULL COMMENT '用户名',
+  name varchar(20) NOT NULL COMMENT '用户名',
   password varchar(50) DEFAULT NULL,
   enabled varchar(5) DEFAULT '0' COMMENT '是否被禁用',
   credential varchar(5) DEFAULT '0' COMMENT '凭证是否过期',
