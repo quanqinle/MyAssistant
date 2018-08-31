@@ -37,6 +37,8 @@ public class MvcConfigurer implements WebMvcConfigurer {
 	@Override
 	public void addViewControllers(ViewControllerRegistry registry) {
 		registry.addViewController("/index.html").setViewName("/index-default"); //url不要加后缀ftl
+		registry.addRedirectViewController("/", "/index.html");
+		registry.addRedirectViewController("/index.*", "/index.html");
 		registry.addRedirectViewController("/**/*.do", "/index.html");
 	}
 

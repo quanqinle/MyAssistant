@@ -18,7 +18,7 @@ public class TaxPlanUtils {
 	/**
 	 * 个税门槛（适用于中国籍员工）
 	 */
-	private static double TAX_THRESHOLD = 5000; //3500;
+	private static double TAX_THRESHOLD = 5000; //2018.10之前3500;
 	/**
 	 * 算税过程中，除法运算精度
 	 */
