@@ -2,6 +2,9 @@ package com.quanqinle.myworld.entity.po;
 
 import javax.persistence.*;
 
+/**
+ * @author quanqinle
+ */
 @Entity
 @Table(name = "log")
 public class LogPo {

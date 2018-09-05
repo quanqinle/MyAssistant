@@ -20,6 +20,9 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+/**
+ * @author quanqinle
+ */
 @Controller
 public class ErrorController extends AbstractErrorController {
 
@@ -62,7 +65,7 @@ public class ErrorController extends AbstractErrorController {
 			view.addObject("cause", cause);
 			return view;
 		} else {
-			Map error = new HashMap();
+			Map error = new HashMap(3);
 			error.put("success", false);
 			error.put("errorMessage", getErrorMessage(cause));
 			error.put("message", message);
@@ -73,7 +76,8 @@ public class ErrorController extends AbstractErrorController {
 
 	protected boolean isJsonRequest(HttpServletRequest request) {
 		String requestUri = request.getRequestURI();
-		if (requestUri.endsWith(".json")) {
+		String suffixJson = ".json";
+		if (requestUri.endsWith(suffixJson)) {
 			return true;
 		} else {
 			return (request.getHeader("accept").contains("application/json") || (request.getHeader("X-Requested-With") != null

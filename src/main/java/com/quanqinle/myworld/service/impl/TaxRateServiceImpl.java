@@ -11,9 +11,13 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
+/**
+ * @author quanqinle
+ *
+ * @CacheConfig("tax") // 统一配置缓存名，免去每个方法注解都要写cacheNames
+ */
 @Service
-@Transactional
-//@CacheConfig("tax") // 统一配置缓存名，免去每个方法注解都要写cacheNames
+@Transactional(rollbackFor = Exception.class)
 public class TaxRateServiceImpl implements TaxRateService {
 
 	@Autowired

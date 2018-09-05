@@ -1,8 +1,10 @@
 package com.quanqinle.myworld.demo.batchjob;
 
-
 import javax.validation.constraints.Size;
 
+/**
+ * @author quanqinle
+ */
 public class CsvPerson {
 	@Size(max = 4,min = 2)
 	private String name;

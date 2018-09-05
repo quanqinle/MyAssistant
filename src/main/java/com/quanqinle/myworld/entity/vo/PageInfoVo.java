@@ -1,6 +1,8 @@
 package com.quanqinle.myworld.entity.vo;
 
-
+/**
+ * @author quanqinle
+ */
 public class PageInfoVo {
 
 	/**

@@ -2,6 +2,7 @@ package com.quanqinle.myworld.entity.vo;
 
 /**
  * 自定义响应结构
+ * @author quanqinle
  */
 public class ResultVo<T> {
 

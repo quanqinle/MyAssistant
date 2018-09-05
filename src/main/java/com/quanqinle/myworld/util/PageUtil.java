@@ -1,5 +1,8 @@
 package com.quanqinle.myworld.util;
 
+/**
+ * @author quanqinle
+ */
 public class PageUtil {
 	/**
 	 * 获取分页起始位置

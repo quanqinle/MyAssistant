@@ -3,6 +3,9 @@ package com.quanqinle.myworld.demo.batchjob;
 import org.springframework.batch.core.JobExecution;
 import org.springframework.batch.core.JobExecutionListener;
 
+/**
+ * @author quanqinle
+ */
 public class CsvJobListener implements JobExecutionListener {
 	long startTime;
 	long endTime;

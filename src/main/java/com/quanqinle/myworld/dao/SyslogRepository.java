@@ -6,7 +6,9 @@ import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 
 /**
  * 演示db rest
+ * 默认访问url/logPoes，通过path=修改
+ * @author quanqinle
  */
-@RepositoryRestResource(path = "log") // 默认访问url/logPoes
+@RepositoryRestResource(path = "log")
 public interface SyslogRepository extends JpaRepository<LogPo, Long> {
 }

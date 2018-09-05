@@ -6,8 +6,10 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 /**
+ * @author quanqinle
+ *
  * note:
- * 默认的自动对应
+ * 默认的自动对应规则
  * Class(TaxRate) --> DB(tax_rate)
  * field(rangeHighest) --> DB(range_highest)
  */

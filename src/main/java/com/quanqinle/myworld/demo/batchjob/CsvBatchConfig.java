@@ -32,9 +32,10 @@ import javax.sql.DataSource;
 
 /**
  * CSV文件批处理导入db配置
- *
+ * 此注解将使批处理在项目运行时执行
+ * @author quanqinle
  */
-@Configuration // 此注解将使批处理在项目运行时执行
+@Configuration
 @EnableBatchProcessing
 public class CsvBatchConfig {
 	Logger logger = LoggerFactory.getLogger(CsvBatchConfig.class);
@@ -125,7 +126,8 @@ public class CsvBatchConfig {
 		logger.info("start-->Step");
 
 		return stepBuilderFactory.get("step1")
-				.<CsvPerson, CsvPerson>chunk(10) // 每次提交10条数据
+				// 每次提交10条数据
+				.<CsvPerson, CsvPerson>chunk(10)
 				.reader(csvItemReader)
 				.processor(processor)
 				.writer(jpaItemWriter)

@@ -2,6 +2,7 @@ package com.quanqinle.myworld.util;
 
 import com.quanqinle.myworld.entity.po.TaxRate;
 import com.quanqinle.myworld.entity.vo.TaxPlan;
+import org.springframework.util.NumberUtils;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -17,8 +18,9 @@ public class TaxPlanUtils {
 
 	/**
 	 * 个税门槛（适用于中国籍员工）
+	 * 2018.10之前3500
 	 */
-	private static double TAX_THRESHOLD = 5000; //2018.10之前3500;
+	private static double TAX_THRESHOLD = 5000;
 	/**
 	 * 算税过程中，除法运算精度
 	 */
@@ -115,10 +117,13 @@ public class TaxPlanUtils {
 	public static TaxPlan calcBestTaxPlanQuickly(double estimatedAnnualSalary, double alreadyPaidSalary,
 	                                             int remainingMonths) {
 
-		Double tolerance = 0.1d; // 总税金差距小于此值时，仍认为两数相等
+		// 总税金差距小于此值时，仍认为两数相等
+		Double tolerance = 0.1d;
 
-		TaxPlan bestTaxPlanOfSalaryRate = new TaxPlan(); // 根据税率表控制年终奖情况下，得到税率最优方案
-		TaxPlan bestTaxPlanOfBonusRate = new TaxPlan(); // 根据税率表控制月薪情况下，得到税率最优方案
+		// 根据税率表控制年终奖情况下，得到税率最优方案
+		TaxPlan bestTaxPlanOfSalaryRate = new TaxPlan();
+		// 根据税率表控制月薪情况下，得到税率最优方案
+		TaxPlan bestTaxPlanOfBonusRate = new TaxPlan();
 
 		bestTaxPlanOfSalaryRate.setTotalTaxes(Double.MAX_VALUE);
 		bestTaxPlanOfBonusRate.setTotalTaxes(Double.MAX_VALUE);
@@ -162,9 +167,6 @@ public class TaxPlanUtils {
 			}
 		}
 
-//		System.out.println("按年终取优：\n" + bestTaxPlanOfBonusRate);
-//		System.out.println("按月薪取优：\n" + bestTaxPlanOfSalaryRate);
-
 		// 1.优先选总税低 2.总税额相差tolerance元以内时，优先选月薪最大
 		if (TaxPlan.compare(bestTaxPlanOfSalaryRate, bestTaxPlanOfBonusRate, tolerance) < 0) {
 			return bestTaxPlanOfSalaryRate;
@@ -194,10 +196,10 @@ public class TaxPlanUtils {
 		TaxPlan bestTaxPlan = new TaxPlan();
 		bestTaxPlan.setTotalTaxes(Double.MAX_VALUE);
 
-		for (double preTaxSalary = 0.0d; Double.compare(DoubleUtils.mul(preTaxSalary, remainingMonths),
+		for (double preTaxSalary = DoubleUtils.DOUBLE_ZERO; Double.compare(DoubleUtils.mul(preTaxSalary, remainingMonths),
 				remaining) <= 0; preTaxSalary = DoubleUtils.add(preTaxSalary, 0.01d)) {
 
-			TaxPlan tempTaxPlan = new TaxPlan(preTaxSalary, 0.0d);
+			TaxPlan tempTaxPlan = new TaxPlan(preTaxSalary, DoubleUtils.DOUBLE_ZERO);
 			tempTaxPlan = calcTaxPlan(estimatedAnnualSalary, alreadyPaidSalary, remainingMonths, tempTaxPlan);
 			if (null == tempTaxPlan) {
 				continue;
@@ -241,7 +243,7 @@ public class TaxPlanUtils {
 		int isValidPreTaxSalary = Double.compare(taxPlan.getPreTaxSalary(), 0.0d);
 		int isValidPreTaxBonus = Double.compare(taxPlan.getPreTaxBonus(), 0.0d);
 
-		if (Double.compare(estimatedAnnualSalary, 0.0d) <= 0 || Double.compare(alreadyPaidSalary, 0.0d) < 0
+		if (Double.compare(estimatedAnnualSalary, DoubleUtils.DOUBLE_ZERO) <= 0 || Double.compare(alreadyPaidSalary, DoubleUtils.DOUBLE_ZERO) < 0
 				|| remainingMonths < 0) {
 			// 入参不能是负
 			return taxPlan = null;
@@ -250,15 +252,15 @@ public class TaxPlanUtils {
 			// 入参（月薪、年终）不能是负
 			return taxPlan = null;
 		}
-		if (Double.compare(remaining, 0.0d) < 0) {
+		if (Double.compare(remaining, DoubleUtils.DOUBLE_ZERO) < 0) {
 			// 剩余应发金额不能是负
 			return taxPlan = null;
 		}
-		if (Double.compare(preTaxSalary, 0.0d) < 0) {
+		if (Double.compare(preTaxSalary, DoubleUtils.DOUBLE_ZERO) < 0) {
 			// 年终不能大于剩余应发
 			return taxPlan = null;
 		}
-		if (Double.compare(preTaxBonus, 0.0d) < 0) {
+		if (Double.compare(preTaxBonus, DoubleUtils.DOUBLE_ZERO) < 0) {
 			// 月薪总额不能大于剩余应发
 			return taxPlan = null;
 		}
@@ -300,7 +302,7 @@ public class TaxPlanUtils {
 	 */
 	public static double calcTaxableSalary(double preTaxSalary) {
 		double diff = DoubleUtils.sub(preTaxSalary, getTaxThreshold());
-		return Double.compare(diff, 0.0d) > 0 ? diff : 0.0d;
+		return Double.compare(diff, DoubleUtils.DOUBLE_ZERO) > 0 ? diff : DoubleUtils.DOUBLE_ZERO;
 	}
 
 	/**
@@ -338,7 +340,7 @@ public class TaxPlanUtils {
 	 * @return
 	 */
 	public static double calcTaxes(double taxableSalary) {
-		double tax = 0.0d;
+		double tax = DoubleUtils.DOUBLE_ZERO;
 
 		TaxRate taxRate = getTaxRate(taxableSalary);
 		if (taxRate != null) {
@@ -377,10 +379,10 @@ public class TaxPlanUtils {
 		}
 
 		double diff = DoubleUtils.sub(bonus, DoubleUtils.sub(getTaxThreshold(), preTaxSalaryOfCurrentMonth));
-		if (Double.compare(diff, 0.0d) > 0) {
+		if (Double.compare(diff, DoubleUtils.DOUBLE_ZERO) > 0) {
 			return diff;
 		} else {
-			return 0.0d;
+			return DoubleUtils.DOUBLE_ZERO;
 		}
 	}
 
@@ -393,7 +395,7 @@ public class TaxPlanUtils {
 	 */
 	private static TaxRate getTaxRateOfBonus(double taxableBonus) {
 
-		if (Double.compare(taxableBonus, 0.0d) >= 0) {
+		if (Double.compare(taxableBonus, DoubleUtils.DOUBLE_ZERO) >= 0) {
 			TaxRate taxRate = getTaxRate(DoubleUtils.div(taxableBonus, 12.0d, DEF_DIV_SCALE));
 			if (taxRate != null) {
 				return taxRate;
@@ -412,11 +414,11 @@ public class TaxPlanUtils {
 	 */
 	private static double calcTaxesOfBonus(double taxableBonus) {
 
-		double dTaxRate = 0.0d;
-		double dQuickDeduction = 0.0d;
-		double taxes = 0.0d;
+		double dTaxRate = DoubleUtils.DOUBLE_ZERO;
+		double dQuickDeduction = DoubleUtils.DOUBLE_ZERO;
+		double taxes = DoubleUtils.DOUBLE_ZERO;
 
-		if (Double.compare(taxableBonus, 0.0d) <= 0) {
+		if (Double.compare(taxableBonus, DoubleUtils.DOUBLE_ZERO) <= 0) {
 			return taxes;
 		}
 

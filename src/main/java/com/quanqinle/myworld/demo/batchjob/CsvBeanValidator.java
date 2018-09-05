@@ -11,7 +11,9 @@ import java.util.Set;
 
 /**
  * 数据校验
+ * @author quanqinle
  * @param <T>
+ *
  */
 public class CsvBeanValidator<T> implements Validator<T>,InitializingBean {
 	private	javax.validation.Validator validator;

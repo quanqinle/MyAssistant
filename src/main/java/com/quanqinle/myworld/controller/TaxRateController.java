@@ -16,7 +16,7 @@ import java.util.HashMap;
 import java.util.List;
 
 /**
- *
+ * @author quanqinle
  */
 @Controller
 @RequestMapping("/tax")
@@ -29,7 +29,8 @@ public class TaxRateController {
 	@GetMapping("/list.html")
 	public String allRate(Model model) {
 		model.addAttribute("ratelist", taxRateService.getAllTaxRate());
-		return "/pages/ratelist"; //properties中设置了缺省.ftl，所以跳转ratelist.ftl
+		//properties中设置了缺省.ftl，所以跳转ratelist.ftl
+		return "/pages/ratelist";
 	}
 
 	/**
@@ -64,8 +65,7 @@ public class TaxRateController {
 		double tax = TaxPlanUtils.calcTaxes(taxableSalary);
 		TaxRate taxRate = TaxPlanUtils.getTaxRate(taxableSalary);
 
-//		JSONObject result = new JSONObject();
-		HashMap<String, Object> result = new HashMap<>();
+		HashMap<String, Object> result = new HashMap<>(16);
 		result.put("taxes", tax);
 		result.put("taxrate", taxRate);
 
@@ -76,7 +76,7 @@ public class TaxRateController {
 	@ResponseBody
 	public HashMap<String, Object> planSubmit(Double estimatedAnnualSalary, Double alreadyPaidSalary, Integer remainingMonths) {
 		TaxPlan taxplan = TaxPlanUtils.calcBestTaxPlanQuickly(estimatedAnnualSalary, alreadyPaidSalary, remainingMonths);
-		HashMap<String, Object> result = new HashMap<>();
+		HashMap<String, Object> result = new HashMap<>(16);
 		result.put("taxplan", taxplan);
 
 		return result;

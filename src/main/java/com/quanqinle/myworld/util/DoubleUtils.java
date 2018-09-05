@@ -10,14 +10,18 @@ import java.math.BigDecimal;
  */
 public class DoubleUtils {
 
-	// 默认除法运算精度
+	public static final double DOUBLE_ZERO = 0.0d;
+	/**
+	 * 默认除法运算精度
+ 	 */
 	private static final int DEF_DIV_SCALE = 10;
-	// 默认乘法运算精度
+	/**
+	 * 默认乘法运算精度
+ 	 */
 	private static final int DEF_MUL_SCALE = 10;
 
-	// 这个类不能实例化
 	private DoubleUtils() {
-
+		// 这个类不能实例化
 	}
 
 	/**

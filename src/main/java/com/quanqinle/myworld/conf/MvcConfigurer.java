@@ -13,11 +13,15 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  * 全局化定制Spring Boot的MVC特性
+ * @author quanql
  */
 @Configuration
 public class MvcConfigurer implements WebMvcConfigurer {
 
-	// 拦截器
+	/**
+	 * 拦截器
+	 * @param registry
+	 */
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {
 		// 检查用户是否登录
@@ -27,16 +31,23 @@ public class MvcConfigurer implements WebMvcConfigurer {
 
 	}
 
-	// 跨域访问配置
+	/**
+	 * 跨域访问配置
+	 * @param registry
+	 */
 	@Override
 	public void addCorsMappings(CorsRegistry registry) {
 
 	}
 
-	// URI到视图的映射
+	/**
+	 * URI到视图的映射
+	 * @param registry
+	 */
 	@Override
 	public void addViewControllers(ViewControllerRegistry registry) {
-		registry.addViewController("/index.html").setViewName("/index-default"); //url不要加后缀ftl
+		//url不要加后缀ftl
+		registry.addViewController("/index.html").setViewName("/index-default");
 		registry.addRedirectViewController("/", "/index.html");
 		registry.addRedirectViewController("/index.*", "/index.html");
 		registry.addRedirectViewController("/**/*.do", "/index.html");
@@ -52,6 +63,7 @@ public class MvcConfigurer implements WebMvcConfigurer {
 	 *
 	 */
 	class SessionHandlerInterceptor implements HandlerInterceptor {
+		@Override
 		public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 				throws Exception {
 			User user = (User) request.getSession().getAttribute("user");

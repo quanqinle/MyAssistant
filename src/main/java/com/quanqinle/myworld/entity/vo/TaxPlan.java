@@ -200,7 +200,7 @@ public class TaxPlan implements Cloneable {
 		this.totalTaxes = totalTaxes;
 	}
 
-	/*
+	/**
 	 * (non-Javadoc)
 	 *
 	 * @see java.lang.Object#toString()
@@ -266,7 +266,7 @@ public class TaxPlan implements Cloneable {
 			} else {
 				return 0;
 			}
-		} else if (Double.compare(diffTotalTaxes, 0.0d) < 0) {
+		} else if (Double.compare(diffTotalTaxes, DoubleUtils.DOUBLE_ZERO) < 0) {
 			// 年总纳税额：p1<p2
 			return -1;
 		} else {

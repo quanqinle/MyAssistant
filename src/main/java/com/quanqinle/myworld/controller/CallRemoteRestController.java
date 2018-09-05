@@ -16,6 +16,8 @@ import java.util.List;
 
 /**
  * 调用其他应用提供的远程api
+ *
+ * @author quanql
  */
 @RestController
 @RequestMapping("/remote")
