@@ -2,8 +2,13 @@ package com.quanqinle.myworld.util;
 
 import com.quanqinle.myworld.entity.po.TaxRate;
 import com.quanqinle.myworld.entity.vo.TaxPlan;
+import com.quanqinle.myworld.service.TaxRateService;
+import com.quanqinle.myworld.service.impl.TaxRateServiceImpl;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.springframework.util.NumberUtils;
 
+import javax.annotation.PostConstruct;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
@@ -14,11 +19,21 @@ import java.util.List;
  * @author quanql
  *
  */
+@Component
 public class TaxPlanUtils {
+	private static TaxPlanUtils taxPlanUtils;
+	@Autowired
+	protected TaxRateService taxRateService;
+
+	@PostConstruct
+	public void init() {
+		taxPlanUtils = this;
+		taxPlanUtils.taxRateService = this.taxRateService;
+	}
 
 	/**
 	 * 个税门槛（适用于中国籍员工）
-	 * 2018.10之前3500
+	 * 2018.10.1之前3500
 	 */
 	private static double TAX_THRESHOLD = 5000;
 	/**
@@ -33,7 +48,7 @@ public class TaxPlanUtils {
 	/**
 	 * 个税税率递进表
 	 */
-	public static final List<TaxRate> TAX_RATES = new ArrayList<TaxRate>() {
+/*	public static final List<TaxRate> TAX_RATES = new ArrayList<TaxRate>() {
 		private static final long serialVersionUID = 1L;
 		{
 			add(new TaxRate(0, 0, 0, 0, 0));
@@ -45,7 +60,7 @@ public class TaxPlanUtils {
 			add(new TaxRate(6, 55000, 80000, 0.35, 5505));
 			add(new TaxRate(7, 80000, Double.MAX_VALUE, 0.45, 13505));
 		}
-	};
+	};*/
 
 
 	/**
@@ -90,7 +105,6 @@ public class TaxPlanUtils {
 
 //		 TaxPlan bestTaxPlan1 = calcBestTaxPlanPrecisely(50000d, 0d, 12);
 //		 System.out.println("穷举法计算最优方案：" + bestTaxPlan1.toString());
-
 	}
 
 	/**
@@ -98,8 +112,11 @@ public class TaxPlanUtils {
 	 * @return 税率表
 	 */
 	public static List<TaxRate> getTaxRateList() {
-		return TAX_RATES;
+//		return TAX_RATES;
+//		TaxRateService taxRateService = new TaxRateServiceImpl();
+		return taxPlanUtils.taxRateService.getTaxRateTable();
 	}
+
 
 	/**
 	 * 计算月薪VS年终奖避税组合最优解（使用预设区间，结果近似，但计算快）

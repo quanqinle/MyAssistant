@@ -6,19 +6,36 @@ package com.quanqinle.myworld.entity.vo;
 public class PageInfoVo {
 
 	/**
-	 * 当前显示多少页
+	 * 总元素数
 	 */
-	private Integer limit;
-
+	private Integer totalElements;
 	/**
-	 * 总共多少页
+	 * 总页数
 	 */
-	private Integer total;
-
+	private Integer totalPages;
 	/**
 	 * 当前第几页
 	 */
 	private Integer pageNum;
+	/**
+	 * 当前页第1条的index，based on 0
+	 */
+	private Integer offset;
+	/**
+	 * 每页条数（当前页条数）
+	 */
+	private Integer limit;
+
+	public PageInfoVo() {
+	}
+
+	public Integer getTotalElements() {
+		return totalElements;
+	}
+
+	public void setTotalElements(Integer totalElements) {
+		this.totalElements = totalElements;
+	}
 
 	public Integer getLimit() {
 		return limit;
@@ -28,12 +45,12 @@ public class PageInfoVo {
 		this.limit = limit;
 	}
 
-	public Integer getTotal() {
-		return total;
+	public Integer getTotalPages() {
+		return totalPages;
 	}
 
-	public void setTotal(Integer total) {
-		this.total = total;
+	public void setTotalPages(Integer totalPages) {
+		this.totalPages = totalPages;
 	}
 
 	public Integer getPageNum() {
@@ -44,5 +61,12 @@ public class PageInfoVo {
 		this.pageNum = pageNum;
 	}
 
+	public Integer getOffset() {
+		return offset;
+	}
+
+	public void setOffset(Integer offset) {
+		this.offset = offset;
+	}
 }
 

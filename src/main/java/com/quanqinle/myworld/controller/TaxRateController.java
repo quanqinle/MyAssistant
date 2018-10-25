@@ -1,6 +1,7 @@
 package com.quanqinle.myworld.controller;
 
 import com.quanqinle.myworld.entity.po.TaxRate;
+import com.quanqinle.myworld.entity.vo.ResultVo;
 import com.quanqinle.myworld.entity.vo.TaxPlan;
 import com.quanqinle.myworld.service.TaxRateService;
 import com.quanqinle.myworld.util.TaxPlanUtils;
@@ -28,7 +29,7 @@ public class TaxRateController {
 
 	@GetMapping("/list.html")
 	public String allRate(Model model) {
-		model.addAttribute("ratelist", taxRateService.getAllTaxRate());
+		model.addAttribute("ratelist", taxRateService.getTaxRateTable());
 		//properties中设置了缺省.ftl，所以跳转ratelist.ftl
 		return "/pages/ratelist";
 	}
@@ -48,8 +49,9 @@ public class TaxRateController {
 
 	@GetMapping("/list.json")
 	@ResponseBody
-	public List<TaxRate> allRate() {
-		return taxRateService.getAllTaxRate();
+	public ResultVo<List<TaxRate>> allRate() {
+		List<TaxRate> list =  taxRateService.getTaxRateTable();
+		return new ResultVo(200, list);
 	}
 
 	/**

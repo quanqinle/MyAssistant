@@ -27,6 +27,10 @@ public class TaxRate {
 
 	private double quickDeduction;
 
+	private int status;
+
+	private String effectiveDate;
+
 	public TaxRate() { //jpa必须的
 		// no-args constructor required by JPA spec
 		// this one is protected since it shouldn't be used directly
@@ -84,6 +88,22 @@ public class TaxRate {
 		this.quickDeduction = quickDeduction;
 	}
 
+	public int getStatus() {
+		return status;
+	}
+
+	public void setStatus(int status) {
+		this.status = status;
+	}
+
+	public String getEffectiveDate() {
+		return effectiveDate;
+	}
+
+	public void setEffectiveDate(String effectiveDate) {
+		this.effectiveDate = effectiveDate;
+	}
+
 	/**
 	 * 金额是否落入当前税率区间
 	 *
@@ -105,6 +125,8 @@ public class TaxRate {
 				", rangeLowest=" + rangeLowest +
 				", rangeHighest=" + rangeHighest +
 				", quickDeduction=" + quickDeduction +
+				", status=" + status +
+				", effectiveDate=" + effectiveDate +
 				'}';
 	}
 }

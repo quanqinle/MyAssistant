@@ -82,7 +82,7 @@
 			<optional>true</optional>
 		</dependency>
 
-		<!-- 批处理。不用自带的db驱动  -->
+		<!-- 批处理。(不用自带的db驱动)  -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-batch</artifactId>
@@ -93,6 +93,19 @@
 				</exclusion>
 			</exclusions>
 		</dependency>
+
+		<!-- webmagic 爬虫  -->
+<!--		<dependency>
+			<groupId>us.codecraft</groupId>
+			<artifactId>webmagic-core</artifactId>
+			<version>0.7.3</version>
+		</dependency>
+		<dependency>
+			<groupId>us.codecraft</groupId>
+			<artifactId>webmagic-extension</artifactId>
+			<version>0.7.3</version>
+		</dependency>-->
+
 	</dependencies>
 
 	<build>

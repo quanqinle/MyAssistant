@@ -9,10 +9,24 @@ import java.util.List;
  */
 public interface TaxRateService {
     /**
-     * 获取所有税率
+     * 获取当前有效的个税税率表
      * @return
      */
-    List<TaxRate> getAllTaxRate();
+    List<TaxRate> getTaxRateTable();
+
+    /**
+     * 根据状态，获取个税税率表
+     * @param status
+     * @return
+     */
+    List<TaxRate> getTaxRateTable(int status);
+
+    /**
+     * 根据生效年份，获取个税税率表
+     * @param effectiveDate
+     * @return
+     */
+    List<TaxRate> getTaxRateTable(String effectiveDate);
 
     /**
      * 根据id获取税率
@@ -27,4 +41,10 @@ public interface TaxRateService {
      * @return
      */
     TaxRate getTaxRateByRange(double income);
+
+    /**
+     * 获取所有个税税率表
+     * @return
+     */
+    List<TaxRate> getAllTaxRateTable();
 }

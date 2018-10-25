@@ -42,6 +42,6 @@ public class RedisDemoController {
 	@RequestMapping("/pub/{msg}")
 	public @ResponseBody String pubChannel(@PathVariable String msg) {
 		redisClient.convertAndSend("news.test", msg);
-		return "succ";
+		return "success";
 	}
 }

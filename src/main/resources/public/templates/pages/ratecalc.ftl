@@ -168,8 +168,8 @@ recommend sticking to 'spring' -->
                     },
                     salaryTaxes: 0,
                     bonusTaxes: 0,
-                    totalTaxes: 0,
-                },
+                    totalTaxes: 0
+                }
             }
         },
         computed: {

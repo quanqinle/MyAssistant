@@ -28,12 +28,12 @@ public class TaxRateControllerOld {
 	@GetMapping("/list.json")
 	@ResponseBody
 	public List<TaxRate> allRate() {
-		return taxRateService.getAllTaxRate();
+		return taxRateService.getTaxRateTable();
 	}
 
 	@GetMapping("/list.html")
 	public String allRate(Model model) {
-		model.addAttribute("ratelist", taxRateService.getAllTaxRate());
+		model.addAttribute("ratelist", taxRateService.getTaxRateTable());
 		//properties中设置了缺省.ftl，所以跳转ratelist.ftl
 		return "/pages/ratelist";
 	}

@@ -20,19 +20,33 @@ import java.util.List;
 @Transactional(rollbackFor = Exception.class)
 public class TaxRateServiceImpl implements TaxRateService {
 
+	private static int STATUS_VALID = 1;
+
 	@Autowired
 	TaxRateRepository taxRateRepository;
 
 	@Override
 	@Cacheable("tax")
-	public List<TaxRate> getAllTaxRate() {
-		return taxRateRepository.findAll(Sort.by(Sort.Direction.ASC, "rangeLowest"));
+	public List<TaxRate> getTaxRateTable() {
+		return this.getTaxRateTable(STATUS_VALID);
+	}
+
+	@Override
+	@Cacheable("tax")
+	public List<TaxRate> getTaxRateTable(int status) {
+		return taxRateRepository.findByStatusOrderByRangeLowestAsc(status);
+	}
+
+	@Override
+	@Cacheable("tax")
+	public List<TaxRate> getTaxRateTable(String effectiveDate) {
+		return taxRateRepository.findByEffectiveDateOrderByRangeLowestAsc(effectiveDate);
 	}
 
 	@Override
 	@Cacheable(cacheNames = "tax",key = "#id",condition = "#id<10")
 	public TaxRate getTaxRateById(int id) {
-		return (TaxRate) taxRateRepository.getOne(id);
+		return taxRateRepository.getOne(id);
 	}
 
 	@Override
@@ -41,10 +55,16 @@ public class TaxRateServiceImpl implements TaxRateService {
 		if (income <= 0) {
 			return null;
 		}
-		List<TaxRate> rates = taxRateRepository.findByRangeLowestLessThanOrderByRangeLowestDesc(income);
+		List<TaxRate> rates = taxRateRepository.findByRangeLowestLessThanAndStatusOrderByRangeLowestDesc(income, STATUS_VALID);
 		if (rates.isEmpty() || rates == null) {
 			return null;
 		}
 		return rates.get(0);
+	}
+
+	@Override
+	@Cacheable("tax")
+	public List<TaxRate> getAllTaxRateTable() {
+		return taxRateRepository.findAll(Sort.by(Sort.Direction.ASC, "rangeLowest"));
 	}
 }
