@@ -22,9 +22,9 @@ import java.net.InetSocketAddress;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
 
 /**
+ * 房地产
  * @author quanql
  */
 @RestController
@@ -80,26 +80,35 @@ public class EstateController {
 	}
 
 	@GetMapping("/secondhand/saveall")
-	public ResultVo<String> saveAllSecondHandInfo() throws Exception{
+	public ResultVo<String> saveAllSecondHandInfo(){
 		RestTemplate restClient = restTemplateBuilder.build();
 //		String uri = remoteBase + "/webty/WebFyAction_getGpxxSelectList.jspx";
 		String uri = remoteBase + "/webty/WxAction_getGpxxSelectList.jspx?page=";
-		ResponseEntity<String> respEntity = restClient.getForEntity(uri, String.class);
+		for (int i = 4892; i < 12000 ; i++) {
+			try {
+				log.info(uri + i);
+				ResponseEntity<String> respEntity = restClient.getForEntity(uri + i, String.class);
+				log.info(respEntity.getStatusCodeValue());
 
-		log.info(respEntity.getStatusCodeValue());
-		log.info(respEntity.toString());
+				String jsonStr = respEntity.getBody();
+				log.info(jsonStr);
 
-		String jsonStr = respEntity.getBody();
-		ObjectMapper mapper = new ObjectMapper();
+				ObjectMapper mapper = new ObjectMapper();
+				EstateSecondHandResp resp = mapper.readValue(jsonStr, EstateSecondHandResp.class);
+				boolean isOver = resp.isIsover();
+				List<EstateSecondHandListing> nodeList = resp.getList();
+				log.info(nodeList);
+				log.info("isOver = " + isOver);
 
-		EstateSecondHandResp resp = mapper.readValue(jsonStr, EstateSecondHandResp.class);
-		boolean isOver = resp.isIsover();
-		List<EstateSecondHandListing> nodeList = resp.getList();
-		log.info("quanql --> " + nodeList);
-//		JavaType type = mapper.getTypeFactory().constructParametricType(List.class, EstateSecondHandListing.class);
-		for (EstateSecondHandListing node: nodeList) {
-//			EstateSecondHandListing listings = mapper.readValue(node, EstateSecondHandListing.class);
-			estateService.saveSecondHandListing(node);
+				// 如果一条失败，整个saveall都会丢失。还是一条条存保险
+				// estateService.saveSecondHandListings(nodeList);
+
+				for (EstateSecondHandListing node: nodeList) {
+					estateService.saveSecondHandListing(node);
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
 
 		return new ResultVo(200, "success");
@@ -111,8 +120,8 @@ public class EstateController {
 //		if(Files.notExists(rootLocation)){
 //			Files.createDirectories(rootLocation);
 //		}
-//		//data.js是文件
-//		Path path = rootLocation.resolve("data.js");
+//		//data.json是文件
+//		Path path = rootLocation.resolve("data.json");
 //		byte[] strToBytes = jsonStr.getBytes();
 //		Files.write(path, strToBytes);
 //	}

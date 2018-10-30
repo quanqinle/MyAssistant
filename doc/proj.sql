@@ -38,13 +38,13 @@ CREATE TABLE tax_rate (
   PRIMARY KEY (id)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COMMENT='税-个税税率表';
 
-insert into tax_rate values (1, 0.03, 0, 1500, 0);
-insert into tax_rate values (2, 0.10, 1500, 4500, 105);
-insert into tax_rate values (3, 0.20, 4500, 9000, 555);
-insert into tax_rate values (4, 0.25, 9000, 35000, 1005);
-insert into tax_rate values (5, 0.30, 35000, 55000, 2755);
-insert into tax_rate values (6, 0.35, 55000, 80000, 5505);
-insert into tax_rate values (7, 0.45, 80000, -1, 13505);
+insert into tax_rate values (1, 0.03, 0, 1500, 0, 0, '2011-09-01');
+insert into tax_rate values (2, 0.10, 1500, 4500, 105, 0, '2011-09-01');
+insert into tax_rate values (3, 0.20, 4500, 9000, 555, 0, '2011-09-01');
+insert into tax_rate values (4, 0.25, 9000, 35000, 1005, 0, '2011-09-01');
+insert into tax_rate values (5, 0.30, 35000, 55000, 2755, 0, '2011-09-01');
+insert into tax_rate values (6, 0.35, 55000, 80000, 5505, 0, '2011-09-01');
+insert into tax_rate values (7, 0.45, 80000, -1, 13505, 0, '2011-09-01');
 
 insert into tax_rate values (8, 0.03, 0, 3000, 0, 1, '2018-10-1');
 insert into tax_rate values (9, 0.10, 3000, 12000, 210, 1, '2018-10-1');
@@ -268,4 +268,61 @@ CREATE TABLE estate_secondhand_listing (
   xzqhname varchar(10) DEFAULT NULL COMMENT '行政区划名称',
   zzcs varchar(10) DEFAULT NULL COMMENT '',
   PRIMARY KEY (id)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COMMENT='房产-二手房挂牌信息';
+
+DROP TABLE IF EXISTS estate_secondhand_listing_unique;
+CREATE TABLE estate_secondhand_listing_unique (
+  id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'id' ,
+  fwtybh varchar(20) NOT NULL COMMENT '房源核验统一编码',
+  jzmj varchar(10) NOT NULL COMMENT '建筑面积',
+  wtcsjg varchar(20) NOT NULL COMMENT '委托出售价格',
+  accountid varchar(20) DEFAULT NULL COMMENT '账号id',
+  accountname varchar(20) DEFAULT NULL COMMENT '账号名称',
+  cjsj varchar(20) DEFAULT NULL COMMENT '创建时间',
+  cqmc varchar(20) DEFAULT NULL COMMENT '城区名称',
+  cqsj varchar(20) DEFAULT NULL COMMENT '城区速记？',
+  cyrybh varchar(20) DEFAULT NULL COMMENT '从业人员编号',
+  czfs varchar(20) DEFAULT NULL COMMENT '',
+  dqlc varchar(20) DEFAULT NULL COMMENT '地区？',
+  fbzt varchar(20) DEFAULT NULL COMMENT '发布状态',
+  fczsh varchar(50) DEFAULT NULL COMMENT '房产证书',
+  fwyt varchar(20) DEFAULT NULL COMMENT '房屋用途id',
+  fwytValue varchar(20) DEFAULT NULL COMMENT '房屋用途',
+  gisx varchar(20) DEFAULT NULL COMMENT '',
+  gisy varchar(20) DEFAULT NULL COMMENT '',
+  gpfyid varchar(20) DEFAULT NULL COMMENT '挂牌房屋id',
+  gphytgsj varchar(20) DEFAULT NULL COMMENT '挂牌行业提供数据？',
+  gpid varchar(20) DEFAULT NULL COMMENT '挂牌id',
+  gplxrcode varchar(20) DEFAULT NULL COMMENT '挂牌联系人代码',
+  gplxrdh varchar(15) DEFAULT NULL COMMENT '挂牌联系人电话',
+  gplxrxm varchar(10) DEFAULT NULL COMMENT '挂牌联系人姓名',
+  gply varchar(20) DEFAULT NULL COMMENT '挂牌来源',
+  gpzt varchar(10) DEFAULT NULL COMMENT '挂牌状态id',
+  gpztValue varchar(10) DEFAULT NULL COMMENT '挂牌状态',
+  hxs varchar(20) DEFAULT NULL COMMENT '户型？',
+  hxt varchar(20) DEFAULT NULL COMMENT '',
+  hxw varchar(20) DEFAULT NULL COMMENT '',
+  hyid varchar(20) DEFAULT NULL COMMENT '',
+  hyjzsj varchar(20) DEFAULT NULL COMMENT '',
+  isnew varchar(20) DEFAULT NULL COMMENT '是否新房？',
+  mdmc varchar(50) DEFAULT NULL COMMENT '门店名称',
+  qyid varchar(20) DEFAULT NULL COMMENT '签约id',
+  qyzt varchar(20) DEFAULT NULL COMMENT '签约状态',
+  scgpshsj varchar(20) DEFAULT NULL COMMENT '首次挂牌上市时间',
+  sellnum varchar(20) DEFAULT NULL COMMENT '',
+  sqhysj varchar(20) DEFAULT NULL COMMENT '',
+  szlc varchar(20) DEFAULT NULL COMMENT '所在楼层',
+  szlcname varchar(20) DEFAULT NULL COMMENT '所在楼层名称',
+  tygpbh varchar(20) DEFAULT NULL COMMENT '统一挂牌编号',
+  wtdqts varchar(20) DEFAULT NULL COMMENT '委托地区？',
+  wtxybh varchar(20) DEFAULT NULL COMMENT '委托协议编号',
+  wtxycode varchar(20) DEFAULT NULL COMMENT '委托协议代码',
+  wtxyid varchar(20) DEFAULT NULL COMMENT '委托协议id',
+  xqid varchar(20) DEFAULT NULL COMMENT '小区id',
+  xqmc varchar(50) DEFAULT NULL COMMENT '小区名称',
+  xzqh varchar(10) DEFAULT NULL COMMENT '行政区划id',
+  xzqhname varchar(10) DEFAULT NULL COMMENT '行政区划名称',
+  zzcs varchar(10) DEFAULT NULL COMMENT '',
+  PRIMARY KEY (id),
+  unique key(fwtybh)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COMMENT='房产-二手房挂牌信息';

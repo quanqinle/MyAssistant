@@ -2,7 +2,17 @@ package com.quanqinle.myworld.entity.po;
 
 import java.util.List;
 
+/**
+ * 二手挂牌信息po
+ *
+ * @author quanqinle
+ */
 public class EstateSecondHandResp {
+	/**
+	 * Constructor for jpa
+	 */
+	protected EstateSecondHandResp() {}
+
 	private boolean isover;
 	private List<EstateSecondHandListing> list;
 
