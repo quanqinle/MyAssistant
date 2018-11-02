@@ -1,4 +1,6 @@
-package com.quanqinle.myworld.entity.po;
+package com.quanqinle.myworld.entity.vo;
+
+import com.quanqinle.myworld.entity.po.EstateSecondHandListing;
 
 import java.util.List;
 

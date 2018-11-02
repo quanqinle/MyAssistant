@@ -31,4 +31,17 @@ public interface EstateService {
 	 * @return
 	 */
 	EstateSecondHandListing saveSecondHandListing(EstateSecondHandListing item);
+
+	/**
+	 * 获取所有二手挂牌信息
+	 * @return
+	 */
+	List<EstateSecondHandListing> getAllSecondHandListing();
+
+	/**
+	 * 将二手房挂牌信息表中的内容同步到其他表
+	 * @param one
+	 * @return
+	 */
+	boolean syncListingToOtherTables(EstateSecondHandListing one);
 }
