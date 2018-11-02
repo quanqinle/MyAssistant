@@ -66,18 +66,28 @@ public class EstateServiceImpl implements EstateService {
 		EstateSecondHandPrice price = new EstateSecondHandPrice();
 
 		if (secondHandHouseRepository.findByHouseUniqueId(houseUniqueId) == null) {
-			// TODO
-			house.setHouseUniqueId();
-			house.setCityCode();
-			house.setCityName();
-			house.setCommunityId();
-			house.setCommunityName();
-			house.setCoveredArea();
-			house.setDistrict();
-			house.setHousePropertyOwnershipCertificate();
+			house.setHouseUniqueId(one.getFwtybh());
+			house.setCoveredArea(one.getJzmj());
+			house.setDistrict(one.getCqmc());
+			house.setHousePropertyOwnershipCertificate(one.getFczsh());
+			house.setCommunityId(one.getXqid());
+			house.setCommunityName(one.getXqmc());
+			house.setCityCode(one.getXzqh());
+			house.setCityName(one.getXzqhname());
 		}
 		if (secondHandPriceRepository.findByHouseUniqueIdAndListingId(houseUniqueId,listingId) == null) {
-
+			price.setHouseUniqueId(one.getFwtybh());
+			price.setListingId(one.getGpid());
+			price.setSalePrice(one.getWtcsjg());
+			price.setEntrustTime(one.getCjsj());
+			price.setListingHouseId(one.getGpfyid());
+			price.setListingContactName(one.getGplxrxm());
+			price.setListingStatus(one.getGpzt());
+			price.setListingStatusValue(one.getGpztValue());
+			price.setRealEstateAgency(one.getMdmc());
+			price.setListingTime(one.getScgpshsj());
+			price.setListingUniqueId(one.getTygpbh());
+			price.setEntrustAgreementId(one.getWtxybh());
 		}
 
 		return false;
