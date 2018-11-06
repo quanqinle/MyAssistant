@@ -9,6 +9,8 @@ import com.quanqinle.myworld.entity.po.EstateSecondHandHouse;
 import com.quanqinle.myworld.entity.po.EstateSecondHandListing;
 import com.quanqinle.myworld.entity.po.EstateSecondHandPrice;
 import com.quanqinle.myworld.service.EstateService;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -23,6 +25,8 @@ import java.util.List;
 @Transactional(rollbackFor = Exception.class)
 public class EstateServiceImpl implements EstateService {
 
+	Log log = LogFactory.getLog(EstateService.class);
+
 	@Autowired
 	CommunityRepository communityRepository;
 	@Autowired
@@ -35,11 +39,6 @@ public class EstateServiceImpl implements EstateService {
 	@Override
 	public List<EstateCommunity> saveCommunities(List<EstateCommunity> list) {
 		return communityRepository.saveAll(list);
-	}
-
-	@Override
-	public List<EstateSecondHandListing> saveSecondHandListings(List<EstateSecondHandListing> list) {
-		return secondHandListingRepository.saveAll(list);
 	}
 
 	@Override
@@ -57,6 +56,36 @@ public class EstateServiceImpl implements EstateService {
 	}
 
 	@Override
+	public List<EstateSecondHandListing> getSecondHandListing(String fwtybh) {
+		return secondHandListingRepository.findByFwtybh(fwtybh);
+	}
+
+	@Override
+	public List<EstateSecondHandListing> getAllNotInHouseTable() {
+		return secondHandListingRepository.findAllNotInHouseTable();
+	}
+
+	@Override
+	public List<EstateSecondHandListing> getAllNotInPriceTable() {
+		return secondHandListingRepository.findAllNotInPriceTable();
+	}
+
+	@Override
+	public EstateSecondHandListing getLatestOne() {
+		return secondHandListingRepository.findFirstByOrderByScgpshsjDescIdAsc();
+	}
+
+	@Override
+	public EstateSecondHandHouse getSecondHandHouse(String houseUniqueId) {
+		return secondHandHouseRepository.findByHouseUniqueId(houseUniqueId);
+	}
+
+	@Override
+	public List<EstateSecondHandPrice> getSecondHandPrice(String houseUniqueId) {
+		return secondHandPriceRepository.findByHouseUniqueId(houseUniqueId);
+	}
+
+	@Override
 	public boolean syncListingToOtherTables(@NotNull EstateSecondHandListing one) {
 
 		String houseUniqueId = one.getFwtybh();
@@ -65,7 +94,9 @@ public class EstateServiceImpl implements EstateService {
 		EstateSecondHandHouse house = new EstateSecondHandHouse();
 		EstateSecondHandPrice price = new EstateSecondHandPrice();
 
-		if (secondHandHouseRepository.findByHouseUniqueId(houseUniqueId) == null) {
+		if (secondHandHouseRepository.findByHouseUniqueId(houseUniqueId) != null) {
+			log.info("house [" + houseUniqueId + "] is existed.");
+		} else {
 			house.setHouseUniqueId(one.getFwtybh());
 			house.setCoveredArea(one.getJzmj());
 			house.setDistrict(one.getCqmc());
@@ -74,8 +105,12 @@ public class EstateServiceImpl implements EstateService {
 			house.setCommunityName(one.getXqmc());
 			house.setCityCode(one.getXzqh());
 			house.setCityName(one.getXzqhname());
+			log.info("save house:" + house);
+			secondHandHouseRepository.saveAndFlush(house);
 		}
-		if (secondHandPriceRepository.findByHouseUniqueIdAndListingId(houseUniqueId,listingId) == null) {
+		if (secondHandPriceRepository.findByHouseUniqueIdAndListingId(houseUniqueId,listingId) != null) {
+			log.info("price [" + listingId + "] is existed.");
+		} else {
 			price.setHouseUniqueId(one.getFwtybh());
 			price.setListingId(one.getGpid());
 			price.setSalePrice(one.getWtcsjg());
@@ -88,6 +123,8 @@ public class EstateServiceImpl implements EstateService {
 			price.setListingTime(one.getScgpshsj());
 			price.setListingUniqueId(one.getTygpbh());
 			price.setEntrustAgreementId(one.getWtxybh());
+			log.info("save price:" + price);
+			secondHandPriceRepository.saveAndFlush(price);
 		}
 
 		return false;

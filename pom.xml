@@ -82,7 +82,7 @@
 			<optional>true</optional>
 		</dependency>
 
-		<!-- 批处理。(不用自带的db驱动)  -->
+		<!-- 批处理。(不使用自带的db驱动)  -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-batch</artifactId>

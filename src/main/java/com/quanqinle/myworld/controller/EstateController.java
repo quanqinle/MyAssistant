@@ -3,10 +3,13 @@ package com.quanqinle.myworld.controller;
 import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.quanqinle.myworld.entity.po.EstateCommunity;
+import com.quanqinle.myworld.entity.po.EstateSecondHandHouse;
 import com.quanqinle.myworld.entity.po.EstateSecondHandListing;
+import com.quanqinle.myworld.entity.po.EstateSecondHandPrice;
 import com.quanqinle.myworld.entity.vo.EstateSecondHandResp;
 import com.quanqinle.myworld.entity.vo.ResultVo;
 import com.quanqinle.myworld.service.EstateService;
+import com.quanqinle.myworld.service.ScheduledTaskService;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +17,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.http.*;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
@@ -24,8 +28,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.Callable;
-
-import static javax.servlet.RequestDispatcher.ERROR_MESSAGE;
 
 /**
  * 房地产
@@ -44,6 +46,9 @@ public class EstateController {
 
 	@Autowired
 	EstateService estateService;
+
+	@Autowired
+	ScheduledTaskService scheduledTaskService;
 
 	@GetMapping("/community/saveall3")
 	public ResultVo<String> saveAll3() {
@@ -83,42 +88,20 @@ public class EstateController {
 		return new ResultVo(200, estateService.saveCommunities(communities));
 	}
 
-	@GetMapping("/secondhand/saveall")
+	@GetMapping("/secondhand/savenew")
 	public ResultVo<String> saveAllListingsInfoToDB(){
-
-				RestTemplate restClient = restTemplateBuilder.build();
-//		String uri = remoteBase + "/webty/WebFyAction_getGpxxSelectList.jspx";
-				String uri = remoteBase + "/webty/WxAction_getGpxxSelectList.jspx?page=";
-				for (int i = 11753; i < 12000 ; i++) {
-					try {
-						log.info(uri + i);
-						ResponseEntity<String> respEntity = restClient.getForEntity(uri + i, String.class);
-						log.info(respEntity.getStatusCodeValue());
-
-						String jsonStr = respEntity.getBody();
-						log.info(jsonStr);
-
-						ObjectMapper mapper = new ObjectMapper();
-						EstateSecondHandResp resp = mapper.readValue(jsonStr, EstateSecondHandResp.class);
-						boolean isOver = resp.isIsover();
-						List<EstateSecondHandListing> nodeList = resp.getList();
-						log.info(nodeList);
-						log.info("isOver = " + isOver);
-
-						// 如果一条失败，整个saveall都会丢失。还是一条条存保险
-						// estateService.saveSecondHandListings(nodeList);
-
-						for (EstateSecondHandListing node: nodeList) {
-							estateService.saveSecondHandListing(node);
-						}
-					} catch (Exception e) {
-						e.printStackTrace();
-					}
-				} // end for
-
-				return new ResultVo(200, "success");
+		scheduledTaskService.crawlNewSecondHandRespToDB();
+		return new ResultVo(200, "success");
 	}
 
+	@GetMapping("/secondhand/house/{houseUniqueId}")
+	public ResultVo<EstateSecondHandHouse> getSecondHandHouseInfo(@PathVariable String houseUniqueId) {
+		return new ResultVo(200, estateService.getSecondHandHouse(houseUniqueId));
+	}
+	@GetMapping("/secondhand/price/{houseUniqueId}")
+	public ResultVo<EstateSecondHandPrice> getSecondHandPriceInfo(@PathVariable String houseUniqueId) {
+		return new ResultVo(200, estateService.getSecondHandPrice(houseUniqueId));
+	}
 	/**
 	 * 分析抓取的数据，同步到对应table
 	 * @return
@@ -128,35 +111,22 @@ public class EstateController {
 
 		// tip: lambda expression
 		Callable<ResultVo> callable = () -> {
-			List<EstateSecondHandListing> all = estateService.getAllSecondHandListing();
-			for (EstateSecondHandListing one:all) {
-				estateService.syncListingToOtherTables(one);
-			}
+			scheduledTaskService.syncLatestListingsToOtherTables();
 			return new ResultVo(200, "success");
 		};
 
-		// 模拟开启一个异步任务，超时时间为10s
-		WebAsyncTask<ResultVo> asyncTask = new WebAsyncTask<>(callable);
-
+		// 开启一个异步任务
+		WebAsyncTask<ResultVo> asyncTask = new WebAsyncTask<>(8*60*60*1000, callable);
+		log.info("asyncTask timeout:" + asyncTask.getTimeout());
 		// 任务执行完成时调用该方法
 		asyncTask.onCompletion(() -> log.info("任务执行完成"));
 		asyncTask.onError(() -> {
 			log.info("任务执行异常");
 			return new ResultVo(400, "failed");
 		});
+		asyncTask.onTimeout(() -> new ResultVo(400, "async task timeout!"));
 
-		return new WebAsyncTask<>(callable);
+		return asyncTask;
 	}
 
-//	private void writeDataToFile(String jsonStr) throws IOException {
-//		//文件目录
-//		Path rootLocation = Paths.get("folder")
-//		if(Files.notExists(rootLocation)){
-//			Files.createDirectories(rootLocation);
-//		}
-//		//data.json是文件
-//		Path path = rootLocation.resolve("data.json");
-//		byte[] strToBytes = jsonStr.getBytes();
-//		Files.write(path, strToBytes);
-//	}
 }

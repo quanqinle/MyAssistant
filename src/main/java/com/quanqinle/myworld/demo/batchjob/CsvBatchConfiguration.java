@@ -37,10 +37,17 @@ import javax.sql.DataSource;
  */
 @Configuration
 @EnableBatchProcessing
-public class CsvBatchConfig {
-	Logger logger = LoggerFactory.getLogger(CsvBatchConfig.class);
+public class CsvBatchConfiguration {
+	Logger logger = LoggerFactory.getLogger(CsvBatchConfiguration.class);
 
-//	@Bean // 参数由Spring自动注入
+	/**
+	 * 参数由Spring自动注入
+	 * @param dataSource
+	 * @param transactionManager
+	 * @return
+	 * @throws Exception
+	 */
+	@Bean
 	public JobRepository jobRepository(DataSource dataSource, PlatformTransactionManager transactionManager) throws Exception {
 
 		logger.info("start-->JobRepository");
@@ -52,13 +59,15 @@ public class CsvBatchConfig {
 		return jobRepositoryFactoryBean.getObject();
 	}
 
-//	@Bean
+	@Bean
 	public JobLauncher jobLauncher(JobRepository jobRepository) {
 		logger.info("start-->JobLauncher");
 		SimpleJobLauncher jobLauncher = new SimpleJobLauncher();
 		jobLauncher.setJobRepository(jobRepository);
 		return jobLauncher;
 	}
+
+	// tag::readerwriterprocessor[]
 
 	@Bean
 	public ItemReader<CsvPerson> csvItemReader() {
@@ -97,7 +106,6 @@ public class CsvBatchConfig {
 		// 自定义的processor
 		CsvItemProcessor processor = new CsvItemProcessor();
 		// 因自定义processor的缘故，校验器是必须的，否则app无法启动
-//		processor.setValidator(new CsvBeanValidator());
 		processor.setValidator(csvBeanValidator());
 		return processor;
 /*
@@ -117,6 +125,9 @@ public class CsvBatchConfig {
 		itemWriter.setEntityManagerFactory(entityManagerFactory);
 		return itemWriter;
 	}
+	// end::readerwriterprocessor[]
+
+	// tag::jobstep[]
 
 	@Bean
 	public Step step1(StepBuilderFactory stepBuilderFactory,
@@ -145,6 +156,7 @@ public class CsvBatchConfig {
 //				.listener(new CsvJobListener())
 				.listener(csvJobListener())
 				.build();
+		// end::jobstep[]
 	}
 
 	@Bean

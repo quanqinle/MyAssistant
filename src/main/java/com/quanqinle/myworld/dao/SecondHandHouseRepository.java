@@ -9,5 +9,10 @@ import org.springframework.data.jpa.repository.JpaRepository;
  */
 public interface SecondHandHouseRepository  extends JpaRepository<EstateSecondHandHouse, Integer> {
 
+	/**
+	 * 根据房屋唯一编码获取房屋信息
+	 * @param houseUniqueId
+	 * @return
+	 */
 	EstateSecondHandHouse findByHouseUniqueId(String houseUniqueId);
 }

@@ -11,7 +11,7 @@ import org.springframework.batch.item.validator.ValidationException;
 public class CsvItemProcessor extends ValidatingItemProcessor<CsvPerson> {
 	@Override
 	public CsvPerson process(CsvPerson item) throws ValidationException {
-		// 需要此才会调用自定义校验器
+		// 需要有此句才会调用自定义校验器
 		super.process(item);
 
 		String hanNation = "汉族";
