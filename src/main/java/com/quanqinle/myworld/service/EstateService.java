@@ -73,10 +73,16 @@ public interface EstateService {
 	List<EstateSecondHandPrice> getSecondHandPrice(String houseUniqueId);
 
 	/**
-	 * 将二手房挂牌信息表中的内容同步到其他表
+	 * 将二手房挂牌信息表中的内容同步到二手房屋信息表
 	 * @param one
 	 * @return
 	 */
-	boolean syncListingToOtherTables(EstateSecondHandListing one);
+	boolean syncListingToHouseTable(EstateSecondHandListing one);
+	/**
+	 * 将二手房挂牌信息表中的内容同步到挂牌价格表
+	 * @param one
+	 * @return
+	 */
+	boolean syncListingToPriceTable(EstateSecondHandListing one);
 
 }

@@ -86,13 +86,12 @@ public class EstateServiceImpl implements EstateService {
 	}
 
 	@Override
-	public boolean syncListingToOtherTables(@NotNull EstateSecondHandListing one) {
+	@Transactional(noRollbackFor = {Exception.class})
+	public boolean syncListingToHouseTable(@NotNull EstateSecondHandListing one) {
 
 		String houseUniqueId = one.getFwtybh();
-		String listingId = one.getGpid();
 
 		EstateSecondHandHouse house = new EstateSecondHandHouse();
-		EstateSecondHandPrice price = new EstateSecondHandPrice();
 
 		if (secondHandHouseRepository.findByHouseUniqueId(houseUniqueId) != null) {
 			log.info("house [" + houseUniqueId + "] is existed.");
@@ -108,6 +107,19 @@ public class EstateServiceImpl implements EstateService {
 			log.info("save house:" + house);
 			secondHandHouseRepository.saveAndFlush(house);
 		}
+
+		return true;
+	}
+
+	@Override
+	@Transactional(noRollbackFor = {Exception.class})
+	public boolean syncListingToPriceTable(@NotNull EstateSecondHandListing one) {
+
+		String houseUniqueId = one.getFwtybh();
+		String listingId = one.getGpid();
+
+		EstateSecondHandPrice price = new EstateSecondHandPrice();
+
 		if (secondHandPriceRepository.findByHouseUniqueIdAndListingId(houseUniqueId,listingId) != null) {
 			log.info("price [" + listingId + "] is existed.");
 		} else {
@@ -127,6 +139,6 @@ public class EstateServiceImpl implements EstateService {
 			secondHandPriceRepository.saveAndFlush(price);
 		}
 
-		return false;
+		return true;
 	}
 }

@@ -104,13 +104,13 @@ public class ScheduledTaskServiceImpl implements ScheduledTaskService {
 		List<EstateSecondHandListing> all1 = estateService.getAllNotInHouseTable();
 		log.info("待同步house表数据条数：" + all1.size());
 		for (EstateSecondHandListing one: all1) {
-			estateService.syncListingToOtherTables(one);
+			estateService.syncListingToHouseTable(one);
 		}
 
 		List<EstateSecondHandListing> all2 = estateService.getAllNotInPriceTable();
 		log.info("待同步price表数据条数：" + all2.size());
 		for (EstateSecondHandListing one: all2) {
-			estateService.syncListingToOtherTables(one);
+			estateService.syncListingToPriceTable(one);
 		}
 
 		log.info("定时任务syncLatestListingsToOtherTables()结束：" + dateFormat.format(new Date()));
