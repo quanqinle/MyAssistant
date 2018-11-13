@@ -90,8 +90,8 @@ public class EstateController {
 
 	@GetMapping("/secondhand/savenew")
 	public ResultVo<String> saveAllListingsInfoToDB(){
-		scheduledTaskService.crawlNewSecondHandRespToDB();
-		return new ResultVo(200, "success");
+		long count = scheduledTaskService.crawlNewSecondHandRespToDB();
+		return new ResultVo(200, "success", "更新 " + count + " 条");
 	}
 
 	@GetMapping("/secondhand/house/{houseUniqueId}")

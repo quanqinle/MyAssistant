@@ -111,7 +111,6 @@ public class ErrorController extends AbstractErrorController {
 
 	@Override
 	public String getErrorPath() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 

@@ -32,9 +32,11 @@ public interface SecondHandListingRepository extends JpaRepository<EstateSecondH
 	List<EstateSecondHandListing> findAllNotInHouseTable();
 	/**
 	 * 查找未同步到 数据库表{price} 中的数据
+	 * 注：实测下面两个sql功能一样，not in的性能好
 	 * @return
 	 */
-	@Query(value="select t.* from estate_secondhand_listing t where not EXISTS (select 1 from estate_secondhand_price h where h.house_unique_id=t.fwtybh and h.listing_id=t.scgpshsj)", nativeQuery = true)
+//	@Query(value="select t.* from estate_secondhand_listing t where not EXISTS (select 1 from estate_secondhand_price p where p.house_unique_id=t.fwtybh and p.listing_id=t.gpid)", nativeQuery = true)
+	@Query(value="select t.* from estate_secondhand_listing t where t.gpid not in (select p.listing_id from estate_secondhand_price p)", nativeQuery = true)
 	List<EstateSecondHandListing> findAllNotInPriceTable();
 
 }
