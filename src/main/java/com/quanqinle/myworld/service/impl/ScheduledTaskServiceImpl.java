@@ -52,9 +52,9 @@ public class ScheduledTaskServiceImpl implements ScheduledTaskService {
 		int idxEnd = 10000;
 		boolean bEnd = false;
 
-		EstateSecondHandListing listing = estateService.getLatestOne();
-		String listingTime = listing.getScgpshsj();
-		String uniqueHouseId = listing.getFwtybh();
+		EstateSecondHandListing latestListing = estateService.getLatestOne();
+		String listingTime = latestListing.getScgpshsj();
+		String uniqueHouseId = latestListing.getFwtybh();
 
 		RestTemplate restClient = restTemplateBuilder.build();
 		String uri = remoteBase + "/webty/WxAction_getGpxxSelectList.jspx?page=";
@@ -72,7 +72,6 @@ public class ScheduledTaskServiceImpl implements ScheduledTaskService {
 				EstateSecondHandResp resp = mapper.readValue(jsonStr, EstateSecondHandResp.class);
 				boolean isOver = resp.isIsover();
 				List<EstateSecondHandListing> nodeList = resp.getList();
-//				log.info(nodeList);
 				log.info("isOver = " + isOver);
 
 				// 如果一条失败，整个saveall都会丢失。还是一条条存更保险
@@ -81,6 +80,16 @@ public class ScheduledTaskServiceImpl implements ScheduledTaskService {
 				for (EstateSecondHandListing node: nodeList) {
 					if (uniqueHouseId.equals(node.getFwtybh()) || listingTime.compareTo(node.getScgpshsj()) > 0) {
 						bEnd = true;
+					}
+					EstateSecondHandListing listing = estateService.getSecondHandListingByGpid(node.getGpid());
+					if (listing != null) {
+						node.setId(listing.getId());
+						if (node.equals(listing)) {
+							continue;
+						}
+						log.info("update listing:" + node);
+					} else {
+						log.info("save listing:" + node);
 					}
 					estateService.saveSecondHandListing(node);
 					count ++;

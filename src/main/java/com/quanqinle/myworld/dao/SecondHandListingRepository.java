@@ -11,12 +11,13 @@ import java.util.List;
  * @author quanql
  */
 public interface SecondHandListingRepository extends JpaRepository<EstateSecondHandListing, Integer> {
+
 	/**
-	 * 根据唯一挂牌编号获取二手挂牌信息
-	 * @param fwtybh
+	 * 根据挂牌id获取二手挂牌信息
+	 * @param gpid
 	 * @return
 	 */
-	List<EstateSecondHandListing> findByFwtybh(String fwtybh);
+	EstateSecondHandListing findByGpid(String gpid);
 
 	/**
 	 * 获取上次爬取的最新一条记录

@@ -34,11 +34,11 @@ public interface EstateService {
 	List<EstateSecondHandListing> getAllSecondHandListing();
 
 	/**
-	 * 根据唯一挂牌编号获取二手挂牌信息
-	 * @param fwtybh
+	 * 根据挂牌id获取二手挂牌信息
+	 * @param gpid
 	 * @return
 	 */
-	List<EstateSecondHandListing> getSecondHandListing(String fwtybh);
+	EstateSecondHandListing getSecondHandListingByGpid(String gpid);
 
 	/**
 	 * 查找存在于挂牌信息表，但不存在于二手房屋表中的数据

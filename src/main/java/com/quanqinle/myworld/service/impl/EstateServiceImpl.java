@@ -56,8 +56,8 @@ public class EstateServiceImpl implements EstateService {
 	}
 
 	@Override
-	public List<EstateSecondHandListing> getSecondHandListing(String fwtybh) {
-		return secondHandListingRepository.findByFwtybh(fwtybh);
+	public EstateSecondHandListing getSecondHandListingByGpid(String gpid) {
+		return secondHandListingRepository.findByGpid(gpid);
 	}
 
 	@Override

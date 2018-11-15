@@ -210,7 +210,8 @@ CREATE TABLE estate_community (
   id int(11) NOT NULL AUTO_INCREMENT,
   xqid varchar(10) NOT NULL COMMENT '小区id',
   xqmc varchar(50) NOT NULL COMMENT '小区名称',
-  PRIMARY KEY (id)
+  CONSTRAINT pk_community PRIMARY KEY (id),
+  CONSTRAINT uc_community UNIQUE (xqid)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COMMENT='房产-小区信息';
 
 -- ----------------------------
@@ -269,7 +270,8 @@ CREATE TABLE estate_secondhand_listing (
   xzqh varchar(10) DEFAULT NULL COMMENT '行政区划id',
   xzqhname varchar(10) DEFAULT NULL COMMENT '行政区划名称',
   zzcs varchar(10) DEFAULT NULL COMMENT '住宅层数？',
-  PRIMARY KEY (id)
+  CONSTRAINT pk_listing PRIMARY KEY (id),
+  CONSTRAINT uc_listing UNIQUE (fwtybh, gpid)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COMMENT='房产-二手房挂牌信息';
 
 -- ----------------------------
