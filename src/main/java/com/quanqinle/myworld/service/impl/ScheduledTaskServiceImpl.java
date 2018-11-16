@@ -40,6 +40,7 @@ public class ScheduledTaskServiceImpl implements ScheduledTaskService {
 
 	/**
 	 * 每日凌晨自动从ZF官网获取最新二手房信息
+	 * @return 更新记录条数
 	 */
 	@Scheduled(cron = "0 0 0 * * * ")
 	@Override
@@ -105,11 +106,29 @@ public class ScheduledTaskServiceImpl implements ScheduledTaskService {
 
 		log.info("定时任务crawlNewSecondHandRespToDB()结束：" + dateFormat.format(new Date()));
 		log.info("定时任务crawlNewSecondHandRespToDB()耗时：" + (System.currentTimeMillis() - time));
+		log.info("更新条数：" + count);
 		return count;
 	}
 
 	@Override
 	public void syncLatestListingsToOtherTables() {
+		log.info("定时任务syncLatestListingsToOtherTables()启动：" + dateFormat.format(new Date()));
+		long time = System.currentTimeMillis();
+
+		List<EstateSecondHandListing> all1 = estateService.getAllNotInHouseTable();
+		log.info("待同步house表数据条数：" + all1.size());
+		estateService.insertHouseTblFromListing();
+
+		List<EstateSecondHandListing> all2 = estateService.getAllNotInPriceTable();
+		log.info("待同步price表数据条数：" + all2.size());
+		estateService.insertPriceTblFromListing();
+
+		log.info("定时任务syncLatestListingsToOtherTables()结束：" + dateFormat.format(new Date()));
+		log.info("定时任务syncLatestListingsToOtherTables()耗时：" + (System.currentTimeMillis() - time));
+	}
+
+	@Override
+	public void syncLatestListingsToOtherTables_2() {
 		log.info("定时任务syncLatestListingsToOtherTables()启动：" + dateFormat.format(new Date()));
 		long time = System.currentTimeMillis();
 
@@ -128,5 +147,4 @@ public class ScheduledTaskServiceImpl implements ScheduledTaskService {
 		log.info("定时任务syncLatestListingsToOtherTables()结束：" + dateFormat.format(new Date()));
 		log.info("定时任务syncLatestListingsToOtherTables()耗时：" + (System.currentTimeMillis() - time));
 	}
-
 }

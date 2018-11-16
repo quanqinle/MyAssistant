@@ -91,19 +91,10 @@ public class EstateServiceImpl implements EstateService {
 
 		String houseUniqueId = one.getFwtybh();
 
-		EstateSecondHandHouse house = new EstateSecondHandHouse();
-
 		if (secondHandHouseRepository.findByHouseUniqueId(houseUniqueId) != null) {
 			log.info("house [" + houseUniqueId + "] is existed.");
 		} else {
-			house.setHouseUniqueId(one.getFwtybh());
-			house.setCoveredArea(one.getJzmj());
-			house.setDistrict(one.getCqmc());
-			house.setHousePropertyOwnershipCertificate(one.getFczsh());
-			house.setCommunityId(one.getXqid());
-			house.setCommunityName(one.getXqmc());
-			house.setCityCode(one.getXzqh());
-			house.setCityName(one.getXzqhname());
+			EstateSecondHandHouse house = new EstateSecondHandHouse(one);
 			log.info("save house:" + house);
 			secondHandHouseRepository.saveAndFlush(house);
 		}
@@ -118,27 +109,41 @@ public class EstateServiceImpl implements EstateService {
 		String houseUniqueId = one.getFwtybh();
 		String listingId = one.getGpid();
 
-		EstateSecondHandPrice price = new EstateSecondHandPrice();
-
 		if (secondHandPriceRepository.findByHouseUniqueIdAndListingId(houseUniqueId,listingId) != null) {
 			log.info("price [" + listingId + "] is existed.");
 		} else {
-			price.setHouseUniqueId(one.getFwtybh());
-			price.setListingId(one.getGpid());
-			price.setSalePrice(one.getWtcsjg());
-			price.setEntrustTime(one.getCjsj());
-			price.setListingHouseId(one.getGpfyid());
-			price.setListingContactName(one.getGplxrxm());
-			price.setListingStatus(one.getGpzt());
-			price.setListingStatusValue(one.getGpztValue());
-			price.setRealEstateAgency(one.getMdmc());
-			price.setListingTime(one.getScgpshsj());
-			price.setListingUniqueId(one.getTygpbh());
-			price.setEntrustAgreementId(one.getWtxybh());
+			EstateSecondHandPrice price = new EstateSecondHandPrice(one);
 			log.info("save price:" + price);
 			secondHandPriceRepository.saveAndFlush(price);
 		}
 
 		return true;
 	}
+
+	/**
+	 * 将Listing表中新数据同步到House表，通过SQL的方式
+	 */
+	@Override
+	public void insertHouseTblFromListing() {
+		try {
+			log.info("insert into estate_secondhand_house select * from estate_secondhand_listing where fwtybh not in (select house_unique_id from estate_secondhand_house)");
+			secondHandListingRepository.insertHouseTable();
+		} catch (Exception e) {
+			log.error(e.getStackTrace());
+		}
+	}
+
+	/**
+	 * 将Listing表中新数据同步到Price表，通过SQL的方式
+	 */
+	@Override
+	public void insertPriceTblFromListing() {
+		try {
+			log.info("insert into estate_secondhand_price select * from estate_secondhand_listing where gpid not in (select listing_id from estate_secondhand_price)");
+			secondHandListingRepository.insertPriceTable();
+		} catch (Exception e) {
+			log.error(e.getStackTrace());
+		}
+	}
+
 }

@@ -53,6 +53,16 @@ public interface EstateService {
 	List<EstateSecondHandListing> getAllNotInPriceTable();
 
 	/**
+	 * 将Listing表中新数据同步到House表，通过SQL的方式
+	 */
+	void insertHouseTblFromListing();
+
+	/**
+	 * 将Listing表中新数据同步到Price表，通过SQL的方式
+	 */
+	void insertPriceTblFromListing();
+
+	/**
 	 * 获取上次抓取的最新一条挂牌信息
 	 * @return
 	 */

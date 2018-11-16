@@ -68,4 +68,22 @@ public class EstateSecondHandPrice {
 	 * 委托协议编号
 	 */
 	private String entrustAgreementId;
+
+	public EstateSecondHandPrice(EstateSecondHandListing one) {
+		if (one != null) {
+			this.setHouseUniqueId(one.getFwtybh());
+			this.setListingId(one.getGpid());
+			this.setSalePrice(one.getWtcsjg());
+			this.setEntrustTime(one.getCjsj());
+			this.setListingHouseId(one.getGpfyid());
+			this.setListingContactName(one.getGplxrxm());
+			this.setListingStatus(one.getGpzt());
+			this.setListingStatusValue(one.getGpztValue());
+			this.setRealEstateAgency(one.getMdmc());
+			this.setListingTime(one.getScgpshsj());
+			this.setListingUniqueId(one.getTygpbh());
+			this.setEntrustAgreementId(one.getWtxybh());
+		}
+	}
+
 }

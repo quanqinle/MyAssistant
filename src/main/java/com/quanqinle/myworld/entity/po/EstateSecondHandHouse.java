@@ -53,4 +53,17 @@ public class EstateSecondHandHouse {
 	 * 行政区划名称（地区级行政区）
 	 */
 	private String cityName;
+
+	public EstateSecondHandHouse(EstateSecondHandListing one) {
+		if (one != null) {
+			this.setHouseUniqueId(one.getFwtybh());
+			this.setCoveredArea(one.getJzmj());
+			this.setDistrict(one.getCqmc());
+			this.setHousePropertyOwnershipCertificate(one.getFczsh());
+			this.setCommunityId(one.getXqid());
+			this.setCommunityName(one.getXqmc());
+			this.setCityCode(one.getXzqh());
+			this.setCityName(one.getXzqhname());
+		}
+	}
 }

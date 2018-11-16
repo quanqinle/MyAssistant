@@ -88,6 +88,10 @@ public class EstateController {
 		return new ResultVo(200, estateService.saveCommunities(communities));
 	}
 
+	/**
+	 * 从ZF官网抓取最新二手房信息
+	 * @return
+	 */
 	@GetMapping("/secondhand/savenew")
 	public ResultVo<String> saveAllListingsInfoToDB(){
 		long count = scheduledTaskService.crawlNewSecondHandRespToDB();
