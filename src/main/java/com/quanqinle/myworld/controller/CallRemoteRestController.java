@@ -2,6 +2,7 @@ package com.quanqinle.myworld.controller;
 
 import com.quanqinle.myworld.entity.po.TaxRate;
 import com.quanqinle.myworld.entity.User;
+import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.web.client.RestTemplateBuilder;
@@ -21,6 +22,7 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/remote")
+@Api(value = "CallRemoteRestController", description = "调用远程API的示例")
 public class CallRemoteRestController {
 
 	@Value(value = "${api.remote}")

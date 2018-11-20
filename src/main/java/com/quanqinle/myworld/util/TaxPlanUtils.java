@@ -32,7 +32,7 @@ public class TaxPlanUtils {
 	}
 
 	/**
-	 * 个税门槛（适用于中国籍员工）
+	 * 个税门槛（适用于居民、非居民）
 	 * 2018.10.1之前3500
 	 */
 	private static double TAX_THRESHOLD = 5000;

@@ -9,6 +9,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import io.swagger.annotations.Api;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +25,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
  * @author quanqinle
  */
 @Controller
+@Api(value = "ErrorController", description = "Error")
 public class ErrorController extends AbstractErrorController {
 
 	private static final String ERROR_PATH = "/error";

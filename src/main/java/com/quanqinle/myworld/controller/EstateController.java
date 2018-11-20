@@ -4,12 +4,12 @@ import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.quanqinle.myworld.entity.po.EstateCommunity;
 import com.quanqinle.myworld.entity.po.EstateSecondHandHouse;
-import com.quanqinle.myworld.entity.po.EstateSecondHandListing;
 import com.quanqinle.myworld.entity.po.EstateSecondHandPrice;
-import com.quanqinle.myworld.entity.vo.EstateSecondHandResp;
 import com.quanqinle.myworld.entity.vo.ResultVo;
 import com.quanqinle.myworld.service.EstateService;
 import com.quanqinle.myworld.service.ScheduledTaskService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,6 +35,7 @@ import java.util.concurrent.Callable;
  */
 @RestController
 @RequestMapping("/estate")
+@Api(value = "EstateController", description = "房地产")
 public class EstateController {
 	Log log = LogFactory.getLog(EstateController.class);
 
@@ -68,7 +69,13 @@ public class EstateController {
 		return new ResultVo(200, "end");
 	}
 
+	/**
+	 * 从ZF网站抓取所有杭州社区信息，存入DB
+	 * @return
+	 * @throws Exception
+	 */
 	@GetMapping("/community/saveall")
+	@ApiOperation(value = "抓取社区信息to DB", notes = "从ZF网站抓取所有杭州社区信息，存入DB（注：这里可以写更详细的api信息）")
 	public ResultVo<List<EstateCommunity>> saveCommunitiesToDB() throws Exception{
 		RestTemplate restClient = restTemplateBuilder.build();
 		String uri = remoteBase + "/upload/webty/index_search_communitylist.js";
@@ -89,20 +96,24 @@ public class EstateController {
 	}
 
 	/**
-	 * 从ZF官网抓取最新二手房信息
+	 * 从ZF官网抓取最新二手房信息，存入DB
 	 * @return
 	 */
 	@GetMapping("/secondhand/savenew")
+	@ApiOperation(value = "抓取二手房信息to DB")
 	public ResultVo<String> saveAllListingsInfoToDB(){
 		long count = scheduledTaskService.crawlNewSecondHandRespToDB();
 		return new ResultVo(200, "success", "更新 " + count + " 条");
 	}
 
 	@GetMapping("/secondhand/house/{houseUniqueId}")
+	@ApiOperation(value = "获取二手房基本信息")
 	public ResultVo<EstateSecondHandHouse> getSecondHandHouseInfo(@PathVariable String houseUniqueId) {
 		return new ResultVo(200, estateService.getSecondHandHouse(houseUniqueId));
 	}
+
 	@GetMapping("/secondhand/price/{houseUniqueId}")
+	@ApiOperation(value = "获取二手房价格信息")
 	public ResultVo<EstateSecondHandPrice> getSecondHandPriceInfo(@PathVariable String houseUniqueId) {
 		return new ResultVo(200, estateService.getSecondHandPrice(houseUniqueId));
 	}
@@ -111,6 +122,7 @@ public class EstateController {
 	 * @return
 	 */
 	@GetMapping("/secondhand/sync")
+	@ApiOperation(value = "同步二手房信息到其他表")
 	public WebAsyncTask<ResultVo> syncListingsToOtherTables(){
 
 		// tip: lambda expression

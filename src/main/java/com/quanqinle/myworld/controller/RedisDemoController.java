@@ -1,5 +1,6 @@
 package com.quanqinle.myworld.controller;
 
+import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.BoundListOperations;
 import org.springframework.data.redis.core.StringRedisTemplate;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
  */
 @Controller
 @RequestMapping("/redis")
+@Api(value = "RedisDemoController", description = "Redis的示例")
 public class RedisDemoController {
 
 	@Autowired

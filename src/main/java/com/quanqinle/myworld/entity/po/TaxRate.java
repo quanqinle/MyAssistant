@@ -1,5 +1,8 @@
 package com.quanqinle.myworld.entity.po;
 
+import io.swagger.annotations.ApiModelProperty;
+import lombok.Data;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -14,27 +17,49 @@ import javax.persistence.Id;
  * field(rangeHighest) --> DB(range_highest)
  */
 @Entity
+@Data
 public class TaxRate {
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int id;
-
-	private double rate;
-
-	private double rangeLowest;
-
-	private double rangeHighest;
-
-	private double quickDeduction;
-
-	private int status;
-
-	private String effectiveDate;
 
 	public TaxRate() { //jpa必须的
 		// no-args constructor required by JPA spec
 		// this one is protected since it shouldn't be used directly
 	}
+	
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@ApiModelProperty(value = "ID")
+	private int id;
+	/**
+	 * 税率
+	 */
+	@ApiModelProperty(value = "税率")
+	private double rate;
+	/**
+	 * 左区间
+	 */
+	@ApiModelProperty(value = "左区间")
+	private double rangeLowest;
+	/**
+	 * 右区间
+	 */
+	@ApiModelProperty(value = "右区间")
+	private double rangeHighest;
+	/**
+	 * 速算扣除数
+	 */
+	@ApiModelProperty(value = "速算扣除数")
+	private double quickDeduction;
+	/**
+	 * 状态
+	 */
+	@ApiModelProperty(value = "状态")
+	private int status;
+	/**
+	 * 生效日期
+	 */
+	@ApiModelProperty(value = "生效日期")
+	private String effectiveDate;
+
 
 	public TaxRate(double rangeLowest, double rangeHighest, double rate, double quickDeduction) {
 		this.rate = rate;
@@ -46,62 +71,6 @@ public class TaxRate {
 	public TaxRate(int id, double rangeLowest, double rangeHighest, double rate, double quickDeduction) {
 		this(rangeLowest, rangeHighest, rate, quickDeduction);
 		this.id = id;
-	}
-
-	public int getId() {
-		return id;
-	}
-
-	public void setId(int id) {
-		this.id = id;
-	}
-
-	public double getRate() {
-		return rate;
-	}
-
-	public void setRate(double rate) {
-		this.rate = rate;
-	}
-
-	public double getRangeLowest() {
-		return rangeLowest;
-	}
-
-	public void setRangeLowest(double rangeLowest) {
-		this.rangeLowest = rangeLowest;
-	}
-
-	public double getRangeHighest() {
-		return rangeHighest;
-	}
-
-	public void setRangeHighest(double rangeHighest) {
-		this.rangeHighest = rangeHighest;
-	}
-
-	public double getQuickDeduction() {
-		return quickDeduction;
-	}
-
-	public void setQuickDeduction(double quickDeduction) {
-		this.quickDeduction = quickDeduction;
-	}
-
-	public int getStatus() {
-		return status;
-	}
-
-	public void setStatus(int status) {
-		this.status = status;
-	}
-
-	public String getEffectiveDate() {
-		return effectiveDate;
-	}
-
-	public void setEffectiveDate(String effectiveDate) {
-		this.effectiveDate = effectiveDate;
 	}
 
 	/**
@@ -117,16 +86,5 @@ public class TaxRate {
 		return false;
 	}
 
-	@Override
-	public String toString() {
-		return "TaxRate{" +
-				"id=" + id +
-				", rate=" + rate +
-				", rangeLowest=" + rangeLowest +
-				", rangeHighest=" + rangeHighest +
-				", quickDeduction=" + quickDeduction +
-				", status=" + status +
-				", effectiveDate=" + effectiveDate +
-				'}';
-	}
+
 }

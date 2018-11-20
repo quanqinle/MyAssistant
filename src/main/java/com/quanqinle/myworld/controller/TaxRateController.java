@@ -5,6 +5,8 @@ import com.quanqinle.myworld.entity.vo.ResultVo;
 import com.quanqinle.myworld.entity.vo.TaxPlan;
 import com.quanqinle.myworld.service.TaxRateService;
 import com.quanqinle.myworld.util.TaxPlanUtils;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +23,7 @@ import java.util.List;
  */
 @Controller
 @RequestMapping("/tax")
+@Api(value = "TaxRateController", description = "个人所得税")
 public class TaxRateController {
 	Log log = LogFactory.getLog(TaxRateController.class);
 
@@ -49,6 +52,7 @@ public class TaxRateController {
 
 	@GetMapping("/list.json")
 	@ResponseBody
+	@ApiOperation(value = "获取个税税率表")
 	public ResultVo<List<TaxRate>> allRate() {
 		List<TaxRate> list =  taxRateService.getTaxRateTable();
 		return new ResultVo(200, list);
@@ -86,6 +90,7 @@ public class TaxRateController {
 
 	@GetMapping("/income/{income}")
 	@ResponseBody
+	@ApiOperation(value = "查询收入对应的税率")
 	public TaxRate getRateByIncome(@PathVariable double income) {
 		double taxableSalary = TaxPlanUtils.calcTaxableSalary(income);
 		return taxRateService.getTaxRateByRange(taxableSalary);
