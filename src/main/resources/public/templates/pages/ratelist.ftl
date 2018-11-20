@@ -15,6 +15,7 @@
 			color: white;
 			text-align: center;
 		}
+
 		td {
 			text-align: right;
 		}
@@ -29,29 +30,30 @@
 <div class="container">
 	<h2>个人所得税税率</h2>
 	<table class="table table-bordered table-hover">
-		<tr>
-			<th>Id</th>
-			<th>税率</th>
-			<th>区间<=</th>
-			<th>区间<</th>
-			<th>速算数</th>
-		</tr>
+        <tr>
+	        <th>ID</th>
+	        <th>税率(%)</th>
+	        <th>应纳税所得额（含税）</th>
+	        <th>速算数</th>
+        </tr>
     <#list ratelist as rateobj>
     <tr>
 	    <td style="text-align: center">${rateobj.id}</td>
-	    <td>${rateobj.rate}</td>
-	    <td>${rateobj.rangeLowest}</td>
-	    <td>
+        <td>${rateobj.rate * 100}</td>
+	    <td style="text-align: center">
             <#if rateobj.rangeHighest == -1>
-	            max
+	            超过 ${rateobj.rangeLowest} 的部分
+            <#elseif rateobj.rangeLowest == 0>
+                不超过 ${rateobj.rangeHighest} 的部分
             <#else>
-                ${rateobj.rangeHighest}
+                超过 ${rateobj.rangeLowest} ～ ${rateobj.rangeHighest} 元的部分
             </#if>
 	    </td>
 	    <td>${rateobj.quickDeduction}</td>
     </tr>
     </#list>
 	</table>
+	<p>月应纳个税 = 月应纳税所得额 × 税率 - 速算扣除数</p>
 </div>
 </body>
 </html>
