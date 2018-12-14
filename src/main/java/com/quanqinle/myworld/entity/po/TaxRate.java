@@ -24,7 +24,7 @@ public class TaxRate {
 		// no-args constructor required by JPA spec
 		// this one is protected since it shouldn't be used directly
 	}
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@ApiModelProperty(value = "ID")

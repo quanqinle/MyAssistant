@@ -56,8 +56,8 @@ public interface SecondHandListingRepository extends JpaRepository<EstateSecondH
 	 */
 	@Modifying
 	@Query(nativeQuery = true, value = "insert INTO estate_secondhand_price \n" +
-			"(house_unique_id, sale_price, entrust_time, listing_house_id, listing_id, listing_contact_name, listing_status, listing_status_value, real_estate_agency, listing_time, listing_unique_id, entrust_agreement_id) \n" +
-			"select fwtybh, wtcsjg, cjsj, gpfyid, gpid, gplxrxm, gpzt, gpztValue, mdmc, scgpshsj, tygpbh, wtxybh \n" +
+			"(house_unique_id, sale_price, per_square_meter_price, entrust_time, listing_house_id, listing_id, listing_contact_name, listing_status, listing_status_value, real_estate_agency, listing_time, listing_unique_id, entrust_agreement_id) \n" +
+			"select fwtybh, wtcsjg, ROUND(wtcsjg/jzmj, 4), cjsj, gpfyid, gpid, gplxrxm, gpzt, gpztValue, mdmc, scgpshsj, tygpbh, wtxybh \n" +
 			"from estate_secondhand_listing where gpid not in (select p.listing_id from estate_secondhand_price p)")
 	void insertPriceTable();
 }

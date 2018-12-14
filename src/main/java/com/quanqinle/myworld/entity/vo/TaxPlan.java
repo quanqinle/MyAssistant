@@ -2,50 +2,62 @@ package com.quanqinle.myworld.entity.vo;
 
 import com.quanqinle.myworld.entity.po.TaxRate;
 import com.quanqinle.myworld.util.DoubleUtils;
+import io.swagger.annotations.ApiModelProperty;
+import lombok.Data;
 
 /**
  * 税收筹划结果
  *
- * @author quanql
+ * @author quanqinle
  *
  */
+@Data
 public class TaxPlan implements Cloneable {
 	/**
 	 * 总月薪。税前，但已扣五险一金
 	 */
+	@ApiModelProperty(value = "税前总月薪")
 	private double preTaxSalary;
 	/**
 	 * 年终奖。税前
 	 */
+	@ApiModelProperty(value = "税前年终奖")
 	private double preTaxBonus;
 	/**
 	 * 税前月薪中应纳税部分。月薪应纳税额=总月薪-个税起征点
 	 */
+	@ApiModelProperty(value = "税前月薪中应纳税部分")
 	private double taxableSalary;
 	/**
 	 * 税前年终奖中应纳税部分。<BR>
 	 * 当发年终奖当月的月薪低于个税起征点时，年终奖中有部分免税
 	 */
+	@ApiModelProperty(value = "税前年终奖中应纳税部分")
 	private double taxableBonus;
 	/**
 	 * 月薪税率
 	 */
+	@ApiModelProperty(value = "月薪税率")
 	private TaxRate salaryTaxRate;
 	/**
 	 * 年终奖税率
 	 */
+	@ApiModelProperty(value = "年终奖税率")
 	private TaxRate bonusTaxRate;
 	/**
 	 * 月薪纳税额
 	 */
+	@ApiModelProperty(value = "月薪纳税额")
 	private double salaryTaxes;
 	/**
 	 * 年终奖纳税额 Year-End Bonus
 	 */
+	@ApiModelProperty(value = "年终奖纳税额")
 	private double bonusTaxes;
 	/**
 	 * 年总纳税额
 	 */
+	@ApiModelProperty(value = "年总纳税额")
 	private double totalTaxes;
 
 	/**
@@ -65,153 +77,7 @@ public class TaxPlan implements Cloneable {
 		this.preTaxBonus = preTaxBonus;
 	}
 
-	/**
-	 * @return the preTaxSalary
-	 */
-	public double getPreTaxSalary() {
-		return preTaxSalary;
-	}
 
-	/**
-	 * @param preTaxSalary
-	 *            the preTaxSalary to set
-	 */
-	public void setPreTaxSalary(double preTaxSalary) {
-		this.preTaxSalary = preTaxSalary;
-	}
-
-	/**
-	 * @return the preTaxBonus
-	 */
-	public double getPreTaxBonus() {
-		return preTaxBonus;
-	}
-
-	/**
-	 * @param preTaxBonus
-	 *            the preTaxBonus to set
-	 */
-	public void setPreTaxBonus(double preTaxBonus) {
-		this.preTaxBonus = preTaxBonus;
-	}
-
-	/**
-	 * @return the taxableSalary
-	 */
-	public double getTaxableSalary() {
-		return taxableSalary;
-	}
-
-	/**
-	 * @param taxableSalary
-	 *            the taxableSalary to set
-	 */
-	public void setTaxableSalary(double taxableSalary) {
-		this.taxableSalary = taxableSalary;
-	}
-
-	/**
-	 * @return the taxableBonus
-	 */
-	public double getTaxableBonus() {
-		return taxableBonus;
-	}
-
-	/**
-	 * @param taxableBonus
-	 *            the taxableBonus to set
-	 */
-	public void setTaxableBonus(double taxableBonus) {
-		this.taxableBonus = taxableBonus;
-	}
-
-	/**
-	 * @return the salaryTaxRate
-	 */
-	public TaxRate getSalaryTaxRate() {
-		return salaryTaxRate;
-	}
-
-	/**
-	 * @param salaryTaxRate
-	 *            the salaryTaxRate to set
-	 */
-	public void setSalaryTaxRate(TaxRate salaryTaxRate) {
-		this.salaryTaxRate = salaryTaxRate;
-	}
-
-	/**
-	 * @return the bonusTaxRate
-	 */
-	public TaxRate getBonusTaxRate() {
-		return bonusTaxRate;
-	}
-
-	/**
-	 * @param bonusTaxRate
-	 *            the bonusTaxRate to set
-	 */
-	public void setBonusTaxRate(TaxRate bonusTaxRate) {
-		this.bonusTaxRate = bonusTaxRate;
-	}
-
-	/**
-	 * @return the salaryTaxes
-	 */
-	public double getSalaryTaxes() {
-		return salaryTaxes;
-	}
-
-	/**
-	 * @param salaryTaxes
-	 *            the salaryTaxes to set
-	 */
-	public void setSalaryTaxes(double salaryTaxes) {
-		this.salaryTaxes = salaryTaxes;
-	}
-
-	/**
-	 * @return the bonusTaxes
-	 */
-	public double getBonusTaxes() {
-		return bonusTaxes;
-	}
-
-	/**
-	 * @param bonusTaxes
-	 *            the bonusTaxes to set
-	 */
-	public void setBonusTaxes(double bonusTaxes) {
-		this.bonusTaxes = bonusTaxes;
-	}
-
-	/**
-	 * @return the totalTaxes
-	 */
-	public double getTotalTaxes() {
-		return totalTaxes;
-	}
-
-	/**
-	 * @param totalTaxes
-	 *            the totalTaxes to set
-	 */
-	public void setTotalTaxes(double totalTaxes) {
-		this.totalTaxes = totalTaxes;
-	}
-
-	/**
-	 * (non-Javadoc)
-	 *
-	 * @see java.lang.Object#toString()
-	 */
-	@Override
-	public String toString() {
-		return "TaxPlan [preTaxSalary=" + preTaxSalary + ", preTaxBonus=" + preTaxBonus + ", taxableSalary="
-				+ taxableSalary + ", taxableBonus=" + taxableBonus + ", salaryTaxRate=" + salaryTaxRate
-				+ ", bonusTaxRate=" + bonusTaxRate + ", salaryTaxes=" + salaryTaxes + ", bonusTaxes=" + bonusTaxes
-				+ ", totalTaxes=" + totalTaxes + "]";
-	}
 
 	/**
 	 * 比较2个筹划方案{@code TaxPlan}<br>

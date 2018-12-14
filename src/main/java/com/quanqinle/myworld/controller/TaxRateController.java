@@ -43,7 +43,7 @@ public class TaxRateController {
 	 * @return
 	 */
 	@GetMapping(value = {"/calc", "/plan"})
-	public String calcTaxRate(Model model) {
+	public String showTaxCalcPage(Model model) {
 		// FIXME 据说：“在渲染页面之前，我们通过model.addAttribute("helloMessage", new HelloMessage());告诉页面绑定到一个空的HelloMessage对象，这样sayHello.html页面初始时就会显示一个空白的表单。”
 		// 实测无效，还是显示上次提交的结果
 		model.addAttribute("taxrate", new TaxRate());
@@ -96,6 +96,11 @@ public class TaxRateController {
 		return taxRateService.getTaxRateByRange(taxableSalary);
 	}
 
+	/**
+	 * just demo for the usage of environment parameter
+	 * @param userDir
+	 * @return
+	 */
 	@GetMapping("/env")
 	@ResponseBody
 	public String getEnv(@Value("${user.dir:false}") String userDir) {

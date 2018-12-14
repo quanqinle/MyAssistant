@@ -28,67 +28,40 @@ recommend sticking to 'spring' -->
 </head>
 <body>
 <div id="app" class="container">
-	<p></p>
-	<div class="panel panel-info">
-		<div class="panel-heading" data-toggle="collapse" data-parent="#accordion" href="#collapseOne"
-		     aria-expanded="true" aria-controls="collapseOne">个税计算器
-		</div>
-		<div class="panel-body panel-collapse collapse in" id="collapseOne" role="tabpanel"
-		     aria-labelledby="headingOne">
-			<fieldset>
-				<div class="col-xs-4">
-					<input type="number" min="0" step="0.01" name="income" class="form-control"
-					       placeholder="月薪（不含免税项，如五险一金）" id="income" onmouseleave="checkInput()"
-					       v-model="income" oninput="checkInput()"/>
-				</div>
-				<input type="submit" value="计算" class="btn btn-primary" id="calcBtn1st" @click="calcPrivTax"
-				       disabled/>
-			</fieldset>
-
-			<div v-if="isFirstVisible">
-				<br>
-				<p>收入：{{incomeResult}} 交税：{{taxes}}</p>
-				<table class="table table-bordered table-hover">
-					<tr>
-						<th>税率</th>
-						<th>区间</th>
-						<th>速扣数</th>
-					</tr>
-					<tr>
-						<td>{{taxRate.rate}}</td>
-						<td>[{{taxRate.rangeLowest}}, {{taxRate.rangeHighest}})</td>
-						<td>{{taxRate.quickDeduction}}</td>
-					</tr>
-				</table>
-			</div>
-		</div>
-	</div>
-
-<#--<HR>-->
 
 	<div class="panel panel-info">
 		<div class="panel-heading" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo"
-		     aria-expanded="true" aria-controls="collapseTwo">个税统筹
+		     aria-expanded="true" aria-controls="collapseTwo">二手房挂牌查询
 		</div>
 		<div class="panel-body panel-collapse collapse in" id="collapseTwo" role="tabpanel"
 		     aria-labelledby="headingTwo">
 			<div class="form-horizontal" id="tax_avoidance">
 				<div class="form-group">
-					<label for="estimatedAnnualSalary" class="col-sm-2 control-label">预估总年薪</label>
-					<div class="col-sm-10">
+					<label for="estimatedAnnualSalary" class="col-sm-2 control-label">总价</label>
+					<div class="col-sm-4">
 						<input type="number" min="0" step="0.01" class="form-control" id="estimatedAnnualSalary"
 						       name="estimatedAnnualSalary" v-model="estimatedAnnualSalary">
 					</div>
-				</div>
-				<div class="form-group">
-					<label for="alreadyPaidSalary" class="col-sm-2 control-label">已发薪酬</label>
-					<div class="col-sm-10">
+					<p class="col-sm-2">～</p>
+					<div class="col-sm-4">
 						<input type="number" min="0" step="0.01" class="form-control" id="alreadyPaidSalary"
 						       name="alreadyPaidSalary" min="1" v-model="alreadyPaidSalary">
 					</div>
 				</div>
 				<div class="form-group">
-					<label for="remainingMonths" class="col-sm-2 control-label">本年剩余月薪发放次数</label>
+					<label for="alreadyPaidSalary" class="col-sm-2 control-label">面积</label>
+					<div class="col-sm-4">
+						<input type="number" min="0" step="0.01" class="form-control" id="alreadyPaidSalary"
+						       name="alreadyPaidSalary" min="1" v-model="alreadyPaidSalary">
+					</div>
+					<p class="col-sm-2">～</p>
+					<div class="col-sm-4">
+						<input type="number" min="0" step="0.01" class="form-control" id="alreadyPaidSalary"
+						       name="alreadyPaidSalary" min="1" v-model="alreadyPaidSalary">
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="remainingMonths" class="col-sm-2 control-label">区域</label>
 					<div class="col-sm-10">
 						<input type="number" class="form-control" id="remainingMonths" name="remainingMonths"
 						       min="0" max="12" v-model="remainingMonths">
@@ -126,6 +99,8 @@ recommend sticking to 'spring' -->
 			</div>
 		</div>
 	</div>
+
+</div>
 </body>
 <script type="text/javascript">
 	new Vue({

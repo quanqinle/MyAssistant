@@ -16,10 +16,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.http.*;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.context.request.async.WebAsyncTask;
 
@@ -33,7 +33,7 @@ import java.util.concurrent.Callable;
  * 房地产
  * @author quanql
  */
-@RestController
+@Controller
 @RequestMapping("/estate")
 @Api(value = "EstateController", description = "房地产")
 public class EstateController {
@@ -51,8 +51,12 @@ public class EstateController {
 	@Autowired
 	ScheduledTaskService scheduledTaskService;
 
-	@GetMapping("/community/saveall3")
-	public ResultVo<String> saveAll3() {
+	/**
+	 * just demo for the usage of restClient
+	 * @return
+	 */
+//	@GetMapping("/community/saveall1")
+	private ResultVo<String> saveAll1() {
 		RestTemplate restClient = restTemplateBuilder.build();
 		String uri = remoteBase + "/upload/webty/index_search_communitylist.js";
 
@@ -61,9 +65,9 @@ public class EstateController {
 		headers.setHost(new InetSocketAddress(remoteBase, 80));
 		headers.set("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/69.0.3497.100 Safari/537.36");
 		String requestBody = null;
-		HttpEntity<String> requestEntity = new HttpEntity<String>(requestBody, headers);
+		HttpEntity<String> requestEntity = new HttpEntity<>(requestBody, headers);
 
-		ResponseEntity<String> respEntity = restClient.exchange(remoteBase, HttpMethod.GET, requestEntity, String.class);
+		ResponseEntity<String> respEntity = restClient.exchange(uri, HttpMethod.GET, requestEntity, String.class);
 		log.info(respEntity.getStatusCodeValue());
 		log.info(respEntity.getBody());
 		return new ResultVo(200, "end");

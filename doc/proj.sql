@@ -313,6 +313,7 @@ CREATE TABLE estate_secondhand_price (
   id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
   house_unique_id varchar(20) NOT NULL COMMENT '房源核验统一编码',
   sale_price varchar(20) NOT NULL COMMENT '委托出售价格',
+  per_square_meter_price varchar(20) DEFAULT NULL COMMENT '每平方米单价',
   listing_time varchar(20) DEFAULT NULL COMMENT '首次挂牌上市时间（政府网站公示）',
   listing_id varchar(20) NOT NULL COMMENT '挂牌id',
   listing_house_id varchar(20) DEFAULT NULL COMMENT '挂牌房屋id',

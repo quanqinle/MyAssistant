@@ -1,5 +1,6 @@
 package com.quanqinle.myworld.entity.po;
 
+import com.quanqinle.myworld.util.DoubleUtils;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -32,6 +33,10 @@ public class EstateSecondHandPrice {
 	 * 委托出售价格
 	 */
 	private String salePrice;
+	/**
+	 * 每平方米的价格
+	 */
+	private String perSquareMeterPrice;
 	/**
 	 * 委托协议创建时间
 	 */
@@ -74,6 +79,12 @@ public class EstateSecondHandPrice {
 			this.setHouseUniqueId(one.getFwtybh());
 			this.setListingId(one.getGpid());
 			this.setSalePrice(one.getWtcsjg());
+			try {
+				String price = String.valueOf(DoubleUtils.div(Double.parseDouble(one.getWtcsjg()),Double.parseDouble(one.getJzmj()), 4));
+				this.setPerSquareMeterPrice(price);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 			this.setEntrustTime(one.getCjsj());
 			this.setListingHouseId(one.getGpfyid());
 			this.setListingContactName(one.getGplxrxm());
