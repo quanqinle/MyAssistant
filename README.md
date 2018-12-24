@@ -24,6 +24,9 @@
 + 访问webui：`http://localhost:8080/swagger-ui.html`
 + 访问json：`http://localhost:8080/v2/api-docs`
 
+## 5. 前端
+### freemarker (.ftl)
+
 # 二、应用具备的业务功能
 ## 1. 个税计算、年薪统筹
 

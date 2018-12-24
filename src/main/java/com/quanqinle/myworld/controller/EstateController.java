@@ -104,7 +104,7 @@ public class EstateController {
 	 * @return
 	 */
 	@GetMapping("/secondhand/savenew")
-	@ApiOperation(value = "抓取二手房信息to DB")
+	@ApiOperation(value = "抓取最新二手房信息to DB")
 	public ResultVo<String> saveAllListingsInfoToDB(){
 		long count = scheduledTaskService.crawlNewSecondHandRespToDB();
 		return new ResultVo(200, "success", "更新 " + count + " 条");

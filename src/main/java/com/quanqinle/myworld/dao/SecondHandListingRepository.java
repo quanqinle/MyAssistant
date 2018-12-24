@@ -45,7 +45,7 @@ public interface SecondHandListingRepository extends JpaRepository<EstateSecondH
 	 * 向house表中同步数据
 	 */
 	@Modifying
-	@Query(nativeQuery = true, value = "insert INTO estate_secondhand_house \n" +
+	@Query(nativeQuery = true, value = "insert IGNORE INTO estate_secondhand_house \n" +
 			"(house_unique_id, covered_area, district, house_property_ownership_certificate, community_id, community_name, city_code, city_name) \n" +
 			"select fwtybh, jzmj, cqmc, fczsh, xqid, xqmc, xzqh, xzqhname \n" +
 			"from estate_secondhand_listing where fwtybh not in (select h.house_unique_id from estate_secondhand_house h)")
@@ -55,7 +55,7 @@ public interface SecondHandListingRepository extends JpaRepository<EstateSecondH
 	 * 向price表中同步数据
 	 */
 	@Modifying
-	@Query(nativeQuery = true, value = "insert INTO estate_secondhand_price \n" +
+	@Query(nativeQuery = true, value = "insert IGNORE INTO estate_secondhand_price \n" +
 			"(house_unique_id, sale_price, per_square_meter_price, entrust_time, listing_house_id, listing_id, listing_contact_name, listing_status, listing_status_value, real_estate_agency, listing_time, listing_unique_id, entrust_agreement_id) \n" +
 			"select fwtybh, wtcsjg, ROUND(wtcsjg/jzmj, 4), cjsj, gpfyid, gpid, gplxrxm, gpzt, gpztValue, mdmc, scgpshsj, tygpbh, wtxybh \n" +
 			"from estate_secondhand_listing where gpid not in (select p.listing_id from estate_secondhand_price p)")
