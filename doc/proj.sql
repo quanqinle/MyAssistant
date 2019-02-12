@@ -8,9 +8,12 @@ Target Server Type    : MYSQL
 Date: 2018-07-27 10:27:40
 */
 
-CREATE SCHEMA `myworld` DEFAULT CHARACTER SET utf8mb4 ;
+CREATE SCHEMA IF NOT EXISTS `myworld` 
+DEFAULT CHARACTER SET utf8mb4 
+DEFAULT COLLATE utf8mb4_general_ci;
 
 /*---- 系统字典 ----*/
+/*
 DROP TABLE IF EXISTS system_dict;
 CREATE TABLE system_dict (
   id bigint(20) not null AUTO_INCREMENT,
@@ -23,7 +26,7 @@ CREATE TABLE system_dict (
   update_time DATE,
   PRIMARY KEY (id)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COMMENT='系统参数字典';
-
+*/
 /*---- 个税 ----*/
 # DROP TABLE IF EXISTS t_individual_income_tax_rate;
 DROP TABLE IF EXISTS tax_rate;
@@ -64,7 +67,7 @@ SET FOREIGN_KEY_CHECKS=0;
 DROP TABLE IF EXISTS user;
 CREATE TABLE user (
   id int(11) NOT NULL,
-  name varchar(20) NOT NULL COMMENT '用户名',
+  username varchar(20) NOT NULL COMMENT '用户名',
   password varchar(50) DEFAULT NULL,
   enabled varchar(5) DEFAULT '0' COMMENT '是否被禁用',
   credential varchar(5) DEFAULT '0' COMMENT '凭证是否过期',
@@ -73,7 +76,7 @@ CREATE TABLE user (
   create_time datetime DEFAULT NULL,
   PRIMARY KEY (id),
   UNIQUE KEY user_info_username_uindex (username)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='用户表';
 
 -- ----------------------------
 -- Records of user
@@ -98,7 +101,7 @@ CREATE TABLE user_info (
   PRIMARY KEY (id),
   UNIQUE KEY user_info_userid_uindex (user_id),
   UNIQUE KEY user_info_nickname_uindex (nickname)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='用户信息表';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='用户详情表';
 
 -- ----------------------------
 -- Records of user_info
@@ -382,7 +385,6 @@ CREATE TABLE estate_secondhand_listing_rest (
   wtxycode varchar(20) DEFAULT NULL COMMENT '委托协议代码',
   wtxyid varchar(20) DEFAULT NULL COMMENT '委托协议id',
   zzcs varchar(10) DEFAULT NULL COMMENT '',
-  PRIMARY KEY (id),
   CONSTRAINT pk_rest PRIMARY KEY (id),
   CONSTRAINT uc_rest UNIQUE (fwtybh)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COMMENT='房产-二手房挂牌信息（剩余部分）';
