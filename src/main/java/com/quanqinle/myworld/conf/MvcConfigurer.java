@@ -1,6 +1,6 @@
 package com.quanqinle.myworld.conf;
 
-import com.quanqinle.myworld.entity.User;
+import com.quanqinle.myworld.entity.po.User;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;

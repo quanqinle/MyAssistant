@@ -27,7 +27,7 @@ import java.util.List;
 public class ScheduledTaskServiceImpl implements ScheduledTaskService {
 
 	private Log log = LogFactory.getLog(ScheduledTaskService.class);
-	private static final SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
+	private static SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
 
 	@Value(value = "http://jjhygl.hzfc.gov.cn")
 	String remoteBase;

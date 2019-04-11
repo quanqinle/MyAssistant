@@ -7,7 +7,10 @@ package com.quanqinle.myworld.entity.vo;
 public class ResultVo<T> {
 
 	/**
-	 * 响应业务状态 200：成功 400：客户端输入参数有误导致响应失败 500：服务器错误
+	 * 响应业务状态
+	 * 200：成功
+	 * 400：客户端输入参数有误导致响应失败
+	 * 500：服务器错误
 	 */
 	private Integer code;
 
@@ -96,5 +99,13 @@ public class ResultVo<T> {
 		return new ResultVo<T>(code, msg, instance);
 	}
 
+	@Override
+	public String toString() {
+		return "ResultVo{" +
+				"code=" + code +
+				", msg='" + msg + '\'' +
+				", data=" + data +
+				'}';
+	}
 }
 

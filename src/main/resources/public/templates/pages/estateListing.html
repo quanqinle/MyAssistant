@@ -1,0 +1,87 @@
+<#compress>
+<#escape x as x?html>
+<#include "../common/macro.ftl">
+<!-- freemarker macros have to be imported into a namespace. We strongly recommend sticking to 'spring' -->
+<#import "/spring.ftl" as spring />
+<!DOCTYPE html>
+<html>
+<head>
+	<@meta />
+	<title>二手房挂牌查询</title>
+	<script type="text/javascript" src="/dist/js/jquery.min.js"></script>
+	<link type="text/css" rel="stylesheet" media="all" href="/dist/css/bootstrap.min.css"/>
+	<script type="text/javascript" src="/dist/js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="/dist/js/vue.js"></script>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.js"></script>
+	<script type="text/javascript">
+      function checkInput() {
+          var text = $("#income").val();
+          if (text == null || text === "") {
+              $("#calcBtn1st").attr("disabled", "true");
+          } else {
+              $("#calcBtn1st").removeAttr("disabled");
+          }
+      }
+	</script>
+</head>
+<body>
+<div style="width:75%;" align="center">
+	<canvas id="myChart"></canvas>
+</div>
+</body>
+
+<script>
+		var ctx = document.getElementById("myChart");
+		var myChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: ['一月', 'February', 'March', 'April', 'May', 'June', 'July'],
+            datasets: [{
+                label: 'My First dataset',
+                backgroundColor: 'red',
+                borderColor: 'red',
+                data: [12, 19, 3, 5, 2, 3, 1],
+                fill: false,
+            }, {
+                label: 'My Second dataset',
+                fill: false,
+                backgroundColor: 'blue',
+                borderColor: 'blue',
+                data: [4, 12, 19, 3, 5, 2, 3],
+            }]
+        },
+        options: {
+            responsive: true,
+            title: {
+                display: true,
+                text: 'Chart.js Line Chart'
+            },
+            tooltips: {
+                mode: 'index',
+                intersect: false,
+            },
+            hover: {
+                mode: 'nearest',
+                intersect: true
+            },
+            scales: {
+                xAxes: [{
+                    display: true,
+                    scaleLabel: {
+                        display: true,
+                        labelString: 'Month'
+                    }
+                }],
+                yAxes: [{
+                    display: true,
+                    scaleLabel: {
+                        display: true,
+                        labelString: 'Value'
+                    }
+                }]
+            }
+        }
+    });
+
+</script>
+</html>
