@@ -26,8 +26,12 @@ import java.util.List;
 public class VideoController {
 	Log log = LogFactory.getLog(VideoController.class);
 
+	private final VideoService videoService;
+
 	@Autowired
-	VideoService videoService;
+	public VideoController(VideoService videoService) {
+		this.videoService = videoService;
+	}
 
 	@GetMapping("/sites.json")
 	@ResponseBody

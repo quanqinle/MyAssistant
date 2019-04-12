@@ -11,8 +11,7 @@ import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.util.Arrays;
 import java.util.List;
@@ -24,21 +23,21 @@ import static org.hibernate.validator.internal.util.Contracts.assertTrue;
  * 发布视频到西瓜视频
  * @author quanql
  */
-public class Post2XiguaByWebdriver extends BaseWebdriver {
+@Component
+public class Post2XiGuaByWebDriver extends BaseWebDriver {
 
-	static Log log = LogFactory.getLog(Post2XiguaByWebdriver.class);
+	private static Log log = LogFactory.getLog(Post2XiGuaByWebDriver.class);
+	private VideoSite site;
 
-	@Autowired
-	VideoService videoService;
-
-	public Post2XiguaByWebdriver() {
+	public Post2XiGuaByWebDriver(VideoService videoService) {
+		super(videoService);
 	}
 
 	@Override
-	public void initAll() {
-		super.initAll();
+	public void startDriver() {
+		super.startDriver();
 
-		VideoSite site = videoService.getVideoSite(VideoUtils.XIGUA);
+		site = videoService.getVideoSite(VideoUtils.XIGUA);
 		driver.get(site.getUploadUrl());
 
 		List<Cookie> cookies = parseRawCookie(site.getCookie());
@@ -47,14 +46,16 @@ public class Post2XiguaByWebdriver extends BaseWebdriver {
 			driver.manage().addCookie(cookie);
 		}
 
-		video = "Brush Your Teeth _ Kids Songs _  Super Simple Songs-wCio_xVlgQ0.mp4";
+		video = "Count & Move from Super Simple Songs-g9EgE_JtEAw.mp4";
 	}
 
 
-	//	@Test
-	public void testXigua() {
+	/**
+	 * 向西瓜发布视频
+	 */
+	public void postToXiGua() {
 
-		driver.get("https://mp.toutiao.com/profile_v3/xigua/upload-video");
+		driver.get(site.getUploadUrl());
 
 		uploadVideo();
 		isUploadFinished();
@@ -69,20 +70,20 @@ public class Post2XiguaByWebdriver extends BaseWebdriver {
 		downloadCover();
 	}
 
-	void uploadVideo() {
-		/*
-		 * 上传视频
-		 */
+	/**
+	 * 上传视频
+	 */
+	private void uploadVideo() {
 		log.info("add video: " + video);
 		By byAddFile = By.xpath("//div[text()='上传视频']/..//input[@type='file']");
 		WebElement elBbtnAddFile = wait60s.until(ExpectedConditions.presenceOfElementLocated(byAddFile));
-//		assertNotNull(elBbtnAddFile, "fail to locate add video button");
+		assertNotNull(elBbtnAddFile, "fail to locate add video button");
 		elBbtnAddFile.sendKeys(VideoUtils.pathStr + video);
 	}
-	void isUploadFinished() {
-		/*
-		 * 是否视频上传完毕
-		 */
+	/**
+	 * 是否视频上传完毕
+	 */
+	private void isUploadFinished() {
 		String uploadStatus = "//div[@class='item-upload-success']//span[contains(text(),'剩余时间')]";
 		WebElement elUploadStatus = wait60s.until(ExpectedConditions.presenceOfElementLocated(By.xpath(uploadStatus)));
 		assertNotNull(elUploadStatus, "fail to check uploading status!");
@@ -91,10 +92,10 @@ public class Post2XiguaByWebdriver extends BaseWebdriver {
 		assertNotNull(elUploadStatus, "fail to check uploaded status!");
 		log.info("uploading video is accomplished");
 	}
-	void inputTitle() {
-		/*
-		 * 标题
-		 */
+	/**
+	 * 标题
+	 */
+	private void inputTitle() {
 		title = VideoUtils.getVideoPureName(video);
 		String xTitle = "//input[contains(@placeholder, '标题') and @type='text']";
 		WebElement elTitle = driver.findElement(By.xpath(xTitle));
@@ -104,22 +105,21 @@ public class Post2XiguaByWebdriver extends BaseWebdriver {
 //		VideoUtils.SetElementValue(driver, elTitle, "英文儿歌｜" + title);
 		log.info("title: 英文儿歌｜" +  title);
 	}
-	void inputContent() {
-		/*
-		 * 介绍
-		 */
+	/**
+	 * 介绍
+	 */
+	private void inputContent() {
 		String content = VideoUtils.getPostContent(title);
 		log.info("description: \n" + content);
 		WebElement elContent = driver.findElement(By.xpath("//textarea[contains(@placeholder, '视频简介')]"));
 		assertNotNull(elContent, "fail to locate description!");
 		elContent.clear();
 		elContent.sendKeys(content);
-//		VideoUtils.SetElementValue(driver, elContent, content);
 	}
-	void setCover() {
-		/*
-		 * 设置封面
-		 */
+	/**
+	 * 设置封面
+	 */
+	private void setCover() {
 		log.info("setting cover...");
 		By bySetCover = By.xpath("//img[@alt='设置封面']");
 		WebElement elSetCover = driver.findElement(bySetCover);
@@ -131,7 +131,8 @@ public class Post2XiguaByWebdriver extends BaseWebdriver {
 
 		By byImg = By.xpath("//div[@role='tabPanel']//ul[@class='system-items']//img[@alt='封面']");
 		// 视频处理中期间，不能选择系统截图。重试3次
-		for (int i = 0; i < 3; i++) {
+		int retry = 4;
+		for (int i = 0; i < retry; i++) {
 			try {
 				elTab2.click();
 				wait10s.until(ExpectedConditions.visibilityOfElementLocated(byImg));
@@ -145,47 +146,56 @@ public class Post2XiguaByWebdriver extends BaseWebdriver {
 		elImgs.get(elImgs.size() / 2 > 6 ? 6 : elImgs.size() / 2).click();
 		driver.findElement(By.xpath("//button[text()='确 定']")).click();
 	}
-	void inputTags() {
-		/*
-		 * 标签
-		 */
+	/**
+	 * 标签
+	 */
+	private void inputTags() {
 		String[] tags = { "英语儿歌", "童谣", "歌曲", "听力", "教育" };
 		log.info("tags: " + Arrays.toString(tags));
-		WebElement elTag = null;
+		WebElement elTag;
 		for (String tag : tags) {
 			elTag = driver.findElement(By.cssSelector(".input-tag input[role='combobox']"));
 			assertNotNull(elTag, "fail to local tag: " + tag);
 			elTag.sendKeys(tag);
 			// ENTER made the tag complete
 			elTag.sendKeys(Keys.ENTER);
-			BaseWebdriver.wait(100);
+			BaseWebDriver.wait(100);
 		}
 	}
-	void setBenefit() {
-		/*
-		 * 收益
-		 */
+	/**
+	 * 收益
+	 */
+	private void setBenefit() {
 		log.info("click benefit");
 		String benefit = "//span[text()='授权投放广告有收益']/..//input[@type='checkbox']";
+		// FIXME
 		WebElement elBenefit = driver.findElement(By.xpath(benefit));
 		elBenefit.click();
 	}
-	void selectCategory() {
 
+	/**
+	 * 选择分类
+	 */
+	private void selectCategory() {
+		// TODO
 	}
-	void selectActivity() {
+
+	/**
+	 * 选择第一个活动
+	 */
+	private void selectActivity() {
 		log.info("click the 1st activity");
 		String xActivity = "//div[text()='参与活动']/..//div[@class='tui2-radio-group']//input[@type='checkbox']";
 		driver.findElement(By.xpath(xActivity)).click();
 	}
-	void publishVideo() {
-		/*
-		 * 发布
-		 */
+	/**
+	 * 发布
+	 */
+	private void publishVideo() {
 		log.info("click publish");
 		driver.findElement(By.xpath("//div[contains(@class, 'submit') and text()='发表']")).click();
 
-		/**
+		/*
 		 * when publish successfully, menu will be automated switched to another
 		 */
 		By byLeftMenu = By.xpath("//a[text()='发表视频' and @aria-current='page']");
@@ -193,8 +203,10 @@ public class Post2XiguaByWebdriver extends BaseWebdriver {
 		assertTrue(isInvisibility, "fail to publish video");
 		log.info("complete posting video: " + video);
 	}
-	void downloadCover() {
-		// 下载封面图
+	/**
+	 * 下载封面图
+	 */
+	private void downloadCover() {
 		driver.get("https://mp.toutiao.com/profile_v3/xigua");
 		By byCover = By.xpath("//div[@class='article-card-home']//img");
 		WebElement elCover = wait60s.until(ExpectedConditions.presenceOfElementLocated(byCover));

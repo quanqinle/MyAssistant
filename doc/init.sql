@@ -14,8 +14,8 @@ DEFAULT COLLATE utf8mb4_general_ci;
 
 /*---- 系统字典 ----*/
 /*
-DROP TABLE IF EXISTS system_dict;
-CREATE TABLE system_dict (
+DROP TABLE IF EXISTS sys_dict;
+CREATE TABLE sys_dict (
   id bigint(20) not null AUTO_INCREMENT,
   key VARCHAR(20) not NULL COMMENT '键',
   value VARCHAR(20) DEFAULT NULL comment '值',

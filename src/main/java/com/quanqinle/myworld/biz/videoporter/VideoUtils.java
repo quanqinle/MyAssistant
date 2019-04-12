@@ -13,7 +13,7 @@ import java.nio.file.Paths;
  * @author quanql
  */
 public class VideoUtils {
-	static Log log = LogFactory.getLog(VideoUtils.class);
+	public static Log log = LogFactory.getLog(VideoUtils.class);
 	public static String pathStr = "D:\\tmp\\video-youtube\\changed\\";
 
 	/**

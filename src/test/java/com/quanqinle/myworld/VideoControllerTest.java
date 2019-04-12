@@ -1,5 +1,7 @@
 package com.quanqinle.myworld;
 
+import com.quanqinle.myworld.biz.videoporter.VideoUtils;
+import com.quanqinle.myworld.biz.videoporter.upload.Post2XiGuaByWebDriver;
 import com.quanqinle.myworld.controller.VideoController;
 import com.quanqinle.myworld.entity.po.VideoInfo;
 import com.quanqinle.myworld.entity.po.VideoSite;
@@ -22,12 +24,14 @@ import java.util.List;
 @SpringBootTest
 @AutoConfigureMockMvc
 public class VideoControllerTest {
-	Log log = LogFactory.getLog(VideoControllerTest.class);
+	private Log log = LogFactory.getLog(VideoControllerTest.class);
 
 	@Autowired
 	VideoController videoController;
 	@Autowired
 	VideoService videoService;
+	@Autowired
+	Post2XiGuaByWebDriver post2XiGuaByWebDriver;
 
 //	@Test
 	public void testDownloadVideo() {
@@ -41,8 +45,30 @@ public class VideoControllerTest {
 		}
 	}
 
+	/**
+	 * 测试更新upload表信息
+	 */
 //	@Test
-	public void testPostVideo() {
+	public void testUpgradeUploadInfo() {
+		String dirPath = "D:/tmp/video-youtube/changed/已上传2";
+		File[] files = new File(dirPath).listFiles();
+		for (File file : files) {
+			if (file.getName().contains(".mp4")) {
+				for (int i = 2; i < 5; i++) {
+					ResultVo<VideoUpload> resultVo = videoController.uploadVideo(file.getName(), i);
+					log.info(resultVo);
+				}
+			}
+		}
+
+		ResultVo<VideoUpload> resultVo = videoController.uploadVideo("Clean Up Song _ Kids Song for Tidying Up _ Super Simple Songs-SFE0mMWbA-Y.mp4", VideoUtils.XIGUA);
+		log.info(resultVo);
+		resultVo = videoController.uploadVideo("Count & Move from Super Simple Songs-g9EgE_JtEAw.mp4", VideoUtils.XIGUA);
+		log.info(resultVo);
+	}
+
+//	@Test
+	public void testUploadVideoInfo() {
 		List<VideoInfo> videoInfos = videoService.getVideos();
 		for (VideoInfo info: videoInfos) {
 			for (int i = 2; i < 5; i++) {
@@ -52,11 +78,18 @@ public class VideoControllerTest {
 		}
 	}
 
-	@Test
+//	@Test
 	public void testUpdateSite() {
 		VideoSite site = videoService.getVideoSite(4);
 		site.setCookie("123");
 		videoService.updateVidetSite(site);
+	}
+
+//	@Test
+	public void testPost2XiGua() {
+		post2XiGuaByWebDriver.startDriver();
+		post2XiGuaByWebDriver.postToXiGua();
+		post2XiGuaByWebDriver.closeDriver();
 	}
 
 }

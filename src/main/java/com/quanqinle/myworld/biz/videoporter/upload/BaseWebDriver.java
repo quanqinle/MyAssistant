@@ -1,5 +1,6 @@
 package com.quanqinle.myworld.biz.videoporter.upload;
 
+import com.quanqinle.myworld.service.VideoService;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.openqa.selenium.Cookie;
@@ -7,6 +8,8 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,9 +18,12 @@ import java.util.List;
  * web driver 基类
  * @author quanql
  */
-public class BaseWebdriver {
+@Component
+public class BaseWebDriver {
 
-	static Log log = LogFactory.getLog(BaseWebdriver.class);
+	private static Log log = LogFactory.getLog(BaseWebDriver.class);
+
+	final VideoService videoService;
 
 	static WebDriver driver;
 	static WebDriverWait wait120s;
@@ -27,7 +33,12 @@ public class BaseWebdriver {
 	String video;
 	String title;
 
-	public void initAll() {
+	@Autowired
+	public BaseWebDriver(VideoService videoService) {
+		this.videoService = videoService;
+	}
+
+	public void startDriver() {
 		System.setProperty("webdriver.chrome.driver", "C:\\chromedriver.exe");
 
 		ChromeOptions options = new ChromeOptions();
@@ -39,11 +50,10 @@ public class BaseWebdriver {
 		wait120s = new WebDriverWait(driver, 120, 200);
 		wait60s = new WebDriverWait(driver, 60, 200);
 		wait10s = new WebDriverWait(driver, 10, 200);
-
 	}
 
-	public void tearDownAll() {
-//		driver.quit();
+	public void closeDriver() {
+		driver.quit();
 	}
 
 	/**
