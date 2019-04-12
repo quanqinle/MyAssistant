@@ -18,11 +18,4 @@ public interface VideoUploadRepository extends JpaRepository<VideoUpload, Intege
 	 */
 	VideoUpload findByVideoIdAndSiteIdAndState(int videoId, int siteId, int state);
 
-	/**
-	 * 保存视频发布信息
-	 * @param videoUpload
-	 * @return
-	 */
-//	@Override
-//	VideoUpload save(VideoUpload videoUpload);
 }

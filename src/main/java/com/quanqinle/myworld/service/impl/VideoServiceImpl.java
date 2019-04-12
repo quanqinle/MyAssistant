@@ -1,5 +1,6 @@
 package com.quanqinle.myworld.service.impl;
 
+import com.quanqinle.myworld.biz.videoporter.VideoUtils;
 import com.quanqinle.myworld.dao.VideoInfoRepository;
 import com.quanqinle.myworld.dao.VideoUploadRepository;
 import com.quanqinle.myworld.dao.VideoSiteRepository;
@@ -13,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 /**
@@ -62,6 +64,11 @@ public class VideoServiceImpl implements VideoService {
 	}
 
 	@Override
+	public List<VideoInfo> getVideosUnpublished(int siteId) {
+		return videoInfoRepository.findAllNotPublished(siteId);
+	}
+
+	@Override
 	public VideoUpload getUploadInfo(String videoName, int siteId) {
 		VideoInfo videoInfo = this.getVideo(videoName);
 		if (null == videoInfo) {
@@ -79,5 +86,19 @@ public class VideoServiceImpl implements VideoService {
 	@Override
 	public VideoUpload addUploadInfo(VideoUpload videoUpload) {
 		return videoUploadRepository.save(videoUpload);
+	}
+
+	@Override
+	public VideoUpload addUploadInfo(String videoName, int siteId) {
+		VideoUpload videoUpload = new VideoUpload();
+		videoUpload.setVideoId(this.getVideo(videoName).getVideoId());
+		videoUpload.setSiteId(siteId);
+		videoUpload.setState(VideoUtils.STATE_DONE);
+		String postName = VideoUtils.getPostTitle(VideoUtils.getVideoPureName(videoName));
+		videoUpload.setPostName(postName);
+		LocalDateTime localDateTime = LocalDateTime.now();
+		videoUpload.setCreateTime(localDateTime);
+		videoUpload.setUpdateTime(localDateTime);
+		return this.addUploadInfo(videoUpload);
 	}
 }

@@ -58,6 +58,22 @@ public class VideoController {
 		return new ResultVo<>(200, "ok", videoService.updateVidetSite(site));
 	}
 
+	@GetMapping("/published/{siteId}")
+	@ResponseBody
+	@ApiOperation(value = "获取已上传到某网站的视频信息")
+	public ResultVo<VideoInfo> getPublishedVideo(@PathVariable int siteId) {
+		// TODO
+		List<VideoInfo> videos = videoService.getVideosUnpublished(siteId);
+		return new ResultVo(200, "ok", videos);
+	}
+	@GetMapping("/unpublished/{siteId}")
+	@ResponseBody
+	@ApiOperation(value = "获取未上传到某网站的视频信息")
+	public ResultVo<VideoInfo> getUnpublishedVideo(@PathVariable int siteId) {
+		List<VideoInfo> videos = videoService.getVideosUnpublished(siteId);
+		return new ResultVo(200, "ok", videos);
+	}
+
 	@PostMapping("/download")
 	@ResponseBody
 	@ApiOperation(value = "下载视频")
@@ -73,9 +89,11 @@ public class VideoController {
 			VideoInfo videoInfo = new VideoInfo();
 			videoInfo.setVideoName(videoName);
 			videoInfo.setVideoSn(VideoUtils.parseVideoSN(videoName));
-			videoInfo.setSourceSiteId(1);
-			videoInfo.setCreateTime(LocalDateTime.parse("2019-04-06T18:18:18"));
-			videoInfo.setUpdateTime(LocalDateTime.parse("2019-04-06T18:18:18"));
+			videoInfo.setSourceSiteId(VideoUtils.YOUTUBE);
+			LocalDateTime localDateTime = LocalDateTime.now();
+			videoInfo.setCreateTime(localDateTime);
+			// LocalDateTime.parse("2019-04-06T18:18:18")
+			videoInfo.setUpdateTime(localDateTime);
 			return new ResultVo(200, "ok", videoService.addVideo(videoInfo));
 		} catch (Exception e) {
 			return new ResultVo(400, e.toString(), null);
@@ -90,21 +108,12 @@ public class VideoController {
 			return new ResultVo(400, "para is null", null);
 		}
 
-		VideoInfo videoInfo = videoService.getVideo(videoName);
 		if (null != videoService.getUploadInfo(videoName, siteId)) {
 			return new ResultVo(200, "video is existed", null);
 		}
 
 		try {
-			VideoUpload videoUpload = new VideoUpload();
-			videoUpload.setVideoId(videoInfo.getVideoId());
-			videoUpload.setSiteId(siteId);
-			videoUpload.setState(0);
-			String postName = VideoUtils.getPostTitle(VideoUtils.getVideoPureName(videoName));
-			videoUpload.setPostName(postName);
-			videoUpload.setCreateTime(LocalDateTime.parse("2019-04-08T16:16:16"));
-			videoUpload.setUpdateTime(LocalDateTime.parse("2019-04-08T16:16:16"));
-			return new ResultVo(200, "ok", videoService.addUploadInfo(videoUpload));
+			return new ResultVo(200, "ok", videoService.addUploadInfo(videoName, siteId));
 		} catch (Exception e) {
 			return new ResultVo(400, e.toString(), null);
 		}

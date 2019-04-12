@@ -14,7 +14,6 @@ import java.nio.file.Paths;
  */
 public class VideoUtils {
 	public static Log log = LogFactory.getLog(VideoUtils.class);
-	public static String pathStr = "D:\\tmp\\video-youtube\\changed\\";
 
 	/**
 	 * site id
@@ -23,6 +22,14 @@ public class VideoUtils {
 	public static int XIGUA = 2;
 	public static int YIDIAN = 3;
 	public static int DAYU = 4;
+
+	/**
+	 * state 视频发布状态
+	 */
+	public static int STATE_DONE = 0;
+	public static int STATE_DONING = 1;
+	public static int STATE_FAIL = 2;
+	public static int STATE_DELETE = 3;
 
 	/**
 	 * val in video name

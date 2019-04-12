@@ -78,7 +78,7 @@ public class Post2XiGuaByWebDriver extends BaseWebDriver {
 		By byAddFile = By.xpath("//div[text()='上传视频']/..//input[@type='file']");
 		WebElement elBbtnAddFile = wait60s.until(ExpectedConditions.presenceOfElementLocated(byAddFile));
 		assertNotNull(elBbtnAddFile, "fail to locate add video button");
-		elBbtnAddFile.sendKeys(VideoUtils.pathStr + video);
+		elBbtnAddFile.sendKeys(pathStr + video);
 	}
 	/**
 	 * 是否视频上传完毕
@@ -211,7 +211,7 @@ public class Post2XiGuaByWebDriver extends BaseWebDriver {
 		By byCover = By.xpath("//div[@class='article-card-home']//img");
 		WebElement elCover = wait60s.until(ExpectedConditions.presenceOfElementLocated(byCover));
 		String imgSrcUrl = elCover.getAttribute("src");
-		VideoUtils.downloadFile(imgSrcUrl, VideoUtils.pathStr + title + ".png");
+		VideoUtils.downloadFile(imgSrcUrl, pathStr + title + ".png");
 		log.info("download video cover: " + title + ".png");
 	}
 }

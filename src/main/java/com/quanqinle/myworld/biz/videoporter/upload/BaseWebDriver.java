@@ -30,6 +30,7 @@ public class BaseWebDriver {
 	static WebDriverWait wait60s;
 	static WebDriverWait wait10s;
 
+	String pathStr = "D:\\tmp\\video-youtube\\changed\\";
 	String video;
 	String title;
 
@@ -38,6 +39,9 @@ public class BaseWebDriver {
 		this.videoService = videoService;
 	}
 
+	/**
+	 * 启动web driver
+	 */
 	public void startDriver() {
 		System.setProperty("webdriver.chrome.driver", "C:\\chromedriver.exe");
 
@@ -52,6 +56,9 @@ public class BaseWebDriver {
 		wait10s = new WebDriverWait(driver, 10, 200);
 	}
 
+	/**
+	 * 关闭web driver
+	 */
 	public void closeDriver() {
 		driver.quit();
 	}
@@ -73,7 +80,12 @@ public class BaseWebDriver {
 		}
 	}
 
-	public static List<Cookie> parseRawCookie(String rawCookie) {
+	/**
+	 * 将cookie字符串拆解到list中
+	 * @param rawCookie
+	 * @return
+	 */
+	public List<Cookie> parseRawCookie(String rawCookie) {
 		List<Cookie> cookies = new ArrayList<Cookie>();
 
 		String[] rawCookieParams = rawCookie.split(";");

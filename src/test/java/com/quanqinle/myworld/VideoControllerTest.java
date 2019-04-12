@@ -85,6 +85,13 @@ public class VideoControllerTest {
 		videoService.updateVidetSite(site);
 	}
 
+	@Test
+	public void testGetVideosUnpublished() {
+		int siteId = 2;
+		List<VideoInfo> videos = videoService.getVideosUnpublished(siteId);
+		log.info(videos);
+	}
+
 //	@Test
 	public void testPost2XiGua() {
 		post2XiGuaByWebDriver.startDriver();

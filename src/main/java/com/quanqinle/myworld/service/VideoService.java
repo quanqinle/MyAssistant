@@ -53,6 +53,13 @@ public interface VideoService {
 	List<VideoInfo> getVideos();
 
 	/**
+	 * 获取所有未发表的视频
+	 * @param siteId
+	 * @return
+	 */
+	List<VideoInfo> getVideosUnpublished(int siteId);
+
+	/**
 	 * 获取视频发布信息
 	 * @param videoName
 	 * @param siteId
@@ -69,9 +76,17 @@ public interface VideoService {
 	 */
 	VideoUpload getUploadInfo(int videoId, int siteId, int state);
 	/**
-	 * DB中新增一条发布视频记录
+	 * DB中新增一条发布视频记录，函数只负责保存，不会修改入参对象
 	 * @param videoUpload
 	 * @return
 	 */
 	VideoUpload addUploadInfo(VideoUpload videoUpload);
+
+	/**
+	 * DB中新增一条发布视频记录
+	 * @param videoName
+	 * @param siteId
+	 * @return
+	 */
+	VideoUpload addUploadInfo(String videoName, int siteId);
 }
