@@ -18,16 +18,16 @@ public class VideoUtils {
 	/**
 	 * site id
 	 */
-	public static int YOUTUBE = 1;
-	public static int XIGUA = 2;
-	public static int YIDIAN = 3;
-	public static int DAYU = 4;
+	public static final int YOUTUBE = 1;
+	public static final int XIGUA = 2;
+	public static final int YIDIAN = 3;
+	public static final int DAYU = 4;
 
 	/**
 	 * state 视频发布状态
 	 */
 	public static int STATE_DONE = 0;
-	public static int STATE_DONING = 1;
+	public static int STATE_DOING = 1;
 	public static int STATE_FAIL = 2;
 	public static int STATE_DELETE = 3;
 
@@ -79,44 +79,37 @@ public class VideoUtils {
 	 * @return
 	 */
 	public static String getVideoPureName(String videoFileName) {
-		String KEY = "_";
-		// "英文儿歌｜"。移出拼接逻辑，方便该函数复用
-		String title = "";
-		if (videoFileName.contains(KEY)) {
-			String []arr = videoFileName.split(KEY);
-			title = title + arr[0];
-		} else {
-			log.error("视频名称不含有分隔符_ ：" + videoFileName);
-			title += videoFileName.replace(VIDEO_SUFFIX, "");
+		String title = videoFileName.replace(VIDEO_SUFFIX, "");
+		title = title.replace(parseVideoSN(videoFileName), "");
+		title = title.substring(0, title.length()-1);
+
+		String separator = "_";
+		if (title.contains(separator)) {
+			String []arr = title.split(separator);
+			title = arr[0];
 		}
 		return title.trim();
 	}
-
 	/**
 	 * 获取视频发布的标题
 	 * @param videoPureName
 	 * @return
 	 */
-	public static String getPostTitle(String videoPureName) {
-		return "英文儿歌｜" + videoPureName;
+	public static String getPostTitle(String videoPureName, int siteId) {
+		String postTitle;
+		switch (siteId) {
+			case XIGUA:
+			case YIDIAN:
+				postTitle = videoPureName.substring(0, 50);
+				break;
+			case DAYU:
+				postTitle = videoPureName.substring(0, 90);
+				break;
+			default:
+				postTitle = videoPureName;
+		}
+		return "英文儿歌｜" + postTitle.trim();
 	}
-	/**
-	 * 获取视频发布的描述
-	 * @param videoPureName 视频名称
-	 * @return
-	 */
-	public static String getPostContent(String videoPureName) {
-		String s = String.format("# %s \n%s \n%s \n%s \n%s \n%s \n%s"
-				, videoPureName
-				, "# Kids Songs"
-				, "# Super Simple Songs"
-				, "# 来源：http://油管/user/SuperSimpleSongs 感谢原创，请subscribe她"
-				, "# 听儿歌，学英语"
-				, "# 节奏轻快，孩子爱听"
-				, "# 喜欢就关注我哦~");
-		return s;
-	}
-
 
 	/**
 	 * 下载指定资源到目标文件
@@ -141,13 +134,19 @@ public class VideoUtils {
 	}
 
 	public static void main(String[] args) {
-		String videoName = "";
+		String videoName;
 		videoName = "BINGO Song Sing-along _ Nursery Rhyme _ #readalong with Super Simple Songs-yNnfd0wMEso.mp4";
 		System.out.println(parseVideoSN(videoName));
+		System.out.println(getVideoPureName(videoName));
 		videoName = "Welcome to Super Simple Songs!-FMj4fyy9xrc.mp4";
+		System.out.println(getVideoPureName(videoName));
 		System.out.println(parseVideoSN(videoName));
 		videoName = "Cartoon _ Hello Baby Sparrows _ Treetop Family Ep.1 _ Cartoon for kids-e6Vz_x-y-IA.mp4";
 		System.out.println(parseVideoSN(videoName));
+		System.out.println(getVideoPureName(videoName));
+		videoName = "Decorate The Christmas Tree (to the tune of Deck The Halls) _ Super Simple Songs-ZpJCgTx_auc.mp4";
+		System.out.println(getVideoPureName(videoName).length());
+		System.out.println(getVideoPureName(videoName).substring(0, 30));
 	}
 
 }

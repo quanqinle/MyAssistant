@@ -13,20 +13,17 @@ DEFAULT CHARACTER SET utf8mb4
 DEFAULT COLLATE utf8mb4_general_ci;
 
 /*---- 系统字典 ----*/
-/*
 DROP TABLE IF EXISTS sys_dict;
 CREATE TABLE sys_dict (
-  id bigint(20) not null AUTO_INCREMENT,
-  key VARCHAR(20) not NULL COMMENT '键',
-  value VARCHAR(20) DEFAULT NULL comment '值',
-  default_value VARCHAR(20) DEFAULT NULL comment '默认值',
-  status TINYINT UNSIGNED DEFAULT 1 COMMENT '1有效，0删除',
-  comment VARCHAR(100) DEFAULT NULL COMMENT '备注',
-  create_time DATE,
-  update_time DATE,
-  PRIMARY KEY (id)
+  id BIGINT NOT NULL AUTO_INCREMENT,
+  `key` VARCHAR(20) NOT NULL COMMENT '键',
+  `value` VARCHAR(100) DEFAULT NULL comment '值',
+  state TINYINT UNSIGNED DEFAULT 1 COMMENT '1有效，0删除',
+  `comment` VARCHAR(100) DEFAULT NULL COMMENT '备注',
+  create_time datetime DEFAULT NULL COMMENT '创建时间',
+  update_time datetime DEFAULT NULL COMMENT '更新时间',
+  CONSTRAINT pk_dict PRIMARY KEY (id)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COMMENT='系统参数字典';
-*/
 
 /*---- 个税 ----*/
 DROP TABLE IF EXISTS tax_rate;

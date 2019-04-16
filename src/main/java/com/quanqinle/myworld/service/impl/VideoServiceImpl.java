@@ -24,7 +24,7 @@ import java.util.List;
 @Transactional(rollbackFor = Exception.class)
 public class VideoServiceImpl implements VideoService {
 
-	Log log = LogFactory.getLog(VideoServiceImpl.class);
+	private Log log = LogFactory.getLog(VideoServiceImpl.class);
 
 	@Autowired
 	VideoSiteRepository videoSiteRepository;
@@ -44,13 +44,37 @@ public class VideoServiceImpl implements VideoService {
 	}
 
 	@Override
-	public VideoSite updateVidetSite(VideoSite videoSite) {
+	public VideoSite addVideoSite(VideoSite videoSite) {
 		return videoSiteRepository.save(videoSite);
 	}
 
 	@Override
 	public VideoInfo addVideo(VideoInfo videoInfo) {
 		return videoInfoRepository.save(videoInfo);
+	}
+
+	@Override
+	public VideoInfo addVideo(String videoName, int siteId) {
+		VideoInfo videoInfo = getVideo(videoName);
+		if (videoInfo == null) {
+			log.info("add a videoInfo");
+			videoInfo = new VideoInfo();
+			videoInfo.setVideoName(videoName);
+			videoInfo.setVideoSn(VideoUtils.parseVideoSN(videoName));
+			videoInfo.setSourceSiteId(siteId);
+			LocalDateTime localDateTime = LocalDateTime.now();
+			videoInfo.setCreateTime(localDateTime);
+			// LocalDateTime.parse("2019-04-06T18:18:18")
+			videoInfo.setUpdateTime(localDateTime);
+		} else {
+			log.info("update a videoInfo");
+			videoInfo.setVideoSn(VideoUtils.parseVideoSN(videoName));
+			videoInfo.setSourceSiteId(siteId);
+			LocalDateTime localDateTime = LocalDateTime.now();
+			videoInfo.setUpdateTime(localDateTime);
+		}
+
+		return this.addVideo(videoInfo);
 	}
 
 	@Override
@@ -64,6 +88,11 @@ public class VideoServiceImpl implements VideoService {
 	}
 
 	@Override
+	public List<VideoUpload> getUploadInfos(int siteId, int state) {
+		return videoUploadRepository.findAllBySiteIdAndState(siteId, state);
+	}
+
+	@Override
 	public List<VideoInfo> getVideosUnpublished(int siteId) {
 		return videoInfoRepository.findAllNotPublished(siteId);
 	}
@@ -72,9 +101,10 @@ public class VideoServiceImpl implements VideoService {
 	public VideoUpload getUploadInfo(String videoName, int siteId) {
 		VideoInfo videoInfo = this.getVideo(videoName);
 		if (null == videoInfo) {
+			log.info("video not existed");
 			return null;
 		} else {
-			return this.getUploadInfo(videoInfo.getVideoId(), siteId, 0);
+			return this.getUploadInfo(videoInfo.getVideoId(), siteId);
 		}
 	}
 
@@ -84,21 +114,48 @@ public class VideoServiceImpl implements VideoService {
 	}
 
 	@Override
-	public VideoUpload addUploadInfo(VideoUpload videoUpload) {
+	public VideoUpload getUploadInfo(int videoId, int siteId) {
+		return videoUploadRepository.findByVideoIdAndSiteId(videoId, siteId);
+	}
+
+	@Override
+	public VideoUpload saveUploadInfo(VideoUpload videoUpload) {
 		return videoUploadRepository.save(videoUpload);
 	}
 
 	@Override
-	public VideoUpload addUploadInfo(String videoName, int siteId) {
-		VideoUpload videoUpload = new VideoUpload();
-		videoUpload.setVideoId(this.getVideo(videoName).getVideoId());
-		videoUpload.setSiteId(siteId);
-		videoUpload.setState(VideoUtils.STATE_DONE);
-		String postName = VideoUtils.getPostTitle(VideoUtils.getVideoPureName(videoName));
-		videoUpload.setPostName(postName);
-		LocalDateTime localDateTime = LocalDateTime.now();
-		videoUpload.setCreateTime(localDateTime);
-		videoUpload.setUpdateTime(localDateTime);
-		return this.addUploadInfo(videoUpload);
+	public VideoUpload saveUploadInfo(String videoName, int siteId) {
+		return this.saveUploadInfo(videoName, siteId, VideoUtils.STATE_DONE);
+	}
+
+	@Override
+	public VideoUpload saveUploadInfo(String videoName, int siteId, int state) {
+		int videoId = this.getVideo(videoName).getVideoId();
+		VideoUpload videoUpload = this.getUploadInfo(videoId, siteId);
+		if (videoUpload == null) {
+			log.info("add a videoUpload");
+			videoUpload = new VideoUpload();
+			videoUpload.setVideoId(videoId);
+			videoUpload.setSiteId(siteId);
+			videoUpload.setState(state);
+			String postName = VideoUtils.getPostTitle(VideoUtils.getVideoPureName(videoName), siteId);
+			videoUpload.setPostName(postName);
+
+			LocalDateTime localDateTime = LocalDateTime.now();
+			videoUpload.setCreateTime(localDateTime);
+			videoUpload.setUpdateTime(localDateTime);
+		} else {
+			log.info("update a videoUpload");
+			videoUpload.setVideoId(videoId);
+			videoUpload.setSiteId(siteId);
+			videoUpload.setState(state);
+			String postName = VideoUtils.getPostTitle(VideoUtils.getVideoPureName(videoName), siteId);
+			videoUpload.setPostName(postName);
+
+			LocalDateTime localDateTime = LocalDateTime.now();
+			videoUpload.setUpdateTime(localDateTime);
+		}
+
+		return this.saveUploadInfo(videoUpload);
 	}
 }

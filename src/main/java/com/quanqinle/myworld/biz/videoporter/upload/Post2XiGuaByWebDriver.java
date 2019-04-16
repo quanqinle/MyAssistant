@@ -6,7 +6,6 @@ import com.quanqinle.myworld.service.VideoService;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.openqa.selenium.By;
-import org.openqa.selenium.Cookie;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
@@ -20,13 +19,16 @@ import static org.hibernate.validator.internal.util.Contracts.assertNotNull;
 import static org.hibernate.validator.internal.util.Contracts.assertTrue;
 
 /**
- * 发布视频到西瓜视频
+ * 发布视频到（今日头条的）西瓜视频
  * @author quanql
  */
 @Component
 public class Post2XiGuaByWebDriver extends BaseWebDriver {
 
-	private static Log log = LogFactory.getLog(Post2XiGuaByWebDriver.class);
+	private Log log = LogFactory.getLog(Post2XiGuaByWebDriver.class);
+
+	private String video;
+	private String title;
 	private VideoSite site;
 
 	public Post2XiGuaByWebDriver(VideoService videoService) {
@@ -40,21 +42,17 @@ public class Post2XiGuaByWebDriver extends BaseWebDriver {
 		site = videoService.getVideoSite(VideoUtils.XIGUA);
 		driver.get(site.getUploadUrl());
 
-		List<Cookie> cookies = parseRawCookie(site.getCookie());
-		log.info(cookies);
-		for (Cookie cookie : cookies) {
-			driver.manage().addCookie(cookie);
-		}
-
-		video = "Count & Move from Super Simple Songs-g9EgE_JtEAw.mp4";
+		super.addCookies(site.getCookie());
 	}
-
 
 	/**
 	 * 向西瓜发布视频
 	 */
-	public void postToXiGua() {
+	public void postToXiGua(String videoName) {
 
+		video = videoName;
+
+		log.info("打开西瓜视频");
 		driver.get(site.getUploadUrl());
 
 		uploadVideo();
@@ -76,9 +74,9 @@ public class Post2XiGuaByWebDriver extends BaseWebDriver {
 	private void uploadVideo() {
 		log.info("add video: " + video);
 		By byAddFile = By.xpath("//div[text()='上传视频']/..//input[@type='file']");
-		WebElement elBbtnAddFile = wait60s.until(ExpectedConditions.presenceOfElementLocated(byAddFile));
-		assertNotNull(elBbtnAddFile, "fail to locate add video button");
-		elBbtnAddFile.sendKeys(pathStr + video);
+		WebElement elBtnAddFile = wait60s.until(ExpectedConditions.presenceOfElementLocated(byAddFile));
+		assertNotNull(elBtnAddFile, "fail to locate add video button");
+		elBtnAddFile.sendKeys(videoPath + video);
 	}
 	/**
 	 * 是否视频上传完毕
@@ -97,19 +95,19 @@ public class Post2XiGuaByWebDriver extends BaseWebDriver {
 	 */
 	private void inputTitle() {
 		title = VideoUtils.getVideoPureName(video);
+		log.info("title: " + title);
 		String xTitle = "//input[contains(@placeholder, '标题') and @type='text']";
 		WebElement elTitle = driver.findElement(By.xpath(xTitle));
 		assertNotNull(elTitle, "fail to locate title!");
 		elTitle.clear();
-		elTitle.sendKeys("英文儿歌｜" + title);
+		elTitle.sendKeys(getPostTitle(title, VideoUtils.XIGUA));
 //		VideoUtils.SetElementValue(driver, elTitle, "英文儿歌｜" + title);
-		log.info("title: 英文儿歌｜" +  title);
 	}
 	/**
 	 * 介绍
 	 */
 	private void inputContent() {
-		String content = VideoUtils.getPostContent(title);
+		String content = super.getPostContent(title);
 		log.info("description: \n" + content);
 		WebElement elContent = driver.findElement(By.xpath("//textarea[contains(@placeholder, '视频简介')]"));
 		assertNotNull(elContent, "fail to locate description!");
@@ -150,7 +148,7 @@ public class Post2XiGuaByWebDriver extends BaseWebDriver {
 	 * 标签
 	 */
 	private void inputTags() {
-		String[] tags = { "英语儿歌", "童谣", "歌曲", "听力", "教育" };
+		String[] tags = super.getPostTags();
 		log.info("tags: " + Arrays.toString(tags));
 		WebElement elTag;
 		for (String tag : tags) {
@@ -211,7 +209,7 @@ public class Post2XiGuaByWebDriver extends BaseWebDriver {
 		By byCover = By.xpath("//div[@class='article-card-home']//img");
 		WebElement elCover = wait60s.until(ExpectedConditions.presenceOfElementLocated(byCover));
 		String imgSrcUrl = elCover.getAttribute("src");
-		VideoUtils.downloadFile(imgSrcUrl, pathStr + title + ".png");
+		VideoUtils.downloadFile(imgSrcUrl, coverPath + title + ".png");
 		log.info("download video cover: " + title + ".png");
 	}
 }

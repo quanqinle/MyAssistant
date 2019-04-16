@@ -1,5 +1,7 @@
 package com.quanqinle.myworld.biz.videoporter.upload;
 
+import com.quanqinle.myworld.biz.videoporter.VideoUtils;
+import com.quanqinle.myworld.service.SysDictService;
 import com.quanqinle.myworld.service.VideoService;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -23,6 +25,8 @@ public class BaseWebDriver {
 
 	private static Log log = LogFactory.getLog(BaseWebDriver.class);
 
+	@Autowired
+	SysDictService sysDictService;
 	final VideoService videoService;
 
 	static WebDriver driver;
@@ -30,9 +34,8 @@ public class BaseWebDriver {
 	static WebDriverWait wait60s;
 	static WebDriverWait wait10s;
 
-	String pathStr = "D:\\tmp\\video-youtube\\changed\\";
-	String video;
-	String title;
+	String videoPath = "D:\\tmp\\video-youtube\\changed\\";
+	String coverPath = "D:\\tmp\\video-youtube\\changed-cover\\";
 
 	@Autowired
 	public BaseWebDriver(VideoService videoService) {
@@ -48,7 +51,11 @@ public class BaseWebDriver {
 		ChromeOptions options = new ChromeOptions();
 		options.addArguments("start-maximized");
 		options.addArguments("disable-infobars");
-//		options.addArguments("headless");
+
+		String keyHeadless = "webdriver.headless";
+		if (sysDictService.isValueTrue(keyHeadless)) {
+			options.addArguments("headless");
+		}
 
 		driver = new ChromeDriver(options);
 		wait120s = new WebDriverWait(driver, 120, 200);
@@ -57,10 +64,23 @@ public class BaseWebDriver {
 	}
 
 	/**
+	 * 给driver增加cookie
+	 * @param rawCookie
+	 */
+	public void addCookies(String rawCookie) {
+		List<Cookie> cookies = parseRawCookie(rawCookie);
+		log.info(cookies);
+		for (Cookie cookie : cookies) {
+			driver.manage().addCookie(cookie);
+		}
+	}
+
+	/**
 	 * 关闭web driver
 	 */
 	public void closeDriver() {
 		driver.quit();
+		// TASKKILL /F /IM chromedriver.exe /T
 	}
 
 	/**
@@ -103,4 +123,38 @@ public class BaseWebDriver {
 		}
 		return cookies;
 	}
+
+	/**
+	 * 获取视频发布的标题
+	 * @param videoPureName
+	 * @param siteId
+	 * @return
+	 */
+	public String getPostTitle(String videoPureName, int siteId) {
+		return VideoUtils.getPostTitle(videoPureName, siteId);
+	}
+	/**
+	 * 获取视频发布的描述
+	 * @param videoPureName 视频名称
+	 * @return
+	 */
+	public String getPostContent(String videoPureName) {
+		return String.format("# %s \n%s \n%s \n%s \n%s \n%s \n%s"
+				, videoPureName
+				, "# Kids Songs"
+				, "# Super Simple Songs"
+				, "# 来源：http://油管/user/SuperSimpleSongs 感谢原创，请subscribe她"
+				, "# 听儿歌，学英语"
+				, "# 节奏轻快，孩子爱听"
+				, "# 喜欢就关注我哦~");
+	}
+	/**
+	 * 获取视频发布的描述
+	 * @return
+	 */
+	public String[] getPostTags() {
+		String[] tags = { "英语儿歌", "童谣", "歌曲", "听力", "教育" };
+		return tags;
+	}
+
 }

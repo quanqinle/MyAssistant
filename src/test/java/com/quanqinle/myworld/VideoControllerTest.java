@@ -1,6 +1,6 @@
 package com.quanqinle.myworld;
 
-import com.quanqinle.myworld.biz.videoporter.VideoUtils;
+import com.quanqinle.myworld.biz.videoporter.upload.BaseWebDriver;
 import com.quanqinle.myworld.biz.videoporter.upload.Post2XiGuaByWebDriver;
 import com.quanqinle.myworld.controller.VideoController;
 import com.quanqinle.myworld.entity.po.VideoInfo;
@@ -20,6 +20,9 @@ import org.springframework.test.context.junit4.SpringRunner;
 import java.io.File;
 import java.util.List;
 
+import static com.quanqinle.myworld.biz.videoporter.VideoUtils.getPostTitle;
+import static com.quanqinle.myworld.biz.videoporter.VideoUtils.getVideoPureName;
+
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -32,6 +35,8 @@ public class VideoControllerTest {
 	VideoService videoService;
 	@Autowired
 	Post2XiGuaByWebDriver post2XiGuaByWebDriver;
+	@Autowired
+	BaseWebDriver baseWebDriver;
 
 //	@Test
 	public void testDownloadVideo() {
@@ -60,11 +65,6 @@ public class VideoControllerTest {
 				}
 			}
 		}
-
-		ResultVo<VideoUpload> resultVo = videoController.uploadVideo("Clean Up Song _ Kids Song for Tidying Up _ Super Simple Songs-SFE0mMWbA-Y.mp4", VideoUtils.XIGUA);
-		log.info(resultVo);
-		resultVo = videoController.uploadVideo("Count & Move from Super Simple Songs-g9EgE_JtEAw.mp4", VideoUtils.XIGUA);
-		log.info(resultVo);
 	}
 
 //	@Test
@@ -82,10 +82,10 @@ public class VideoControllerTest {
 	public void testUpdateSite() {
 		VideoSite site = videoService.getVideoSite(4);
 		site.setCookie("123");
-		videoService.updateVidetSite(site);
+		videoService.addVideoSite(site);
 	}
 
-	@Test
+//	@Test
 	public void testGetVideosUnpublished() {
 		int siteId = 2;
 		List<VideoInfo> videos = videoService.getVideosUnpublished(siteId);
@@ -94,8 +94,10 @@ public class VideoControllerTest {
 
 //	@Test
 	public void testPost2XiGua() {
+		String video = "Count & Move from Super Simple Songs-g9EgE_JtEAw.mp4";
+
 		post2XiGuaByWebDriver.startDriver();
-		post2XiGuaByWebDriver.postToXiGua();
+		post2XiGuaByWebDriver.postToXiGua(video);
 		post2XiGuaByWebDriver.closeDriver();
 	}
 
