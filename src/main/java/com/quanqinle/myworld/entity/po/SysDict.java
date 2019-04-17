@@ -23,9 +23,12 @@ public class SysDict {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 
+	@Column(name = "dict_key")
 	private String key;
+	@Column(name = "dict_value")
 	private String value;
 	private int state;
+	@Column(name = "dict_comment")
 	private String comment;
 	@Column(name = "create_time")
 	private LocalDateTime createTime;

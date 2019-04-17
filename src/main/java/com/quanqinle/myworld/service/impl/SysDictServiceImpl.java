@@ -3,6 +3,8 @@ package com.quanqinle.myworld.service.impl;
 import com.quanqinle.myworld.dao.SysDictRepository;
 import com.quanqinle.myworld.entity.po.SysDict;
 import com.quanqinle.myworld.service.SysDictService;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
@@ -17,6 +19,7 @@ import java.util.List;
 @Service
 @Transactional(rollbackFor = Exception.class)
 public class SysDictServiceImpl implements SysDictService {
+	private Log log = LogFactory.getLog(SysDictServiceImpl.class);
 
 	@Autowired
 	SysDictRepository sysdictRepository;
@@ -58,12 +61,14 @@ public class SysDictServiceImpl implements SysDictService {
 			LocalDateTime localDateTime = LocalDateTime.now();
 			sysdict.setCreateTime(localDateTime);
 			sysdict.setUpdateTime(localDateTime);
+			log.info("new sysdict");
 		} else {
 			LocalDateTime localDateTime = LocalDateTime.now();
 			sysdict.setUpdateTime(localDateTime);
+			log.info("old sysdict");
 		}
 
-		System.out.println(sysdict);
+		log.info(sysdict);
 		return sysdictRepository.save(sysdict);
 	}
 
@@ -77,6 +82,6 @@ public class SysDictServiceImpl implements SysDictService {
 		dict.setValue(value);
 		dict.setState(1);
 
-		return this.save(dict);
+		return sysdictRepository.save(dict);
 	}
 }

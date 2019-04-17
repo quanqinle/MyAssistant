@@ -16,10 +16,10 @@ DEFAULT COLLATE utf8mb4_general_ci;
 DROP TABLE IF EXISTS sys_dict;
 CREATE TABLE sys_dict (
   id BIGINT NOT NULL AUTO_INCREMENT,
-  `key` VARCHAR(20) NOT NULL COMMENT '键',
-  `value` VARCHAR(100) DEFAULT NULL comment '值',
+  `dict_key` VARCHAR(20) NOT NULL COMMENT '键',
+  `dict_value` VARCHAR(100) DEFAULT NULL comment '值',
   state TINYINT UNSIGNED DEFAULT 1 COMMENT '1有效，0删除',
-  `comment` VARCHAR(100) DEFAULT NULL COMMENT '备注',
+  `dict_comment` VARCHAR(100) DEFAULT NULL COMMENT '备注',
   create_time datetime DEFAULT NULL COMMENT '创建时间',
   update_time datetime DEFAULT NULL COMMENT '更新时间',
   CONSTRAINT pk_dict PRIMARY KEY (id)
