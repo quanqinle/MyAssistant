@@ -63,6 +63,20 @@ public class SysDictServiceImpl implements SysDictService {
 			sysdict.setUpdateTime(localDateTime);
 		}
 
+		System.out.println(sysdict);
 		return sysdictRepository.save(sysdict);
+	}
+
+	@Override
+	public SysDict save(String key, String value) {
+		SysDict dict = this.getSysDict(key);
+		if (dict == null) {
+			dict = new SysDict();
+			dict.setKey(key.toLowerCase());
+		}
+		dict.setValue(value);
+		dict.setState(1);
+
+		return this.save(dict);
 	}
 }

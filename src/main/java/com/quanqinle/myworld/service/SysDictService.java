@@ -44,4 +44,12 @@ public interface SysDictService {
 	 * @return
 	 */
 	SysDict save(SysDict sysdict);
+
+	/**
+	 * 新增/修改字典
+	 * @param key
+	 * @param value
+	 * @return
+	 */
+	SysDict save(String key, String value);
 }

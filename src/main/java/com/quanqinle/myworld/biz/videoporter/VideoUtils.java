@@ -9,6 +9,8 @@ import java.nio.file.FileAlreadyExistsException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
+import static java.lang.Math.min;
+
 /**
  * @author quanql
  */
@@ -32,11 +34,11 @@ public class VideoUtils {
 	public static int STATE_DELETE = 3;
 
 	/**
-	 * val in video name
+	 * strings in video name
 	 */
-	static String KEY_SLOGAN = "Super Simple Songs";
-	static String KEY_SEPARATOR = "-";
-	static String VIDEO_SUFFIX = ".mp4";
+	private static String KEY_SLOGAN = "Super Simple Songs";
+	private static String KEY_SEPARATOR = "-";
+	private static String VIDEO_SUFFIX = ".mp4";
 
 	/**
 	 * get unique code from video name
@@ -97,13 +99,16 @@ public class VideoUtils {
 	 */
 	public static String getPostTitle(String videoPureName, int siteId) {
 		String postTitle;
+		int endIndex;
 		switch (siteId) {
 			case XIGUA:
 			case YIDIAN:
-				postTitle = videoPureName.substring(0, 50);
+				endIndex = min(videoPureName.length(), 50);
+				postTitle = videoPureName.substring(0, endIndex);
 				break;
 			case DAYU:
-				postTitle = videoPureName.substring(0, 90);
+				endIndex = min(videoPureName.length(), 90);
+				postTitle = videoPureName.substring(0, endIndex);
 				break;
 			default:
 				postTitle = videoPureName;

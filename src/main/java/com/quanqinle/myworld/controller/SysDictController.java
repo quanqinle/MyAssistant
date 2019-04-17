@@ -46,9 +46,16 @@ public class SysDictController {
 		return new ResultVo<>(200, "ok", dict);
 	}
 
+	@GetMapping("/save/{key}/{value}")
+	@ResponseBody
+	@ApiOperation(value = "更新字典信息")
+	public ResultVo<SysDict> saveDict(@PathVariable String key, @PathVariable String value) {
+		return new ResultVo<>(200, "ok", sysDictService.save(key, value));
+	}
+
 	@PostMapping("/save")
 	@ResponseBody
-	@ApiOperation(value = "更新网站信息")
+	@ApiOperation(value = "更新字典信息")
 	public ResultVo<String> addOrUpdateCookie(String key, String value) {
 		if (key.isEmpty()) {
 			return new ResultVo<>(200, "fail", "key is null");
