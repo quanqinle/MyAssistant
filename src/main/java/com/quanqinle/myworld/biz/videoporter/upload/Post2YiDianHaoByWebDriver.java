@@ -48,6 +48,7 @@ public class Post2YiDianHaoByWebDriver extends BaseWebDriver {
 		video = videoName;
 
 		log.info("打开一点号");
+		// FIXME 2次打开时失效
 		driver.get(site.getUploadUrl());
 		wait(1000);
 		driver.navigate().refresh();

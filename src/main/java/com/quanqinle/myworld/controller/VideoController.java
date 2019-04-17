@@ -9,6 +9,7 @@ import com.quanqinle.myworld.entity.po.VideoUpload;
 import com.quanqinle.myworld.entity.vo.ResultVo;
 import com.quanqinle.myworld.service.VideoService;
 import com.quanqinle.myworld.biz.videoporter.VideoUtils;
+import com.quanqinle.myworld.util.SystemCommandUtils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.apache.commons.logging.Log;
@@ -195,5 +196,14 @@ public class VideoController {
 		}
 
 		return new ResultVo<>(200, "ok", msg);
+	}
+
+	@GetMapping("/killdriver")
+	@ResponseBody
+	@ApiOperation(value = "杀掉webdriver系统进程")
+	public ResultVo<String> tearDownDriver() {
+		SystemCommandUtils.runCMD("DIR", "/A");
+		SystemCommandUtils.runCMD("TASKKILL", "/F", "/IM", "chromedriver.exe", "/T");
+		return new ResultVo<>(200, "ok", null);
 	}
 }

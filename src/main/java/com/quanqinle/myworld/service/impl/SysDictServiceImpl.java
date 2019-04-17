@@ -54,17 +54,16 @@ public class SysDictServiceImpl implements SysDictService {
 	}
 
 	@Override
-	public SysDict save(SysDict sysdict) {
+	public SysDict saveSysDict(SysDict sysdict) {
 		String key = sysdict.getKey().toLowerCase();
 		sysdict.setKey(key);
+
+		LocalDateTime localDateTime = LocalDateTime.now();
+		sysdict.setUpdateTime(localDateTime);
 		if (this.getSysDict(key) == null) {
-			LocalDateTime localDateTime = LocalDateTime.now();
 			sysdict.setCreateTime(localDateTime);
-			sysdict.setUpdateTime(localDateTime);
 			log.info("new sysdict");
 		} else {
-			LocalDateTime localDateTime = LocalDateTime.now();
-			sysdict.setUpdateTime(localDateTime);
 			log.info("old sysdict");
 		}
 
@@ -73,15 +72,15 @@ public class SysDictServiceImpl implements SysDictService {
 	}
 
 	@Override
-	public SysDict save(String key, String value) {
-		SysDict dict = this.getSysDict(key);
+	public SysDict saveSysDict(String key, String value) {
+		SysDict dict = this.getSysDict(key.toLowerCase());
 		if (dict == null) {
 			dict = new SysDict();
-			dict.setKey(key.toLowerCase());
 		}
+		dict.setKey(key.toLowerCase());
 		dict.setValue(value);
 		dict.setState(1);
 
-		return sysdictRepository.save(dict);
+		return this.saveSysDict(dict);
 	}
 }

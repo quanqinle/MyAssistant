@@ -16,6 +16,4 @@ public interface SysDictRepository extends JpaRepository<SysDict, Integer> {
 	 */
 	SysDict findByKey(String key);
 
-	@Override
-	SysDict save(SysDict sysDict);
 }

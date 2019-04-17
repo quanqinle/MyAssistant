@@ -43,7 +43,7 @@ public interface SysDictService {
 	 * @param sysdict
 	 * @return
 	 */
-	SysDict save(SysDict sysdict);
+	SysDict saveSysDict(SysDict sysdict);
 
 	/**
 	 * 新增/修改字典
@@ -51,5 +51,5 @@ public interface SysDictService {
 	 * @param value
 	 * @return
 	 */
-	SysDict save(String key, String value);
+	SysDict saveSysDict(String key, String value);
 }

@@ -132,29 +132,22 @@ public class VideoServiceImpl implements VideoService {
 	public VideoUpload saveUploadInfo(String videoName, int siteId, int state) {
 		int videoId = this.getVideo(videoName).getVideoId();
 		VideoUpload videoUpload = this.getUploadInfo(videoId, siteId);
+
+		LocalDateTime localDateTime = LocalDateTime.now();
 		if (videoUpload == null) {
 			log.info("add a videoUpload");
 			videoUpload = new VideoUpload();
-			videoUpload.setVideoId(videoId);
-			videoUpload.setSiteId(siteId);
-			videoUpload.setState(state);
-			String postName = VideoUtils.getPostTitle(VideoUtils.getVideoPureName(videoName), siteId);
-			videoUpload.setPostName(postName);
-
-			LocalDateTime localDateTime = LocalDateTime.now();
 			videoUpload.setCreateTime(localDateTime);
-			videoUpload.setUpdateTime(localDateTime);
 		} else {
 			log.info("update a videoUpload");
-			videoUpload.setVideoId(videoId);
-			videoUpload.setSiteId(siteId);
-			videoUpload.setState(state);
-			String postName = VideoUtils.getPostTitle(VideoUtils.getVideoPureName(videoName), siteId);
-			videoUpload.setPostName(postName);
-
-			LocalDateTime localDateTime = LocalDateTime.now();
-			videoUpload.setUpdateTime(localDateTime);
 		}
+
+		videoUpload.setVideoId(videoId);
+		videoUpload.setSiteId(siteId);
+		videoUpload.setState(state);
+		String postName = VideoUtils.getPostTitle(VideoUtils.getVideoPureName(videoName), siteId);
+		videoUpload.setPostName(postName);
+		videoUpload.setUpdateTime(localDateTime);
 
 		return this.saveUploadInfo(videoUpload);
 	}
