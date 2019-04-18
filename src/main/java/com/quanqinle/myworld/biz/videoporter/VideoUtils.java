@@ -102,9 +102,12 @@ public class VideoUtils {
 		int endIndex;
 		switch (siteId) {
 			case XIGUA:
+				endIndex = min(videoPureName.length(), 50);
+				postTitle = videoPureName.substring(0, endIndex).replace("'", "");
+				break;
 			case YIDIAN:
 				endIndex = min(videoPureName.length(), 50);
-				postTitle = videoPureName.substring(0, endIndex);
+				postTitle = videoPureName.substring(0, endIndex).replace("#", "-");
 				break;
 			case DAYU:
 				endIndex = min(videoPureName.length(), 90);

@@ -202,7 +202,6 @@ public class VideoController {
 	@ResponseBody
 	@ApiOperation(value = "杀掉webdriver系统进程")
 	public ResultVo<String> tearDownDriver() {
-		SystemCommandUtils.runCMD("DIR", "/A");
 		SystemCommandUtils.runCMD("TASKKILL", "/F", "/IM", "chromedriver.exe", "/T");
 		return new ResultVo<>(200, "ok", null);
 	}

@@ -1,5 +1,6 @@
 package com.quanqinle.myworld.util;
 
+import com.google.common.util.concurrent.ThreadFactoryBuilder;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -7,9 +8,11 @@ import javax.validation.constraints.NotNull;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.concurrent.*;
 
 /**
  * 运行系统命令
+ *
  * @author quanql
  */
 public class SystemCommandUtils {
@@ -20,9 +23,8 @@ public class SystemCommandUtils {
 		builder.redirectErrorStream(true);
 		try {
 			final Process process = builder.start();
-
-			// Watch the process
-			watch(process);
+			// watch process log
+			showRunningLog(process);
 		} catch (Exception e) {
 			log.error(e);
 		}
@@ -30,25 +32,30 @@ public class SystemCommandUtils {
 	}
 
 	/**
-	 * show running log
+	 * 将命令运行时日志显示在标准输出
+	 *
 	 * @param process
 	 */
-	private static void watch(final Process process) {
+	private static void showRunningLog(final Process process) {
 
-		new Thread() {
-			@Override
-			public void run() {
-				BufferedReader input = new BufferedReader(new InputStreamReader(process.getInputStream()));
-				String line = null;
-				try {
-					while ((line = input.readLine()) != null) {
-						System.out.println(line);
-					}
-				} catch (IOException e) {
-					e.printStackTrace();
+		ThreadFactory namedThreadFactory = new ThreadFactoryBuilder().setNameFormat("thread-call-runner-%d").build();
+		ExecutorService singleThreadPool = new ThreadPoolExecutor(1, 1,
+				0L, TimeUnit.MILLISECONDS,
+				new LinkedBlockingQueue<>(1024), namedThreadFactory, new ThreadPoolExecutor.AbortPolicy());
+
+		Runnable task = () -> {
+			BufferedReader input = new BufferedReader(new InputStreamReader(process.getInputStream()));
+			String line;
+			try {
+				while ((line = input.readLine()) != null) {
+					System.out.println(line);
 				}
+			} catch (IOException e) {
+				e.printStackTrace();
 			}
-		}.start();
+		};
+		singleThreadPool.execute(	task);
+		singleThreadPool.shutdown();
 	}
 
 }

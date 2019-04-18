@@ -34,8 +34,8 @@ public class BaseWebDriver {
 	static WebDriverWait wait60s;
 	static WebDriverWait wait10s;
 
-	String videoPath = "D:\\tmp\\video-youtube\\changed\\";
-	String coverPath = "D:\\tmp\\video-youtube\\changed-cover\\";
+	String videoPath;
+	String coverPath;
 
 	@Autowired
 	public BaseWebDriver(VideoService videoService) {
@@ -46,6 +46,7 @@ public class BaseWebDriver {
 	 * 启动web driver
 	 */
 	public void startDriver() {
+
 		System.setProperty("webdriver.chrome.driver", "C:\\chromedriver.exe");
 
 		ChromeOptions options = new ChromeOptions();
@@ -61,6 +62,9 @@ public class BaseWebDriver {
 		wait120s = new WebDriverWait(driver, 120, 200);
 		wait60s = new WebDriverWait(driver, 60, 200);
 		wait10s = new WebDriverWait(driver, 10, 200);
+
+		this.videoPath = sysDictService.getValue("video.path", "D:\\tmp\\video-youtube\\changed\\");
+		this.coverPath = sysDictService.getValue("cover.path", "D:\\tmp\\video-youtube\\changed-cover\\");
 	}
 
 	/**
