@@ -116,7 +116,9 @@ public class VideoUtils {
 			default:
 				postTitle = videoPureName;
 		}
-		return "英文儿歌｜" + postTitle.trim();
+		postTitle = "英文儿歌｜" + postTitle.trim();
+		log.info(postTitle);
+		return postTitle;
 	}
 
 	/**

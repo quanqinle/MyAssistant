@@ -21,5 +21,5 @@ public interface ScheduledTaskService {
 	 * 将最新的二手房挂牌信息表中的内容同步到其他表
 	 * 实现方式：使用jpa的save()逐条保存记录
 	 */
-	void syncLatestListingsToOtherTables_2();
+	void syncLatestListingsToOtherTables2();
 }

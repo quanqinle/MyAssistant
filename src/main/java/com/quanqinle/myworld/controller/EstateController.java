@@ -55,7 +55,7 @@ public class EstateController {
 	 * just demo for the usage of restClient
 	 * @return
 	 */
-//	@GetMapping("/community/saveall1")
+	@GetMapping("/community/savealldemo")
 	private ResultVo<String> saveAll1() {
 		RestTemplate restClient = restTemplateBuilder.build();
 		String uri = remoteBase + "/upload/webty/index_search_communitylist.js";

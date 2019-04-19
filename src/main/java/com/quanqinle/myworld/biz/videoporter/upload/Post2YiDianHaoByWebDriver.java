@@ -52,6 +52,7 @@ public class Post2YiDianHaoByWebDriver extends BaseWebDriver {
 		driver.get(site.getUploadUrl());
 		wait(1000);
 		driver.navigate().refresh();
+		wait(1000);
 
 		uploadVideo();
 		isUploadFinished();

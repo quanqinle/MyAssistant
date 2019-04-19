@@ -128,7 +128,7 @@ public class ScheduledTaskServiceImpl implements ScheduledTaskService {
 	}
 
 	@Override
-	public void syncLatestListingsToOtherTables_2() {
+	public void syncLatestListingsToOtherTables2() {
 		log.info("定时任务syncLatestListingsToOtherTables()启动：" + dateFormat.format(new Date()));
 		long time = System.currentTimeMillis();
 

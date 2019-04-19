@@ -57,7 +57,7 @@ public class VideoServiceImpl implements VideoService {
 	public VideoInfo addVideo(String videoName, int siteId) {
 		VideoInfo videoInfo = getVideo(videoName);
 		if (videoInfo == null) {
-			log.info("add a videoInfo");
+			log.info("db|add a videoInfo");
 			videoInfo = new VideoInfo();
 			videoInfo.setVideoName(videoName);
 			videoInfo.setVideoSn(VideoUtils.parseVideoSN(videoName));
@@ -67,7 +67,7 @@ public class VideoServiceImpl implements VideoService {
 			// LocalDateTime.parse("2019-04-06T18:18:18")
 			videoInfo.setUpdateTime(localDateTime);
 		} else {
-			log.info("update a videoInfo");
+			log.info("db|update a videoInfo");
 			videoInfo.setVideoSn(VideoUtils.parseVideoSN(videoName));
 			videoInfo.setSourceSiteId(siteId);
 			LocalDateTime localDateTime = LocalDateTime.now();
@@ -135,11 +135,11 @@ public class VideoServiceImpl implements VideoService {
 
 		LocalDateTime localDateTime = LocalDateTime.now();
 		if (videoUpload == null) {
-			log.info("add a videoUpload");
+			log.info("db|add a videoUpload");
 			videoUpload = new VideoUpload();
 			videoUpload.setCreateTime(localDateTime);
 		} else {
-			log.info("update a videoUpload");
+			log.info("db|update a videoUpload");
 		}
 
 		videoUpload.setVideoId(videoId);
