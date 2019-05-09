@@ -171,7 +171,7 @@ public class Post2YiDianHaoByWebDriver extends BaseWebDriver {
 		 * when publish successfully, menu will be automated switched to 视频主页
 		 */
 		By byLeftMenu = By.xpath("//a[text()='内容管理' and @class='menu-item router-link-active']");
-		wait60s.until(ExpectedConditions.presenceOfElementLocated(byLeftMenu));
+		wait60s.until(ExpectedConditions.visibilityOfElementLocated(byLeftMenu));
 		log.info("complete posting video: " + video);
 	}
 

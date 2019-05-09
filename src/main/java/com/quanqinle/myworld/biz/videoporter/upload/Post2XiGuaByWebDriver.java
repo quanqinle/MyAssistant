@@ -205,8 +205,14 @@ public class Post2XiGuaByWebDriver extends BaseWebDriver {
 	 * 下载封面图
 	 */
 	private void downloadCover() {
-		driver.get("https://mp.toutiao.com/profile_v3/xigua");
-		By byCover = By.xpath("//div[@class='article-card-home']//img");
+//  视频主页
+//		driver.get("https://mp.toutiao.com/profile_v3/xigua");
+//		By byCover = By.xpath("//div[@class='article-card-home']//img");
+
+		// 内容管理页面
+		driver.get("https://mp.toutiao.com/profile_v3/xigua/content-manage");
+		By byCover = By.xpath("//div[@class='article-card']//img[@class='hover-img']");
+
 		WebElement elCover = wait60s.until(ExpectedConditions.presenceOfElementLocated(byCover));
 		String imgSrcUrl = elCover.getAttribute("src");
 		VideoUtils.downloadFile(imgSrcUrl, coverPath + title + ".png");

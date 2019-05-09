@@ -143,9 +143,8 @@ public class BaseWebDriver {
 	 * @return
 	 */
 	public String getPostContent(String videoPureName) {
-		return String.format("# %s \n%s \n%s \n%s \n%s \n%s \n%s"
+		return String.format("# %s \n%s \n%s \n%s \n%s \n%s"
 				, videoPureName
-				, "# Kids Songs"
 				, "# Super Simple Songs"
 				, "# 来源：http://油管/user/SuperSimpleSongs 感谢原创，请subscribe她"
 				, "# 听儿歌，学英语"
