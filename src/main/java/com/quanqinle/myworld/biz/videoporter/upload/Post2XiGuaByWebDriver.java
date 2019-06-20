@@ -6,9 +6,9 @@ import com.quanqinle.myworld.service.VideoService;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.springframework.stereotype.Component;
 
@@ -58,12 +58,13 @@ public class Post2XiGuaByWebDriver extends BaseWebDriver {
 		uploadVideo();
 		isUploadFinished();
 		inputTitle();
-		inputContent();
 		setCover();
-		inputTags();
-//		setBenefit();
-		selectCategory();
+		inputContent();
+		setBenefit();
 		selectActivity();
+		inputTags();
+//		selectCategory();
+
 		publishVideo();
 		downloadCover();
 	}
@@ -82,10 +83,10 @@ public class Post2XiGuaByWebDriver extends BaseWebDriver {
 	 * 是否视频上传完毕
 	 */
 	private void isUploadFinished() {
-		String uploadStatus = "//div[@class='item-upload-success']//span[contains(text(),'剩余时间')]";
+		String uploadStatus = "//div[@class='upload-btn']//span[contains(text(),'上传中')]";
 		WebElement elUploadStatus = wait60s.until(ExpectedConditions.presenceOfElementLocated(By.xpath(uploadStatus)));
 		assertNotNull(elUploadStatus, "fail to check uploading status!");
-		uploadStatus = "//div[@class='item-upload-success']//span[text()='上传完毕']";
+		uploadStatus = "//div[@class='upload-btn']//span[text()='上传成功']";
 		elUploadStatus = wait120s.until(ExpectedConditions.presenceOfElementLocated(By.xpath(uploadStatus)));
 		assertNotNull(elUploadStatus, "fail to check uploaded status!");
 		log.info("uploading video is accomplished");
@@ -100,8 +101,11 @@ public class Post2XiGuaByWebDriver extends BaseWebDriver {
 		WebElement elTitle = driver.findElement(By.xpath(xTitle));
 		assertNotNull(elTitle, "fail to locate title!");
 		elTitle.clear();
+		/**
+		 * failed the followed code:
+		 * VideoUtils.SetElementValue(driver, elTitle, "英文儿歌｜" + title)
+		 */
 		elTitle.sendKeys(getPostTitle(title, VideoUtils.XIGUA));
-//		VideoUtils.SetElementValue(driver, elTitle, "英文儿歌｜" + title);
 	}
 	/**
 	 * 介绍
@@ -119,30 +123,19 @@ public class Post2XiGuaByWebDriver extends BaseWebDriver {
 	 */
 	private void setCover() {
 		log.info("setting cover...");
-		By bySetCover = By.xpath("//img[@alt='设置封面']");
-		WebElement elSetCover = driver.findElement(bySetCover);
-		new Actions(driver).moveToElement(elSetCover).build().perform();
-		wait60s.until(ExpectedConditions.visibilityOf(elSetCover)).click();
-		By byTab1OnDialog = By.xpath("//ul[@role='tabList']//li[text()='自定义封面']");
-		By byTab2OnDialog = By.xpath("//ul[@role='tabList']//li[text()='系统封面']");
-		WebElement elTab2 = wait10s.until(ExpectedConditions.elementToBeClickable(byTab2OnDialog));
 
-		By byImg = By.xpath("//div[@role='tabPanel']//ul[@class='system-items']//img[@alt='封面']");
-		// 视频处理中期间，不能选择系统截图。重试3次
-		int retry = 4;
-		for (int i = 0; i < retry; i++) {
-			try {
-				elTab2.click();
-				wait10s.until(ExpectedConditions.visibilityOfElementLocated(byImg));
-			} catch (Exception e) {
-				driver.findElement(byTab1OnDialog).click();
-			}
-		}
+		String bgGenerate = "//div[@class='m-loading' and contains(text(),'视频封面获取中')]";
+		WebElement elBgStatus = wait60s.until(ExpectedConditions.presenceOfElementLocated(By.xpath(bgGenerate)));
+		assertNotNull(elBgStatus, "fail to start cover generation!");
+
+		By byImg = By.xpath("//div[@class='m-server-bg-list']//img[contains(@class,'system-item-bg')]");
+		elBgStatus = wait60s.until(ExpectedConditions.elementToBeClickable(byImg));
+		assertNotNull(elBgStatus, "fail to check cover generation status!");
+		log.info("cover generation is accomplished");
 
 		List<WebElement> elImgs = driver.findElements(byImg);
 		// 选图片作为封面
-		elImgs.get(elImgs.size() / 2 > 6 ? 6 : elImgs.size() / 2).click();
-		driver.findElement(By.xpath("//button[text()='确 定']")).click();
+		elImgs.get(elImgs.size() / 2 > 4 ? 4 : elImgs.size() / 2).click();
 	}
 	/**
 	 * 标签
@@ -165,10 +158,15 @@ public class Post2XiGuaByWebDriver extends BaseWebDriver {
 	 */
 	private void setBenefit() {
 		log.info("click benefit");
-		String benefit = "//span[text()='授权投放广告有收益']/..//input[@type='checkbox']";
-		// FIXME
-		WebElement elBenefit = driver.findElement(By.xpath(benefit));
-		elBenefit.click();
+		// default status is ok!
+//		String benefit = "//span[text()='授权投放广告有收益']/..//input[@type='checkbox']";
+//		WebElement elBenefit = driver.findElement(By.xpath(benefit));
+//		elBenefit.click();
+
+		String award = "//div[contains(text(),'金秒奖')]/..//div[@class='switch-content']";
+		WebElement elAward = driver.findElement(By.xpath(award));
+		super.scrollTo(elAward);
+		elAward.click();
 	}
 
 	/**
@@ -205,10 +203,6 @@ public class Post2XiGuaByWebDriver extends BaseWebDriver {
 	 * 下载封面图
 	 */
 	private void downloadCover() {
-//  视频主页
-//		driver.get("https://mp.toutiao.com/profile_v3/xigua");
-//		By byCover = By.xpath("//div[@class='article-card-home']//img");
-
 		// 内容管理页面
 		driver.get("https://mp.toutiao.com/profile_v3/xigua/content-manage");
 		By byCover = By.xpath("//div[@class='article-card']//img[@class='hover-img']");

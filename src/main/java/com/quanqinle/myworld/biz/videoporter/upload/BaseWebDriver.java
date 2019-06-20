@@ -6,7 +6,9 @@ import com.quanqinle.myworld.service.VideoService;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.openqa.selenium.Cookie;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -160,4 +162,14 @@ public class BaseWebDriver {
 		return tags;
 	}
 
+	/**
+	 * 通过JavaScript实现滚动到某元素。
+	 * tips：适用于元素不可见或被遮挡
+	 *
+	 * @param element
+	 */
+	public void scrollTo(WebElement element) {
+		JavascriptExecutor jse = (JavascriptExecutor)driver;
+		jse.executeScript("arguments[0].scrollIntoView();", element);
+	}
 }

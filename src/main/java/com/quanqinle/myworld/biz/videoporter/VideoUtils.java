@@ -76,7 +76,7 @@ public class VideoUtils {
 	}
 
 	/**
-	 * 解析视频名字，它不包含文件名中的无效内容、明确表示视频内容
+	 * 解析视频名字，它不包含文件名中的无效信息、明确表示视频内容
 	 * @param videoFileName
 	 * @return
 	 */

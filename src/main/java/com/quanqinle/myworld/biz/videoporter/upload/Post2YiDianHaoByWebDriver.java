@@ -62,7 +62,7 @@ public class Post2YiDianHaoByWebDriver extends BaseWebDriver {
 		inputTags();
 		inputContent();
 		setCopyRight();
-		selectActivity();
+//		selectActivity();
 		publishVideo();
 	}
 	/**
@@ -70,7 +70,7 @@ public class Post2YiDianHaoByWebDriver extends BaseWebDriver {
 	 */
 	private void uploadVideo() {
 		log.info("add video: " + video);
-		By byAddFile = By.xpath("//input[@type='file' and ..//button[text()='视频上传']]");
+		By byAddFile = By.xpath("//input[@type='file' and ../..//button[text()='视频上传']]");
 		WebElement elBtnAddFile = wait60s.until(ExpectedConditions.presenceOfElementLocated(byAddFile));
 		assertNotNull(elBtnAddFile, "fail to locate add video button");
 		elBtnAddFile.sendKeys(videoPath + video);
@@ -90,7 +90,7 @@ public class Post2YiDianHaoByWebDriver extends BaseWebDriver {
 	private void inputTitle() {
 		title = VideoUtils.getVideoPureName(video);
 		log.info("title: " + title);
-		String xTitle = "//div[text()='标题']/..//textarea";
+		String xTitle = "//div[text()='标题']/..//input";
 		WebElement elTitle = driver.findElement(By.xpath(xTitle));
 		assertNotNull(elTitle, "fail to locate title!");
 		elTitle.clear();
@@ -110,11 +110,30 @@ public class Post2YiDianHaoByWebDriver extends BaseWebDriver {
 	/**
 	 * 设置封面
 	 */
+	private void setCoverUsingLocalPic() {
+		log.info("setting cover...");
+		driver.findElement(By.xpath("//div[@class='cover-container']")).click();
+		By byTab = By.xpath("//div[@class='upload-container']//div[contains(text(),'本地上传')]");
+		wait10s.until(ExpectedConditions.elementToBeClickable(byTab)).click();
+		By byInput = By.xpath("//div[@class='upload-btn' and contains(text(), '上传封面')]//input");
+		driver.findElement(byInput).sendKeys(coverPath + title + ".png");
+		By byOk = By.xpath("//div[@class='upload-video-pic']//div[text()='确定']");
+		wait60s.until(ExpectedConditions.elementToBeClickable(byOk)).click();
+	}
 	private void setCover() {
 		log.info("setting cover...");
-		By bySetCover = By.xpath("//div[text()='封面']/..//input[@type='file']");
-		driver.findElement(bySetCover).sendKeys(coverPath + title + ".png");
-		wait60s.until(ExpectedConditions.elementToBeClickable(By.xpath("//button[text()='裁切']"))).click();
+		driver.findElement(By.xpath("//div[@class='cover-container']")).click();
+		By byImg = By.xpath("//div[@class='video-screen-shot']//div[@class='img-item']");
+		WebElement elBgStatus = wait60s.until(ExpectedConditions.elementToBeClickable(byImg));
+		assertNotNull(elBgStatus, "fail to check cover generation status!");
+		log.info("cover generation is accomplished");
+
+		List<WebElement> elImgs = driver.findElements(byImg);
+		// 选图片作为封面
+		elImgs.get(elImgs.size() / 2 > 4 ? 4 : elImgs.size() / 2).click();
+		By byOk = By.xpath("//div[@class='screenshot-box']//div[text()='确定']");
+		wait10s.until(ExpectedConditions.elementToBeClickable(byOk)).click();
+		wait10s.until(ExpectedConditions.invisibilityOfElementLocated(byOk));
 	}
 	/**
 	 * 标签
@@ -140,6 +159,7 @@ public class Post2YiDianHaoByWebDriver extends BaseWebDriver {
 	}
 	/**
 	 * 选择分类
+	 * 通过js选中分类
 	 */
 	private void selectCategory() {
 		log.info("select category");
@@ -170,7 +190,7 @@ public class Post2YiDianHaoByWebDriver extends BaseWebDriver {
 		/*
 		 * when publish successfully, menu will be automated switched to 视频主页
 		 */
-		By byLeftMenu = By.xpath("//a[text()='内容管理' and @class='menu-item router-link-active']");
+		By byLeftMenu = By.xpath("//a[text()='内容管理' and @class='menu-item current']");
 		wait60s.until(ExpectedConditions.visibilityOfElementLocated(byLeftMenu));
 		log.info("complete posting video: " + video);
 	}
