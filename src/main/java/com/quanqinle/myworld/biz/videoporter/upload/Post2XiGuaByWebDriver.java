@@ -6,7 +6,6 @@ import com.quanqinle.myworld.service.VideoService;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -163,10 +162,11 @@ public class Post2XiGuaByWebDriver extends BaseWebDriver {
 //		WebElement elBenefit = driver.findElement(By.xpath(benefit));
 //		elBenefit.click();
 
-		String award = "//div[contains(text(),'金秒奖')]/..//div[@class='switch-content']";
-		WebElement elAward = driver.findElement(By.xpath(award));
-		super.scrollTo(elAward);
-		elAward.click();
+		// 金秒奖不见了
+//		String award = "//div[contains(text(),'金秒奖')]/..//div[@class='switch-content']";
+//		WebElement elAward = driver.findElement(By.xpath(award));
+//		super.scrollTo(elAward);
+//		elAward.click();
 	}
 
 	/**
@@ -182,7 +182,9 @@ public class Post2XiGuaByWebDriver extends BaseWebDriver {
 	private void selectActivity() {
 		log.info("click the 1st activity");
 		String xActivity = "//div[text()='参与活动']/..//div[@class='tui2-radio-group']//input[@type='checkbox']";
-		driver.findElement(By.xpath(xActivity)).click();
+		WebElement elActivity = driver.findElement(By.xpath(xActivity));
+		super.scrollTo(elActivity);
+		elActivity.click();
 	}
 	/**
 	 * 发布

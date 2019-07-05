@@ -108,11 +108,11 @@ public class BaseWebDriver {
 
 	/**
 	 * 将cookie字符串拆解到list中
-	 * @param rawCookie
-	 * @return
+	 * @param rawCookie 原始Cookie字符串
+	 * @return Cookie列表
 	 */
 	public List<Cookie> parseRawCookie(String rawCookie) {
-		List<Cookie> cookies = new ArrayList<Cookie>();
+		List<Cookie> cookies = new ArrayList<>();
 
 		String[] rawCookieParams = rawCookie.split(";");
 
@@ -172,4 +172,16 @@ public class BaseWebDriver {
 		JavascriptExecutor jse = (JavascriptExecutor)driver;
 		jse.executeScript("arguments[0].scrollIntoView();", element);
 	}
+
+	/**
+	 * 通过JavaScript实现点击元素。
+	 * tips：适用于click()失效时
+	 *
+	 * @param element
+	 */
+	public void clickByJS(WebElement element) {
+		JavascriptExecutor jse = (JavascriptExecutor)driver;
+		jse.executeScript("arguments[0].click()", element);
+	}
+
 }

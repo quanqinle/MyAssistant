@@ -132,7 +132,9 @@ public class Post2YiDianHaoByWebDriver extends BaseWebDriver {
 		// 选图片作为封面
 		elImgs.get(elImgs.size() / 2 > 4 ? 4 : elImgs.size() / 2).click();
 		By byOk = By.xpath("//div[@class='screenshot-box']//div[text()='确定']");
-		wait10s.until(ExpectedConditions.elementToBeClickable(byOk)).click();
+		wait10s.until(ExpectedConditions.elementToBeClickable(byOk));
+		//.click()总失败，改成js
+		super.clickByJS(driver.findElement(byOk));
 		wait10s.until(ExpectedConditions.invisibilityOfElementLocated(byOk));
 	}
 	/**
