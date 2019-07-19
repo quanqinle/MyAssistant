@@ -223,5 +223,9 @@ public class EstateSecondHandListing {
 	 *
 	 */
 	private String zzcs;
+	/**
+	 * Todo 新字段还不知其作用
+	 */
+	private String sjhm;
 
 }
