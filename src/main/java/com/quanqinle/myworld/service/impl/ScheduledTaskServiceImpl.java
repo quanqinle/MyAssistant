@@ -10,12 +10,13 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.web.client.RestTemplateBuilder;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -63,7 +64,13 @@ public class ScheduledTaskServiceImpl implements ScheduledTaskService {
 		for (int i = 0; i < idxEnd ; i++) {
 			try {
 				log.info(uri + i);
-				ResponseEntity<String> respEntity = restClient.getForEntity(uri + i, String.class);
+
+				HttpHeaders headers = new HttpHeaders();
+				headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
+				headers.set("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/69.0.3497.100 Safari/537.36");
+				HttpEntity<String> entity = new HttpEntity<>("parameters", headers);
+
+				ResponseEntity<String> respEntity = restClient.exchange(uri+i, HttpMethod.GET, entity, String.class);
 				log.info(respEntity.getStatusCodeValue());
 
 				String jsonStr = respEntity.getBody();

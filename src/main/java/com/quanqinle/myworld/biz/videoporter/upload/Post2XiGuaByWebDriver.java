@@ -39,7 +39,7 @@ public class Post2XiGuaByWebDriver extends BaseWebDriver {
 		super.startDriver();
 
 		site = videoService.getVideoSite(VideoUtils.XIGUA);
-		driver.get(site.getUploadUrl());
+		driver.get(site.getHomeUrl());
 
 		super.addCookies(site.getCookie());
 	}
@@ -158,9 +158,9 @@ public class Post2XiGuaByWebDriver extends BaseWebDriver {
 	private void setBenefit() {
 		log.info("click benefit");
 		// default status is ok!
-//		String benefit = "//span[text()='授权投放广告有收益']/..//input[@type='checkbox']";
-//		WebElement elBenefit = driver.findElement(By.xpath(benefit));
-//		elBenefit.click();
+		String benefit = "//span[text()='授权投放广告有收益']/..//input[@type='checkbox']";
+		WebElement elBenefit = driver.findElement(By.xpath(benefit));
+		elBenefit.click();
 
 		// 金秒奖不见了
 //		String award = "//div[contains(text(),'金秒奖')]/..//div[@class='switch-content']";

@@ -56,18 +56,26 @@ public class EstateController {
 	 * @return
 	 */
 	@GetMapping("/community/savealldemo")
-	private ResultVo<String> saveAll1() {
+	@ApiOperation(value = "demo", notes = "演示RestTemplate用法")
+	public ResultVo<String> saveDemo() {
 		RestTemplate restClient = restTemplateBuilder.build();
 		String uri = remoteBase + "/upload/webty/index_search_communitylist.js";
+
+		/**
+		 * 如果用下面这句，有时会报 403 Forbidden
+		 * ResponseEntity<String> respEntity = restClient.getForEntity(uri, String.class)
+		 *
+		 * 增加"User-Agent"，可以解决问题。
+		 */
 
 		HttpHeaders headers = new HttpHeaders();
 		headers.setAcceptCharset(new ArrayList(Arrays.asList("gzip, deflate")));
 		headers.setHost(new InetSocketAddress(remoteBase, 80));
 		headers.set("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/69.0.3497.100 Safari/537.36");
-		String requestBody = null;
-		HttpEntity<String> requestEntity = new HttpEntity<>(requestBody, headers);
+		HttpEntity<String> requestEntity = new HttpEntity<>("parameters", headers);
 
 		ResponseEntity<String> respEntity = restClient.exchange(uri, HttpMethod.GET, requestEntity, String.class);
+
 		log.info(respEntity.getStatusCodeValue());
 		log.info(respEntity.getBody());
 		return new ResultVo(200, "end");
@@ -78,15 +86,22 @@ public class EstateController {
 	 * @return
 	 * @throws Exception
 	 */
-	@GetMapping("/community/saveall")
+	@GetMapping("/community/saveCommunities")
 	@ApiOperation(value = "抓取社区信息to DB", notes = "从ZF网站抓取所有杭州社区信息，存入DB（注：这里可以写更详细的api信息）")
 	public ResultVo<List<EstateCommunity>> saveCommunitiesToDB() throws Exception{
 		RestTemplate restClient = restTemplateBuilder.build();
 		String uri = remoteBase + "/upload/webty/index_search_communitylist.js";
-		ResponseEntity<String> respEntity = restClient.getForEntity(uri, String.class);
 
-		log.debug(respEntity.getStatusCodeValue());
-		log.debug(respEntity.toString());
+		HttpHeaders headers = new HttpHeaders();
+		headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
+		headers.set("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/69.0.3497.100 Safari/537.36");
+		HttpEntity<String> requestEntity = new HttpEntity<>("parameters", headers);
+
+		ResponseEntity<String> respEntity = restClient.exchange(uri, HttpMethod.GET, requestEntity, String.class);
+
+		log.info(respEntity.getStatusCodeValue());
+		log.info(respEntity.toString());
+		log.info(respEntity.getBody());
 
 		String body = respEntity.getBody();
 		String pre = "var data_communitylist = ";
@@ -103,7 +118,7 @@ public class EstateController {
 	 * 从ZF官网抓取最新二手房信息，存入DB
 	 * @return
 	 */
-	@GetMapping("/secondhand/savenew")
+	@GetMapping("/secondhand/saveNewestListings")
 	@ApiOperation(value = "抓取最新二手房信息to DB")
 	public ResultVo<String> saveAllListingsInfoToDB(){
 		long count = scheduledTaskService.crawlNewSecondHandRespToDB();
