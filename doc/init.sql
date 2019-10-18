@@ -161,6 +161,7 @@ CREATE TABLE estate_secondhand_listing (
   xzqh varchar(10) DEFAULT NULL COMMENT '行政区划id',
   xzqhname varchar(10) DEFAULT NULL COMMENT '行政区划名称',
   zzcs varchar(10) DEFAULT NULL COMMENT '住宅层数？',
+  sjhm varchar(20) DEFAULT NULL COMMENT '？',
   CONSTRAINT pk_listing PRIMARY KEY (id),
   CONSTRAINT uc_listing UNIQUE (fwtybh, gpid)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COMMENT='房产-二手房挂牌信息';
