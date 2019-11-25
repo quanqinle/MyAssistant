@@ -2,7 +2,7 @@
 Source Server         : myDB
 Source Server Version : 50719
 Source Host           : localhost:3306
-Source Database       : myworld
+Source Database       : mysecretary
 
 Target Server Type    : MYSQL
 Date                  : 2018-07-27 10:27:40
