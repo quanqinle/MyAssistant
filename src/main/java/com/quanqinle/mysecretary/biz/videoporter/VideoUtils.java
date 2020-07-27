@@ -1,7 +1,7 @@
 package com.quanqinle.mysecretary.biz.videoporter;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.InputStream;
 import java.net.URL;
@@ -15,7 +15,7 @@ import static java.lang.Math.min;
  * @author quanql
  */
 public class VideoUtils {
-	public static Log log = LogFactory.getLog(VideoUtils.class);
+	public static Logger log = LoggerFactory.getLogger(VideoUtils.class);
 
 	/**
 	 * site id

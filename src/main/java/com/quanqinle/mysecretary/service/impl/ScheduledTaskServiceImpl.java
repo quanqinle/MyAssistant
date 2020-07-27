@@ -5,8 +5,8 @@ import com.quanqinle.mysecretary.entity.po.EstateSecondHandListing;
 import com.quanqinle.mysecretary.entity.vo.EstateSecondHandResp;
 import com.quanqinle.mysecretary.service.EstateService;
 import com.quanqinle.mysecretary.service.ScheduledTaskService;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.web.client.RestTemplateBuilder;
@@ -27,7 +27,7 @@ import java.util.List;
 @Component
 public class ScheduledTaskServiceImpl implements ScheduledTaskService {
 
-	private Log log = LogFactory.getLog(ScheduledTaskService.class);
+    private Logger log = LoggerFactory.getLogger(ScheduledTaskService.class);
 	private static SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
 
 	@Value(value = "http://jjhygl.hzfc.gov.cn")
@@ -71,7 +71,7 @@ public class ScheduledTaskServiceImpl implements ScheduledTaskService {
 				HttpEntity<String> entity = new HttpEntity<>("parameters", headers);
 
 				ResponseEntity<String> respEntity = restClient.exchange(uri+i, HttpMethod.GET, entity, String.class);
-				log.info(respEntity.getStatusCodeValue());
+				log.info("resp code: {}", respEntity.getStatusCodeValue());
 
 				String jsonStr = respEntity.getBody();
 				log.info(jsonStr);

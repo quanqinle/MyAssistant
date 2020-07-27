@@ -8,8 +8,8 @@ import com.quanqinle.mysecretary.entity.po.VideoInfo;
 import com.quanqinle.mysecretary.entity.po.VideoSite;
 import com.quanqinle.mysecretary.entity.po.VideoUpload;
 import com.quanqinle.mysecretary.service.VideoService;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -24,7 +24,7 @@ import java.util.List;
 @Transactional(rollbackFor = Exception.class)
 public class VideoServiceImpl implements VideoService {
 
-	private Log log = LogFactory.getLog(VideoServiceImpl.class);
+    private Logger log = LoggerFactory.getLogger(VideoServiceImpl.class);
 
 	@Autowired
 	VideoSiteRepository videoSiteRepository;

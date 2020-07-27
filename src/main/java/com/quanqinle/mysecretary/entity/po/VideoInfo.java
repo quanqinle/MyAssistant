@@ -26,12 +26,16 @@ public class VideoInfo {
 
 	@ApiModelProperty(notes = "video name", required = true)
 	private String videoName;
+
 	@ApiModelProperty(notes = "unique code in video website")
 	private String videoSn;
+
 	@ApiModelProperty(notes = "video website Id")
 	private int sourceSiteId;
+
 	@Column(name = "create_time")
 	private LocalDateTime createTime;
+
 	@Column(name = "update_time")
 	private LocalDateTime updateTime;
 }

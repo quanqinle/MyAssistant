@@ -10,8 +10,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import io.swagger.annotations.Api;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.web.servlet.error.AbstractErrorController;
 import org.springframework.boot.web.servlet.error.DefaultErrorAttributes;
@@ -29,7 +29,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 public class ErrorController extends AbstractErrorController {
 
 	private static final String ERROR_PATH = "/error";
-	Log log = LogFactory.getLog(ErrorController.class);
+    private Logger log = LoggerFactory.getLogger(ErrorController.class);
 
 	@Autowired
 	ObjectMapper objectMapper;

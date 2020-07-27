@@ -7,8 +7,8 @@ import com.quanqinle.mysecretary.service.TaxRateService;
 import com.quanqinle.mysecretary.util.TaxPlanUtils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -25,7 +25,7 @@ import java.util.List;
 @RequestMapping("/tax")
 @Api(value = "TaxRateController", description = "个人所得税")
 public class TaxRateController {
-	Log log = LogFactory.getLog(TaxRateController.class);
+    private Logger log = LoggerFactory.getLogger(TaxRateController.class);
 
 	@Autowired
 	TaxRateService taxRateService;

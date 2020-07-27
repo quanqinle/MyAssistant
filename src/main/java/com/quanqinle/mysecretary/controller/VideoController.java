@@ -12,8 +12,8 @@ import com.quanqinle.mysecretary.biz.videoporter.VideoUtils;
 import com.quanqinle.mysecretary.util.SystemCommandUtils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Controller;
@@ -31,7 +31,7 @@ import static java.lang.Math.min;
 @RequestMapping("/video")
 @Api(value = "VideoController", description = "视频搬运")
 public class VideoController {
-	private Log log = LogFactory.getLog(VideoController.class);
+	private Logger log = LoggerFactory.getLogger(VideoController.class);
 
 	private final VideoService videoService;
 	private final Post2XiGuaByWebDriver post2XiGuaByWebDriver;

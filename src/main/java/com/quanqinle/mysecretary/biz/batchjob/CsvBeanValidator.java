@@ -1,4 +1,4 @@
-package com.quanqinle.mysecretary.demo.batchjob;
+package com.quanqinle.mysecretary.biz.batchjob;
 
 import org.springframework.batch.item.validator.ValidationException;
 import org.springframework.batch.item.validator.Validator;

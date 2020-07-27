@@ -3,10 +3,10 @@ package com.quanqinle.mysecretary.biz.videoporter.upload;
 import com.quanqinle.mysecretary.biz.videoporter.VideoUtils;
 import com.quanqinle.mysecretary.entity.po.VideoSite;
 import com.quanqinle.mysecretary.service.VideoService;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -20,7 +20,7 @@ import static org.hibernate.validator.internal.util.Contracts.assertNotNull;
 @Component
 public class Post2YiDianHaoByWebDriver extends BaseWebDriver {
 
-	private Log log = LogFactory.getLog(Post2YiDianHaoByWebDriver.class);
+    private Logger log = LoggerFactory.getLogger(Post2YiDianHaoByWebDriver.class);
 
 	private String video;
 	private String title;

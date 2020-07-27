@@ -1,4 +1,4 @@
-package com.quanqinle.mysecretary.demo.batchjob;
+package com.quanqinle.mysecretary.biz.batchjob;
 
 import javax.validation.constraints.Size;
 

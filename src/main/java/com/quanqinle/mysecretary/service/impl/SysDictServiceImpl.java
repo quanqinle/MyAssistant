@@ -3,8 +3,8 @@ package com.quanqinle.mysecretary.service.impl;
 import com.quanqinle.mysecretary.dao.SysDictRepository;
 import com.quanqinle.mysecretary.entity.po.SysDict;
 import com.quanqinle.mysecretary.service.SysDictService;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
@@ -19,7 +19,7 @@ import java.util.List;
 @Service
 @Transactional(rollbackFor = Exception.class)
 public class SysDictServiceImpl implements SysDictService {
-	private Log log = LogFactory.getLog(SysDictServiceImpl.class);
+    private Logger log = LoggerFactory.getLogger(SysDictServiceImpl.class);
 
 	@Autowired
 	SysDictRepository sysdictRepository;
@@ -67,7 +67,7 @@ public class SysDictServiceImpl implements SysDictService {
 			log.info("old sysdict");
 		}
 
-		log.info(sysdict);
+		log.info("sysdict: {}", sysdict);
 		return sysdictRepository.save(sysdict);
 	}
 

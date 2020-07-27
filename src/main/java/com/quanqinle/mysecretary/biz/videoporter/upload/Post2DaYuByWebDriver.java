@@ -3,18 +3,19 @@ package com.quanqinle.mysecretary.biz.videoporter.upload;
 import com.quanqinle.mysecretary.biz.videoporter.VideoUtils;
 import com.quanqinle.mysecretary.entity.po.VideoSite;
 import com.quanqinle.mysecretary.service.VideoService;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import static org.hibernate.validator.internal.util.Contracts.assertNotNull;
 import static org.hibernate.validator.internal.util.Contracts.assertTrue;
+
 
 /**
  * 发布视频到大鱼号视频
@@ -22,7 +23,7 @@ import static org.hibernate.validator.internal.util.Contracts.assertTrue;
  */
 @Component
 public class Post2DaYuByWebDriver extends BaseWebDriver{
-	private Log log = LogFactory.getLog(Post2DaYuByWebDriver.class);
+    private Logger log = LoggerFactory.getLogger(Post2DaYuByWebDriver.class);
 
 	private String video;
 	private String title;

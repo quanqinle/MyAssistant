@@ -10,8 +10,8 @@ import com.quanqinle.mysecretary.service.EstateService;
 import com.quanqinle.mysecretary.service.ScheduledTaskService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.web.client.RestTemplateBuilder;
@@ -37,7 +37,7 @@ import java.util.concurrent.Callable;
 @RequestMapping("/estate")
 @Api(value = "EstateController", description = "房地产")
 public class EstateController {
-	Log log = LogFactory.getLog(EstateController.class);
+    private Logger log = LoggerFactory.getLogger(EstateController.class);
 
 	@Value(value = "http://jjhygl.hzfc.gov.cn")
 	String remoteBase;
@@ -76,8 +76,8 @@ public class EstateController {
 
 		ResponseEntity<String> respEntity = restClient.exchange(uri, HttpMethod.GET, requestEntity, String.class);
 
-		log.info(respEntity.getStatusCodeValue());
-		log.info(respEntity.getBody());
+		log.info("resp code: {}", respEntity.getStatusCodeValue());
+		log.info("resp body: {}",respEntity.getBody());
 		return new ResultVo(200, "end");
 	}
 
@@ -99,9 +99,9 @@ public class EstateController {
 
 		ResponseEntity<String> respEntity = restClient.exchange(uri, HttpMethod.GET, requestEntity, String.class);
 
-		log.info(respEntity.getStatusCodeValue());
-		log.info(respEntity.toString());
-		log.info(respEntity.getBody());
+		log.info("resp code: {}", respEntity.getStatusCodeValue());
+		log.info("resp body: {}", respEntity.getBody());
+		log.info("resp all: {}", respEntity.toString());
 
 		String body = respEntity.getBody();
 		String pre = "var data_communitylist = ";

@@ -8,9 +8,8 @@ import com.quanqinle.mysecretary.entity.po.VideoSite;
 import com.quanqinle.mysecretary.entity.po.VideoUpload;
 import com.quanqinle.mysecretary.entity.vo.ResultVo;
 import com.quanqinle.mysecretary.service.VideoService;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-import org.junit.runner.RunWith;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -19,11 +18,10 @@ import org.springframework.test.context.junit4.SpringRunner;
 import java.io.File;
 import java.util.List;
 
-@RunWith(SpringRunner.class)
-@SpringBootTest
 @AutoConfigureMockMvc
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class VideoControllerTest {
-	private Log log = LogFactory.getLog(VideoControllerTest.class);
+    private Logger log = LoggerFactory.getLogger(VideoControllerTest.class);
 
 	@Autowired
 	VideoController videoController;
@@ -41,7 +39,7 @@ public class VideoControllerTest {
 		for (File file : files) {
 			if (file.getName().contains(".mp4")) {
 				ResultVo<VideoInfo> resultVo = videoController.downloadVideo(file.getName());
-				log.info(resultVo);
+				log.info(resultVo.toString());
 			}
 		}
 	}
@@ -57,7 +55,7 @@ public class VideoControllerTest {
 			if (file.getName().contains(".mp4")) {
 				for (int i = 2; i < 5; i++) {
 					ResultVo<VideoUpload> resultVo = videoController.uploadVideo(file.getName(), i);
-					log.info(resultVo);
+					log.info(resultVo.toString());
 				}
 			}
 		}
@@ -69,7 +67,7 @@ public class VideoControllerTest {
 		for (VideoInfo info: videoInfos) {
 			for (int i = 2; i < 5; i++) {
 				ResultVo<VideoUpload> resultVo = videoController.uploadVideo(info.getVideoName(), i);
-				log.info(resultVo);
+				log.info(resultVo.toString());
 			}
 		}
 	}
@@ -85,7 +83,7 @@ public class VideoControllerTest {
 	public void testGetVideosUnpublished() {
 		int siteId = 2;
 		List<VideoInfo> videos = videoService.getVideosUnpublished(siteId);
-		log.info(videos);
+		log.info(videos.toString());
 	}
 
 //	@Test

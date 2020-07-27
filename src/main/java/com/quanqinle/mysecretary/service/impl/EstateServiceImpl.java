@@ -9,8 +9,8 @@ import com.quanqinle.mysecretary.entity.po.EstateSecondHandHouse;
 import com.quanqinle.mysecretary.entity.po.EstateSecondHandListing;
 import com.quanqinle.mysecretary.entity.po.EstateSecondHandPrice;
 import com.quanqinle.mysecretary.service.EstateService;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -25,7 +25,7 @@ import java.util.List;
 @Transactional(rollbackFor = Exception.class)
 public class EstateServiceImpl implements EstateService {
 
-	Log log = LogFactory.getLog(EstateService.class);
+    private Logger log = LoggerFactory.getLogger(EstateService.class);
 
 	@Autowired
 	CommunityRepository communityRepository;
@@ -129,7 +129,7 @@ public class EstateServiceImpl implements EstateService {
 			log.info("insert into estate_secondhand_house select * from estate_secondhand_listing where fwtybh not in (select house_unique_id from estate_secondhand_house)");
 			secondHandListingRepository.insertHouseTable();
 		} catch (Exception e) {
-			log.error(e.getStackTrace());
+			log.error(String.valueOf(e.getStackTrace()));
 		}
 	}
 
@@ -142,7 +142,7 @@ public class EstateServiceImpl implements EstateService {
 			log.info("insert into estate_secondhand_price select * from estate_secondhand_listing where gpid not in (select listing_id from estate_secondhand_price)");
 			secondHandListingRepository.insertPriceTable();
 		} catch (Exception e) {
-			log.error(e.getStackTrace());
+			log.error(String.valueOf(e.getStackTrace()));
 		}
 	}
 

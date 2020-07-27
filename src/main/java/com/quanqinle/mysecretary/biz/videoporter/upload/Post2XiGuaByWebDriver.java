@@ -3,12 +3,12 @@ package com.quanqinle.mysecretary.biz.videoporter.upload;
 import com.quanqinle.mysecretary.biz.videoporter.VideoUtils;
 import com.quanqinle.mysecretary.entity.po.VideoSite;
 import com.quanqinle.mysecretary.service.VideoService;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import java.util.Arrays;
@@ -24,7 +24,7 @@ import static org.hibernate.validator.internal.util.Contracts.assertTrue;
 @Component
 public class Post2XiGuaByWebDriver extends BaseWebDriver {
 
-	private Log log = LogFactory.getLog(Post2XiGuaByWebDriver.class);
+    private Logger log = LoggerFactory.getLogger(Post2XiGuaByWebDriver.class);
 
 	private String video;
 	private String title;
@@ -149,7 +149,7 @@ public class Post2XiGuaByWebDriver extends BaseWebDriver {
 			elTag.sendKeys(tag);
 			// ENTER made the tag complete
 			elTag.sendKeys(Keys.ENTER);
-			BaseWebDriver.wait(100);
+			this.wait(100);
 		}
 	}
 	/**

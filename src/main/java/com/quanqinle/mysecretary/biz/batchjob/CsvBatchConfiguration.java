@@ -1,4 +1,4 @@
-package com.quanqinle.mysecretary.demo.batchjob;
+package com.quanqinle.mysecretary.biz.batchjob;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

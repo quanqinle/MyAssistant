@@ -1,7 +1,7 @@
 package com.quanqinle.mysecretary.conf;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.connection.Message;
@@ -47,7 +47,7 @@ public class RedisChannelListenerConf {
  * 为了订阅频道，实现监听
  */
 class MyRedisChannelListener implements MessageListener {
-	Log log = LogFactory.getLog(RedisChannelListenerConf.class);
+    private Logger log = LoggerFactory.getLogger(RedisChannelListenerConf.class);
 
 	@Override
 	public void onMessage(Message message, byte[] pattern) {

@@ -3,8 +3,6 @@ package com.quanqinle.mysecretary.biz.videoporter.upload;
 import com.quanqinle.mysecretary.biz.videoporter.VideoUtils;
 import com.quanqinle.mysecretary.service.SysDictService;
 import com.quanqinle.mysecretary.service.VideoService;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.openqa.selenium.Cookie;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
@@ -12,6 +10,8 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -25,7 +25,7 @@ import java.util.List;
 @Component
 public class BaseWebDriver {
 
-	private static Log log = LogFactory.getLog(BaseWebDriver.class);
+    private Logger log = LoggerFactory.getLogger(BaseWebDriver.class);
 
 	@Autowired
 	SysDictService sysDictService;
@@ -75,7 +75,7 @@ public class BaseWebDriver {
 	 */
 	public void addCookies(String rawCookie) {
 		List<Cookie> cookies = parseRawCookie(rawCookie);
-		log.info(cookies);
+		log.info("the cookies: {}", cookies);
 		for (Cookie cookie : cookies) {
 			driver.manage().addCookie(cookie);
 		}
@@ -95,7 +95,7 @@ public class BaseWebDriver {
 	 * @param millis
 	 *          毫秒。<=0时，无效
 	 */
-	public static void wait(int millis) {
+	public void wait(int millis) {
 		if (0 >= millis) {
 			return;
 		}

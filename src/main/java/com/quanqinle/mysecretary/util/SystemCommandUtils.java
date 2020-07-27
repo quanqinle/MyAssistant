@@ -1,8 +1,8 @@
 package com.quanqinle.mysecretary.util;
 
 import com.google.common.util.concurrent.ThreadFactoryBuilder;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.validation.constraints.NotNull;
 import java.io.BufferedReader;
@@ -16,7 +16,7 @@ import java.util.concurrent.*;
  * @author quanql
  */
 public class SystemCommandUtils {
-	private static Log log = LogFactory.getLog(SystemCommandUtils.class);
+	private static Logger log = LoggerFactory.getLogger(SystemCommandUtils.class);
 
 	public static void runCMD(@NotNull String... command) {
 		ProcessBuilder builder = new ProcessBuilder(command);
@@ -26,7 +26,7 @@ public class SystemCommandUtils {
 			// watch process log
 			showRunningLog(process);
 		} catch (Exception e) {
-			log.error(e);
+			log.error(String.valueOf(e));
 		}
 
 	}
