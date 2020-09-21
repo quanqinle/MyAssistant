@@ -2,7 +2,7 @@
 
 My personal secretary.
 
-The purpose of the project is to integrate all the back-end services I need in daily work and life. Furthermore, in this project, I will practice the skills I learned and accumulate some useful code blocks.
+The purpose of the project is to integrate all the back-end services I need in daily work and life. Furthermore, in this project, I will practice the skills I learned and accumulate some useful code snippets.
 
 > Note!  
 > A purely private project, fork is not recommended.
