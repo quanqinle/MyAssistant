@@ -17,16 +17,16 @@ import org.slf4j.LoggerFactory;
  * @author quanqinle
  * @date
  */
-public class ReadExcelTest {
+public class ReadExcelByEasyExcelTest {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(ReadExcelTest.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(ReadExcelByEasyExcelTest.class);
 
     public static void main(String[] args) {
         String file;
         file = "D:\\Demo1.xlsx";
 
-//        read_1(file);
-//        read_2(file);
+        read_1(file);
+
         read_3(file);
     }
 
