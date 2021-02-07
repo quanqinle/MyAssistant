@@ -29,7 +29,7 @@ public class MyBizDemoListener<T> extends ReadRowDataListener<T> {
 
 
     public MyBizDemoListener() {
-        super(new ReadExcelResult<>(), null);
+        this(new ReadExcelResult<>(), null);
     }
 
     /**

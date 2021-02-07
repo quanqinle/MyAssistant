@@ -150,6 +150,7 @@ public class ReadAllCellDataThrowExceptionLastListener extends
                 exceptionLinkedList.add(e);
             }
         }
+
         //没有异常，则转换为需要的map
         if (CollectionUtils.isEmpty(exceptionLinkedList)) {
             BeanMap.create(resultModel).putAll(map);

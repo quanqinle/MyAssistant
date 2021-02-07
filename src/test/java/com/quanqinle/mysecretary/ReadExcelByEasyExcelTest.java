@@ -65,6 +65,11 @@ public class ReadExcelByEasyExcelTest {
     }
 
 
+    /**
+     * 使用自定义单元格解析监听，遇到错误的单元格不中止当前行解析
+     *
+     * @param file
+     */
     public static void read_3(String file) {
         LOGGER.info("-- read_3 --");
 

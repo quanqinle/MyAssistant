@@ -126,6 +126,7 @@ public class ReadRowDataListener<T> extends AnalysisEventListener<T> {
          */
         if (headCheckMap != null && !headCheckMap.isEmpty()) {
             int headRowNumber = context.readSheetHolder().getHeadRowNumber();
+            // 只表头最后一行才被校验
             if (headRowNumber == rowIndex + 1) {
                 for (Integer key : headCheckMap.keySet()) {
                     String expect = headCheckMap.get(key).trim();

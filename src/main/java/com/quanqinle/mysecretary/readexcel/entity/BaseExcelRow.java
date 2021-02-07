@@ -5,6 +5,7 @@ import com.alibaba.excel.annotation.ExcelIgnore;
 import java.util.Map;
 
 /**
+ * 行数据基类
  *
  * @author quanql
  */
