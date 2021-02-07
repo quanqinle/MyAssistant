@@ -15,14 +15,17 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
+ * Excel行数据对象
  *
- * 注意：默认第一个字段就是index=0
- * 在@ExcelProperty中，value和index只能用1个，优先value
+ * 使用指南：
+ * <p>1. 在 @ExcelProperty 中，value和index只能用1个，优先value，index从0开始</p>
+ * <p>2. 如果使用index，则将值以常量形式写在类的靠前位置，方便统一修改</p>
+ * <p>3. 常量HEAD_ROW_NUMBER/COLUMN_LAST_NUMBER/HEAD_CHECK_MAP必须存在，且提供get()</p>
  *
  * @author quanqinle
  */
 @Data
-public class DemoBizExcelRow extends BaseExcelRow {
+public class DemoBizExcelRow {
 
     /**
      * 表头所在行
