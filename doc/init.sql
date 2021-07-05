@@ -5,12 +5,12 @@ Source Host           : localhost:3306
 Source Database       : mysecretary
 
 Target Server Type    : MYSQL
-Date                  : 2018-07-27 10:27:40
+Date                  : 2021-07-05 10:27:40
 */
 
-CREATE SCHEMA IF NOT EXISTS `myworld`
+CREATE SCHEMA IF NOT EXISTS `mysecretary`
 DEFAULT CHARACTER SET utf8mb4
-DEFAULT COLLATE utf8mb4_general_ci;
+DEFAULT COLLATE utf8mb4_0900_ai_ci;
 
 /*---- 系统字典 ----*/
 DROP TABLE IF EXISTS sys_dict;
@@ -28,7 +28,7 @@ CREATE TABLE sys_dict (
 /*---- 个税 ----*/
 DROP TABLE IF EXISTS tax_rate;
 CREATE TABLE tax_rate (
-  id bigint(20) not null AUTO_INCREMENT,
+  id bigint not null AUTO_INCREMENT,
   rate float(7,4) DEFAULT 0 comment '税率',
   range_lowest float(7,2) DEFAULT 0 comment '左区间',
   range_highest float(7,2) DEFAULT 0 comment '右区间',
@@ -59,7 +59,7 @@ insert into tax_rate values (14, 0.45, 80000, -1, 15160, 1, '2018-10-01');
 -- ----------------------------
 DROP TABLE IF EXISTS user;
 CREATE TABLE user (
-  id int(11) NOT NULL,
+  id BIGINT NOT NULL,
   username varchar(20) NOT NULL COMMENT '用户名',
   password varchar(50) DEFAULT NULL,
   enabled varchar(5) DEFAULT '0' COMMENT '是否被禁用',
@@ -67,8 +67,8 @@ CREATE TABLE user (
   locked varchar(5) DEFAULT '0' COMMENT '是否被锁',
   expired varchar(5) DEFAULT '0' COMMENT '是否过期',
   create_time datetime DEFAULT NULL,
-  PRIMARY KEY (id),
-  UNIQUE KEY user_info_username_uindex (username)
+  CONSTRAINT pk_user PRIMARY KEY (id),
+  CONSTRAINT uc_user UNIQUE (username)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='用户表';
 
 -- ----------------------------
@@ -81,7 +81,7 @@ INSERT INTO user VALUES ('1', 'admin', 'FA5A66466E9006215E3F54BF5B2BEEA3', 'fals
 -- ----------------------------
 DROP TABLE IF EXISTS log;
 CREATE TABLE log (
-  id int(20) NOT NULL AUTO_INCREMENT,
+  id int NOT NULL AUTO_INCREMENT,
   username varchar(50) DEFAULT NULL,
   url varchar(1024) DEFAULT NULL,
   ip varchar(20) DEFAULT NULL,
@@ -98,7 +98,7 @@ CREATE TABLE log (
 -- ----------------------------
 DROP TABLE IF EXISTS estate_community;
 CREATE TABLE estate_community (
-  id int(11) NOT NULL AUTO_INCREMENT,
+  id int NOT NULL AUTO_INCREMENT,
   xqid varchar(10) NOT NULL COMMENT '小区id',
   xqmc varchar(50) NOT NULL COMMENT '小区名称',
   CONSTRAINT pk_community PRIMARY KEY (id),
@@ -295,11 +295,6 @@ CREATE TABLE video_site (
   CONSTRAINT uc_site UNIQUE (site_name)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='视频相关网站';
 
-INSERT INTO `video_site` VALUES (1, 'youtube', NULL, NULL, NULL, NULL);
-INSERT INTO `video_site` VALUES (2, '西瓜视频', 'https://mp.toutiao.com', '', 'https://mp.toutiao.com/profile_v3/xigua/upload-video', NULL);
-INSERT INTO `video_site` VALUES (3, '一点号', 'https://mp.yidianzixun.com', '', 'https://mp.yidianzixun.com/#/Writing/videoEditor', NULL);
-INSERT INTO `video_site` VALUES (4, '大鱼号', 'https://mp.dayu.com', '', 'https://mp.dayu.com/dashboard/video/write', NULL);
-
 DROP TABLE IF EXISTS video_info;
 CREATE TABLE video_info (
   video_id BIGINT NOT NULL AUTO_INCREMENT,
@@ -323,4 +318,24 @@ CREATE TABLE video_upload (
   update_time datetime DEFAULT NULL COMMENT '更新时间',
   CONSTRAINT pk_upload PRIMARY KEY (id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='视频上传情况表';
+
+
+/* Chinese history */
+DROP TABLE IF EXISTS Chinese_dynasty;
+CREATE TABLE Chinese_dynasty (
+  id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
+  name varchar(16) NOT NULL COMMENT '朝代名',
+  year_start varchar(16) NOT NULL COMMENT '起始年份',
+  year_end varchar(16) NOT NULL COMMENT '终止年份',
+  term varchar(16) DEFAULT NULL COMMENT '持续时间',
+  years varchar(64) NOT NULL COMMENT '朝代年份',
+  founder varchar(16) DEFAULT NULL COMMENT '建国君王',
+  capital varchar(16) DEFAULT NULL COMMENT '国都',
+  now_location varchar(64) DEFAULT NULL COMMENT '当今的位置',
+  parent_name varchar(16) DEFAULT NULL COMMENT '父级朝代名',
+  ethnic varchar(16) DEFAULT NULL COMMENT '民族',
+  create_time datetime DEFAULT NULL COMMENT '创建时间',
+  update_time datetime DEFAULT NULL COMMENT '更新时间',
+  CONSTRAINT pk_dynasty PRIMARY KEY (id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='中国朝代';
 
