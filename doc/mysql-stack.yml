@@ -1,0 +1,22 @@
+# Use root as user credentials
+version: '3.1'
+
+services:
+
+  mysql:
+    image: mysql:8
+    ports:
+      - "3306:3306"
+    command: --default-authentication-plugin=mysql_native_password
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: vjr7u-Xi_oUEHcM%
+    volumes:
+      # Relative or absolute path, but not a bare name
+      - /home/ubuntu/data/mysqldb:/var/lib/mysql
+
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8080:8080
