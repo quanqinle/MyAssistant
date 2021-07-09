@@ -134,7 +134,7 @@ public class Post2YiDianHaoByWebDriver extends BaseWebDriver {
 		By byOk = By.xpath("//div[@class='screenshot-box']//div[text()='确定']");
 		wait10s.until(ExpectedConditions.elementToBeClickable(byOk));
 		//.click()总失败，改成js
-		super.clickByJS(driver.findElement(byOk));
+		super.clickByJs(driver.findElement(byOk));
 		wait10s.until(ExpectedConditions.invisibilityOfElementLocated(byOk));
 	}
 	/**

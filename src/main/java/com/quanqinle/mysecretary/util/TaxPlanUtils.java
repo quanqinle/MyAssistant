@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
-import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.List;
 
 /**
@@ -152,7 +152,7 @@ public class TaxPlanUtils {
 			if (Double.compare(preTaxBonus, 0.0d) == 0) {
 				// 税率区间取0值时，特殊处理。即，全部按月薪发放。另，采用舍位法，避免总年薪超发
 				preTaxSalary = DoubleUtils.div(DoubleUtils.sub(estimatedAnnualSalary, alreadyPaidSalary),
-						remainingMonths, DEF_DIV_SCALE, BigDecimal.ROUND_FLOOR);
+						remainingMonths, DEF_DIV_SCALE, RoundingMode.FLOOR);
 			}
 			TaxPlan tempTaxPlan = new TaxPlan(preTaxSalary, preTaxBonus);
 			tempTaxPlan = calcTaxPlan(estimatedAnnualSalary, alreadyPaidSalary, remainingMonths, tempTaxPlan);

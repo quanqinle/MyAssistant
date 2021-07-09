@@ -23,7 +23,7 @@ import java.util.List;
  */
 @Controller
 @RequestMapping("/tax")
-@Api(value = "TaxRateController", description = "个人所得税")
+@Api(value = "TaxRateController", tags = {"个人所得税"})
 public class TaxRateController {
     private Logger log = LoggerFactory.getLogger(TaxRateController.class);
 

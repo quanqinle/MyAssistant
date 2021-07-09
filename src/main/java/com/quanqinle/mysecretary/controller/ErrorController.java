@@ -14,6 +14,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.web.servlet.error.AbstractErrorController;
+import org.springframework.boot.web.error.ErrorAttributeOptions;
 import org.springframework.boot.web.servlet.error.DefaultErrorAttributes;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,7 +26,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
  * @author quanqinle
  */
 @Controller
-@Api(value = "ErrorController", description = "Error")
+@Api(value = "ErrorController", tags = {"Error"})
 public class ErrorController extends AbstractErrorController {
 
 	private static final String ERROR_PATH = "/error";
@@ -41,7 +42,7 @@ public class ErrorController extends AbstractErrorController {
 	@RequestMapping(ERROR_PATH)
 	public ModelAndView getErrorPath(HttpServletRequest request, HttpServletResponse response) {
 		Map<String, Object> model = Collections.unmodifiableMap(getErrorAttributes(
-				request, false));
+				request, ErrorAttributeOptions.defaults()));
 		Throwable cause = getCause(request);
 		int status = (Integer) model.get("status");
 		//错误信息
@@ -98,7 +99,7 @@ public class ErrorController extends AbstractErrorController {
 
 	protected String getErrorMessage(Throwable ex) {
 		/*不给前端显示详细错误*/
-		return "服务器错误,请联系管理员";
+		return "服务器错误，请联系管理员";
 	}
 
 	protected Throwable getCause(HttpServletRequest request) {
@@ -111,9 +112,9 @@ public class ErrorController extends AbstractErrorController {
 		return error;
 	}
 
-	@Override
+/*	@Override
 	public String getErrorPath() {
 		return null;
-	}
+	}*/
 
 }

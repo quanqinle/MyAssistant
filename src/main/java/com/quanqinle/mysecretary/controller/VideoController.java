@@ -29,7 +29,7 @@ import static java.lang.Math.min;
  */
 @Controller
 @RequestMapping("/video")
-@Api(value = "VideoController", description = "视频搬运")
+@Api(value = "VideoController", tags = {"视频搬运"})
 public class VideoController {
 	private Logger log = LoggerFactory.getLogger(VideoController.class);
 
@@ -202,7 +202,7 @@ public class VideoController {
 	@ResponseBody
 	@ApiOperation(value = "杀掉webdriver系统进程")
 	public ResultVo<String> tearDownDriver() {
-		SystemCommandUtils.runCMD("TASKKILL", "/F", "/IM", "chromedriver.exe", "/T");
+		SystemCommandUtils.runCmd("TASKKILL", "/F", "/IM", "chromedriver.exe", "/T");
 		return new ResultVo<>(200, "ok", null);
 	}
 }

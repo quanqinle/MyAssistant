@@ -35,7 +35,7 @@ import java.util.concurrent.Callable;
  */
 @Controller
 @RequestMapping("/estate")
-@Api(value = "EstateController", description = "房地产")
+@Api(value = "EstateController", tags = {"房地产"})
 public class EstateController {
     private Logger log = LoggerFactory.getLogger(EstateController.class);
 
@@ -88,7 +88,7 @@ public class EstateController {
 	 */
 	@GetMapping("/community/saveCommunities")
 	@ApiOperation(value = "抓取社区信息to DB", notes = "从ZF网站抓取所有杭州社区信息，存入DB（注：这里可以写更详细的api信息）")
-	public ResultVo<List<EstateCommunity>> saveCommunitiesToDB() throws Exception{
+	public ResultVo<List<EstateCommunity>> saveCommunitiesToDb() throws Exception{
 		RestTemplate restClient = restTemplateBuilder.build();
 		String uri = remoteBase + "/upload/webty/index_search_communitylist.js";
 
@@ -120,8 +120,8 @@ public class EstateController {
 	 */
 	@GetMapping("/secondhand/saveNewestListings")
 	@ApiOperation(value = "抓取最新二手房信息to DB")
-	public ResultVo<String> saveAllListingsInfoToDB(){
-		long count = scheduledTaskService.crawlNewSecondHandRespToDB();
+	public ResultVo<String> saveAllListingsInfoToDb(){
+		long count = scheduledTaskService.crawlNewSecondHandRespToDb();
 		return new ResultVo(200, "success", "更新 " + count + " 条");
 	}
 

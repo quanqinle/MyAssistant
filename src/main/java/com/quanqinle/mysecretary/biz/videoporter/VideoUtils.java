@@ -46,7 +46,7 @@ public class VideoUtils {
 	 * @param videoName
 	 * @return
 	 */
-	public static String parseVideoSN(String videoName) {
+	public static String parseVideoSn(String videoName) {
 		String sn = "";
 		if (null == videoName || videoName.isEmpty()) {
 			return null;
@@ -82,7 +82,7 @@ public class VideoUtils {
 	 */
 	public static String getVideoPureName(String videoFileName) {
 		String title = videoFileName.replace(VIDEO_SUFFIX, "");
-		title = title.replace(parseVideoSN(videoFileName), "");
+		title = title.replace(parseVideoSn(videoFileName), "");
 		title = title.substring(0, title.length()-1);
 
 		String separator = "_";
@@ -146,13 +146,13 @@ public class VideoUtils {
 	public static void main(String[] args) {
 		String videoName;
 		videoName = "BINGO Song Sing-along _ Nursery Rhyme _ #readalong with Super Simple Songs-yNnfd0wMEso.mp4";
-		System.out.println(parseVideoSN(videoName));
+		System.out.println(parseVideoSn(videoName));
 		System.out.println(getVideoPureName(videoName));
 		videoName = "Welcome to Super Simple Songs!-FMj4fyy9xrc.mp4";
 		System.out.println(getVideoPureName(videoName));
-		System.out.println(parseVideoSN(videoName));
+		System.out.println(parseVideoSn(videoName));
 		videoName = "Cartoon _ Hello Baby Sparrows _ Treetop Family Ep.1 _ Cartoon for kids-e6Vz_x-y-IA.mp4";
-		System.out.println(parseVideoSN(videoName));
+		System.out.println(parseVideoSn(videoName));
 		System.out.println(getVideoPureName(videoName));
 		videoName = "Decorate The Christmas Tree (to the tune of Deck The Halls) _ Super Simple Songs-ZpJCgTx_auc.mp4";
 		System.out.println(getVideoPureName(videoName).length());

@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
  */
 @Controller
 @RequestMapping("/redis")
-@Api(value = "RedisDemoController", description = "Redis的示例")
+@Api(value = "RedisDemoController", tags = {"Redis的示例"})
 public class RedisDemoController {
 
 	@Autowired

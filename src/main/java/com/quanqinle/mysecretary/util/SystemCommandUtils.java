@@ -18,7 +18,7 @@ import java.util.concurrent.*;
 public class SystemCommandUtils {
 	private static Logger log = LoggerFactory.getLogger(SystemCommandUtils.class);
 
-	public static void runCMD(@NotNull String... command) {
+	public static void runCmd(@NotNull String... command) {
 		ProcessBuilder builder = new ProcessBuilder(command);
 		builder.redirectErrorStream(true);
 		try {

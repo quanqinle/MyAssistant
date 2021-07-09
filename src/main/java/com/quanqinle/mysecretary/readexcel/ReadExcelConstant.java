@@ -41,14 +41,14 @@ public class ReadExcelConstant {
      */
     public final static Map<String, Integer> CONTACT_SUBJECT_MAP = new HashMap<>() {
         {
-            put("应收账款",16);
-            put("预收款项",17);
-            put("应付账款",18);
-            put("预付款项",19);
-            put("其他应收款",20);
-            put("其他应付款",21);
-            put("长期应付款",24);
-            put("长期应收款",25);
+            put("应收账款", 16);
+            put("预收款项", 17);
+            put("应付账款", 18);
+            put("预付款项", 19);
+            put("其他应收款", 20);
+            put("其他应付款", 21);
+            put("长期应付款", 24);
+            put("长期应收款", 25);
         }
     };
 
@@ -57,10 +57,10 @@ public class ReadExcelConstant {
      */
     public final static Map <String, Integer> DEAL_TYPE_MAP = new HashMap<>() {
         {
-            put("销售商品/提供劳务（营业收入）",26);
-            put("采购商品/接受劳务（存货）",27);
-            put("采购长期资产",28);
-            put("其他",29);
+            put("销售商品/提供劳务（营业收入）", 26);
+            put("采购商品/接受劳务（存货）", 27);
+            put("采购长期资产", 28);
+            put("其他", 29);
         }
     };
 

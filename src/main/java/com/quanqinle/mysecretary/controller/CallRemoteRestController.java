@@ -22,7 +22,7 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/remote")
-@Api(value = "CallRemoteRestController", description = "调用远程API的示例")
+@Api(value = "CallRemoteRestController", tags = {"调用远程API的示例"})
 public class CallRemoteRestController {
 
 	@Value(value = "${api.remote}")

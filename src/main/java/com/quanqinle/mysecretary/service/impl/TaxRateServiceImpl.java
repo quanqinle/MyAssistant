@@ -46,7 +46,7 @@ public class TaxRateServiceImpl implements TaxRateService {
 	@Override
 	@Cacheable(cacheNames = "tax",key = "#id",condition = "#id<10")
 	public TaxRate getTaxRateById(int id) {
-		return taxRateRepository.getOne(id);
+		return taxRateRepository.getById(id);
 	}
 
 	@Override

@@ -34,9 +34,10 @@ import javax.sql.DataSource;
  * CSV文件批处理导入db配置
  * 此注解将使批处理在项目运行时执行
  * @author quanqinle
+// FIXME 升级springboot到1.4.3后，运行报错，暂不解决，注释下面两行
+ @Configuration
+ @EnableBatchProcessing
  */
-@Configuration
-@EnableBatchProcessing
 public class CsvBatchConfiguration {
 	Logger logger = LoggerFactory.getLogger(CsvBatchConfiguration.class);
 

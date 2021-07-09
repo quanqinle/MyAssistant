@@ -6,9 +6,9 @@ import java.util.StringJoiner;
  * 从youtube下载视频
  * @author quanql
  */
-public class YoutubeDL {
+public class YoutubeDl {
 
-	public YoutubeDL() {
+	public YoutubeDl() {
 	}
 
 	public void download(String url) {

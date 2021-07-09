@@ -19,7 +19,7 @@ import java.util.List;
  */
 @Controller
 @RequestMapping("/sysdict")
-@Api(value = "SysDictController", description = "系统词典")
+@Api(value = "SysDictController", tags = {"系统词典"})
 public class SysDictController {
     private Logger log = LoggerFactory.getLogger(SysDictController.class);
 

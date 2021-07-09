@@ -179,7 +179,7 @@ public class BaseWebDriver {
 	 *
 	 * @param element
 	 */
-	public void clickByJS(WebElement element) {
+	public void clickByJs(WebElement element) {
 		JavascriptExecutor jse = (JavascriptExecutor)driver;
 		jse.executeScript("arguments[0].click()", element);
 	}

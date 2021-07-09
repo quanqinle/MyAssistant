@@ -45,7 +45,7 @@ public class ScheduledTaskServiceImpl implements ScheduledTaskService {
 	 */
 	@Scheduled(cron = "0 0 0 * * * ")
 	@Override
-	public long crawlNewSecondHandRespToDB() {
+	public long crawlNewSecondHandRespToDb() {
 		log.info("定时任务crawlNewSecondHandRespToDB()启动：" + dateFormat.format(new Date()));
 		long time = System.currentTimeMillis();
 		long count = 0;

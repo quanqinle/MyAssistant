@@ -11,6 +11,7 @@ import com.quanqinle.mysecretary.readexcel.converter.SubjectConverter;
 import lombok.Data;
 
 import javax.validation.constraints.NotBlank;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -150,14 +151,20 @@ public class DemoBizExcelRow {
     private String endTime;
     @ExcelProperty("单位")
     private String unit1;
+    /**
+     * 转换失败时，会异常
+     */
     @ExcelProperty("贵公司欠本公司")
     @NumberFormat("#.##")
     private Double owes;
+    /**
+     * 转换失败时，保持原值，不会异常
+     */
     @ExcelProperty("本公司欠贵公司")
-    @NumberFormat("#.##%")
+    @NumberFormat("#.##")
     private String owed;
     @ExcelProperty("其中：已开票金额")
-    @NumberFormat("#.##")
+    @NumberFormat("#.##%")
     private String invoiceAccrual;
     @ExcelProperty("其中：未开票金额")
     @NumberFormat("#.##")
@@ -176,7 +183,8 @@ public class DemoBizExcelRow {
     @ExcelProperty(value = "交易类型", converter = DealTypeConverter.class)
     private String dealType;
     @ExcelProperty("期间")
-    private String section;
+    @DateTimeFormat("yyyy-MM-dd")
+    private Date section;
     @ExcelProperty("数量")
     @NumberFormat("#.##")
     private String quantity;

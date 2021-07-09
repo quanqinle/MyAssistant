@@ -191,7 +191,7 @@ public class ReadExcelUtil {
      */
     public static boolean checkNotEmpty(String columnHeadName, AnalysisContext context, Set<Integer> columnIndexSet) {
 
-        boolean isOK = false;
+        boolean isOk = false;
 
         ReadHolder readHolder = context.currentReadHolder();
         Map<Integer, Head> headMap = readHolder.excelReadHeadProperty().getHeadMap();
@@ -203,7 +203,7 @@ public class ReadExcelUtil {
 
             if (headMap.get(colIdx).getHeadNameList().contains(columnHeadName)) {
                 if (checkNotEmpty(colIdx, context, columnIndexSet)) {
-                    isOK = true;
+                    isOk = true;
                 } else {
                     columnIndexSet.add(colIdx);
                     LOGGER.error("必填项不应为空：第{}行，列名[{}]", rowIndex+1, columnHeadName);
@@ -212,7 +212,7 @@ public class ReadExcelUtil {
         }
 
         //fixme
-        return isOK;
+        return isOk;
     }
 
     /**

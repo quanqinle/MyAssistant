@@ -180,8 +180,9 @@ public class ReadRowDataListener<T> extends AnalysisEventListener<T> {
                 /*
                  * demo codes for hyperlink, not be really used
                  */
-                if ("Sheet1!A1".equals(extra.getText())) {
-                    LOGGER.info("额外信息是超链接,在rowIndex:{},columnIndex;{},内容是:{}", extra.getRowIndex(),
+                String expect = "Sheet1!A1";
+                if (expect.equals(extra.getText())) {
+                    LOGGER.info("额外信息是超链接，在rowIndex={},columnIndex={}，内容是:{}", extra.getRowIndex(),
                             extra.getColumnIndex(), extra.getText());
                 } else {
                     LOGGER.error("Unknown hyperlink!");
