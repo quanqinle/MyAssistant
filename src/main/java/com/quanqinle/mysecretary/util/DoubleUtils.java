@@ -43,8 +43,8 @@ public class DoubleUtils {
 	/**
 	 * 加法运算
 	 *
-	 * @param addend
-	 * @param augend
+	 * @param addend -
+	 * @param augend the number to which an addend is added
 	 * @return {@code addend + ... + augend}
 	 */
 	public static double add(double addend, double... augend) {
@@ -149,7 +149,7 @@ public class DoubleUtils {
 		if (scale < 0) {
 			throw new IllegalArgumentException("The scale must be a positive integer or zero");
 		}
-		/**
+		/*
 		 * ROUND_HALF_UP: 遇到.5的情况时往上近似,例: 1.5 ->2; ROUND_HALF_DOWN : 遇到.5的情况时往下近似,例:
 		 * 1.5->1;
 		 */

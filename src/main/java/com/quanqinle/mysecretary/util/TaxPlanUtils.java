@@ -42,10 +42,9 @@ public class TaxPlanUtils {
 	 */
 	private static final int DEF_MUL_SCALE = 2;
 
-	/**
-	 * 个税税率递进表
-	 */
-/*	public static final List<TaxRate> TAX_RATES = new ArrayList<TaxRate>() {
+
+/*	个税税率递进表
+	public static final List<TaxRate> TAX_RATES = new ArrayList<TaxRate>() {
 		private static final long serialVersionUID = 1L;
 		{
 			add(new TaxRate(0, 0, 0, 0, 0));
@@ -132,7 +131,7 @@ public class TaxPlanUtils {
 	                                             int remainingMonths) {
 
 		// 总税金差距小于此值时，仍认为两数相等
-		Double tolerance = 0.1d;
+		double tolerance = 0.1d;
 
 		// 根据税率表控制年终奖情况下，得到税率最优方案
 		TaxPlan bestTaxPlanOfSalaryRate = new TaxPlan();
@@ -312,7 +311,7 @@ public class TaxPlanUtils {
 	 *
 	 * @param preTaxSalary
 	 *            税前月薪
-	 * @return
+	 * @return -
 	 */
 	public static double calcTaxableSalary(double preTaxSalary) {
 		double diff = DoubleUtils.sub(preTaxSalary, getTaxThreshold());
@@ -322,7 +321,7 @@ public class TaxPlanUtils {
 	/**
 	 * 获取个税起征点
 	 *
-	 * @return
+	 * @return -
 	 */
 	private static double getTaxThreshold() {
 		// FIXME 起征点需要区分天朝人or上等人（老外）
@@ -334,7 +333,7 @@ public class TaxPlanUtils {
 	 *
 	 * @param taxableSalary
 	 *            应纳税所得。已扣除免税，已减去起征点
-	 * @return
+	 * @return -
 	 */
 	public static TaxRate getTaxRate(double taxableSalary) {
 		for (TaxRate taxRate : getTaxRateList()) {
@@ -351,7 +350,7 @@ public class TaxPlanUtils {
 	 *
 	 * @param taxableSalary
 	 *            应纳税所得额。已扣除免税，已减去起征点
-	 * @return
+	 * @return -
 	 */
 	public static double calcTaxes(double taxableSalary) {
 		double tax = DoubleUtils.DOUBLE_ZERO;
@@ -369,7 +368,7 @@ public class TaxPlanUtils {
 	 * 计算应纳税额
 	 * @param preTaxSalary 税前月薪
 	 *
-	 * @return
+	 * @return -
 	 */
 	public static double calcTaxesByPreTaxSalary(double preTaxSalary) {
 		double taxableSalary = calcTaxableSalary(preTaxSalary);
@@ -383,7 +382,7 @@ public class TaxPlanUtils {
 	 *            年终奖
 	 * @param preTaxSalaryOfCurrentMonth
 	 *            发放年终奖的当月，税前月薪（已扣减五险一金、未扣减个税起征）
-	 * @return
+	 * @return -
 	 */
 	private static double calcTaxableBonus(double bonus, double preTaxSalaryOfCurrentMonth) {
 
@@ -405,7 +404,7 @@ public class TaxPlanUtils {
 	 *
 	 * @param taxableBonus
 	 *            年终奖应纳税部分
-	 * @return
+	 * @return -
 	 */
 	private static TaxRate getTaxRateOfBonus(double taxableBonus) {
 
@@ -424,7 +423,7 @@ public class TaxPlanUtils {
 	 *
 	 * @param taxableBonus
 	 *            年终奖应纳税部分
-	 * @return
+	 * @return -
 	 */
 	private static double calcTaxesOfBonus(double taxableBonus) {
 

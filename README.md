@@ -5,7 +5,7 @@ My personal secretary.
 The purpose of the project is to integrate all the back-end services I need in daily work and life. Furthermore, in this project, I will practice the skills I learned and accumulate some useful code snippets.
 
 > Note!  
-> A purely private project, fork is not recommended.
+> A completely private project, forking is not recommended.
 
 # Technology overview
 
@@ -21,6 +21,7 @@ The purpose of the project is to integrate all the back-end services I need in d
 * JpaRepository
 * Selenium
 * Lombok
+* Layui
 
 # Technology details
 
@@ -30,11 +31,11 @@ The purpose of the project is to integrate all the back-end services I need in d
 
 ## 2. Redis
 ### Publish/Subscribe
-`RedisChannelListenerConf.java`: achive Channel Subscribe, set Listener
+`RedisChannelListenerConf.java`: achieve Channel Subscribe, set Listener
 
 ## 3. Scheduled Task
 + In the config file, set `@EnableScheduling` to open or shutdown Scheduled Task
-+ `ScheduledTaskService.java`: achive Scheduled Task, use cron to set the timing period
++ `ScheduledTaskService.java`: achieve Scheduled Task, use cron to set the timing period
 
 ## 4. Swagger
 
@@ -48,6 +49,8 @@ Change from `Swagger UI` method to `springfox-swagger` method.
 
 ### freemarker (.ftl)
 
+### Layui
+Try out this front-end UI framework [Layui](https://github.com/sentsin/layui/)
 
 # Business overview
 

@@ -8,7 +8,7 @@ public interface ScheduledTaskService {
 
 	/**
 	 * 从ZF官网抓取最新二手房信息
-	 * @return
+	 * @return -
 	 */
 	long crawlNewSecondHandRespToDb();
 

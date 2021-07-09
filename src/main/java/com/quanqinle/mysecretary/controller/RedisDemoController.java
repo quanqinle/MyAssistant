@@ -23,14 +23,13 @@ public class RedisDemoController {
 	@RequestMapping("/setget/{value}")
 	public @ResponseBody String env(@PathVariable(name = "value") String para) {
 		redisClient.opsForValue().set("testenv", para);
-		String str = redisClient.opsForValue().get("testenv");
-		return str;
+		return redisClient.opsForValue().get("testenv");
 	}
 
 	@RequestMapping("/list/{para}")
 	public @ResponseBody String list(@PathVariable String para) {
-		BoundListOperations operations = redisClient.boundListOps("listkey");
-		operations.leftPush(para);
+		BoundListOperations<String, String> operations = redisClient.boundListOps("listkey");
+		Long aLong = operations.leftPush(para);
 		Long len = operations.size();
 		String str = (String) operations.rightPop();
 		return "size: " + len + " value: " + str;
@@ -38,8 +37,8 @@ public class RedisDemoController {
 
 	/**
 	 * 订阅频道，发送消息
-	 * @param msg
-	 * @return
+	 * @param msg -
+	 * @return -
 	 */
 	@RequestMapping("/pub/{msg}")
 	public @ResponseBody String pubChannel(@PathVariable String msg) {

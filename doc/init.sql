@@ -339,3 +339,20 @@ CREATE TABLE Chinese_dynasty (
   CONSTRAINT pk_dynasty PRIMARY KEY (id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='中国朝代';
 
+/* 英语单词、短语、句型、句子 */
+DROP TABLE IF EXISTS English_word;
+CREATE TABLE English_word (
+  id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
+  word varchar(256) NOT NULL COMMENT '字词句',
+  type TINYINT UNSIGNED DEFAULT 0 COMMENT '类型 0未分类 1单词 2词组 3句型 4谚语成语 5单词对比 6词组对比 7句子 8语法',
+  IPA varchar(32) DEFAULT NULL COMMENT '音标',
+  meaning TEXT DEFAULT NULL COMMENT '含义',
+  example TEXT DEFAULT NULL COMMENT '示例。如果和 meaning 必须有一个为空，请让 example 为空',
+  category varchar(32) DEFAULT NULL COMMENT '分类。重要性，难度水平，来源集合 等',
+  others varchar(32) DEFAULT NULL COMMENT '其他',
+  state TINYINT UNSIGNED DEFAULT 1 COMMENT '0删除，1有效',
+  create_time datetime DEFAULT NULL COMMENT '创建时间',
+  update_time datetime DEFAULT NULL COMMENT '更新时间',
+  CONSTRAINT pk_english PRIMARY KEY (id),
+  CONSTRAINT uc_english UNIQUE (word)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='英语字、词、句';

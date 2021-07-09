@@ -14,7 +14,7 @@ import java.util.List;
 /**
  * @author quanqinle
  *
- * @CacheConfig("tax") // 统一配置缓存名，免去每个方法注解都要写cacheNames
+ * // @CacheConfig("tax") // 统一配置缓存名，免去每个方法注解都要写cacheNames
  */
 @Service
 @Transactional(rollbackFor = Exception.class)
@@ -56,7 +56,7 @@ public class TaxRateServiceImpl implements TaxRateService {
 			return null;
 		}
 		List<TaxRate> rates = taxRateRepository.findByRangeLowestLessThanAndStatusOrderByRangeLowestDesc(income, STATUS_VALID);
-		if (rates.isEmpty() || rates == null) {
+		if (rates.isEmpty()) {
 			return null;
 		}
 		return rates.get(0);
