@@ -19,6 +19,7 @@
 * JpaRepository
 * Selenium
 * Lombok
+* AdminLTE
 
 # 二、项目技术细节
 
@@ -43,6 +44,7 @@
 ## 5. 前端
 ### freemarker (.ftl)
 
+### AdminLTE
 
 # 三、应用具备的业务功能
 

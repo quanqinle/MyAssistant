@@ -21,7 +21,7 @@ The purpose of the project is to integrate all the back-end services I need in d
 * JpaRepository
 * Selenium
 * Lombok
-* Layui
+* AdminLTE
 
 # Technology details
 
@@ -49,8 +49,8 @@ Change from `Swagger UI` method to `springfox-swagger` method.
 
 ### freemarker (.ftl)
 
-### Layui
-Try out this front-end UI framework [Layui](https://github.com/sentsin/layui/)
+### AdminLTE
+Try out this front-end UI framework [AdminLTE](https://github.com/ColorlibHQ/AdminLTE)
 
 # Business overview
 
