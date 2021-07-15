@@ -10,9 +10,9 @@ import java.time.LocalDateTime;
  * @author quanql
  * @version 2021/7/9
  */
-@Data
 @Entity
-@Table(name = "English_word")
+@Data
+@Table(name = "english_word")
 public class EnglishWord {
 
     @Id

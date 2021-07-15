@@ -1,7 +1,9 @@
 package com.quanqinle.mysecretary.service;
 
 import com.quanqinle.mysecretary.entity.po.EnglishWord;
+import org.springframework.data.domain.Page;
 
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -14,7 +16,7 @@ public interface EnglishWordService {
      * insert
      *
      * @param englishWord a EnglishWord object
-     * @return
+     * @return -
      */
     EnglishWord insert(EnglishWord englishWord);
 
@@ -22,7 +24,7 @@ public interface EnglishWordService {
      * update
      *
      * @param englishWord a EnglishWord object
-     * @return
+     * @return -
      */
     EnglishWord update(EnglishWord englishWord);
 
@@ -30,7 +32,7 @@ public interface EnglishWordService {
      * query by id
      *
      * @param id EnglishWord id
-     * @return
+     * @return -
      */
     Optional<EnglishWord> queryById(Long id);
 
@@ -38,8 +40,29 @@ public interface EnglishWordService {
      * delete by id
      *
      * @param id EnglishWord id
-     * @return
+     * @return -
      */
     boolean deleteById(Long id);
 
+    /**
+     * get count of all data
+     * @return -
+     */
+    long getCount();
+
+    /**
+     * query all
+     *
+     * @return -
+     */
+    List<EnglishWord> queryAll();
+
+    /**
+     *
+     * @param type
+     * @param pageNum
+     * @param limit
+     * @return
+     */
+    Page<EnglishWord> getList(int type, int pageNum, int limit);
 }

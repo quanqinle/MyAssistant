@@ -22,88 +22,89 @@ import java.util.List;
  * @author quanqinle
  */
 @Controller
-@RequestMapping("/tax")
+@RequestMapping("/pages/tax")
 @Api(value = "TaxRateController", tags = {"个人所得税"})
 public class TaxRateController {
-    private Logger log = LoggerFactory.getLogger(TaxRateController.class);
+    private final Logger log = LoggerFactory.getLogger(TaxRateController.class);
 
-	@Autowired
-	TaxRateService taxRateService;
+    @Autowired
+    TaxRateService taxRateService;
 
-	@GetMapping("/list.html")
-	public String allRate(Model model) {
-		model.addAttribute("ratelist", taxRateService.getTaxRateTable());
-		//properties中设置了缺省.ftl，所以跳转ratelist.ftl
-		return "/pages/ratelist";
-	}
+    @GetMapping("/rate.html")
+    public String getAllRate(Model model) {
+        model.addAttribute("ratelist", taxRateService.getTaxRateTable());
+        //properties中设置了缺省.ftl，所以跳转ratelist.ftl
+        return "/pages/tax/rate";
+    }
 
-	/**
-	 * 个税计算页面
-	 *
-	 * @return
-	 */
-	@GetMapping(value = {"/calc", "/plan"})
-	public String showTaxCalcPage(Model model) {
-		// FIXME 据说：“在渲染页面之前，我们通过model.addAttribute("helloMessage", new HelloMessage());告诉页面绑定到一个空的HelloMessage对象，这样sayHello.html页面初始时就会显示一个空白的表单。”
-		// 实测无效，还是显示上次提交的结果
-		model.addAttribute("taxrate", new TaxRate());
-		return "/pages/ratecalc";
-	}
+    /**
+     * 个税计算页面
+     *
+     * @return -
+     */
+    @GetMapping(value = {"/calc", "/plan"})
+    public String showTaxCalcPage(Model model) {
+        // FIXME 据说：“在渲染页面之前，我们通过model.addAttribute("helloMessage", new HelloMessage());告诉页面绑定到一个空的HelloMessage对象，这样sayHello.html页面初始时就会显示一个空白的表单。”
+        // 实测无效，还是显示上次提交的结果
+        model.addAttribute("taxrate", new TaxRate());
+        return "/pages/tax/ratecalc";
+    }
 
-	@GetMapping("/list.json")
-	@ResponseBody
-	@ApiOperation(value = "获取个税税率表")
-	public ResultVo<List<TaxRate>> allRate() {
-		List<TaxRate> list =  taxRateService.getTaxRateTable();
-		return new ResultVo(200, list);
-	}
+    @GetMapping("/list.json")
+    @ResponseBody
+    @ApiOperation(value = "获取个税税率表")
+    public ResultVo<List<TaxRate>> allRate() {
+        List<TaxRate> list = taxRateService.getTaxRateTable();
+        return new ResultVo(200, list);
+    }
 
-	/**
-	 * 提交个税查询
-	 *
-	 * @param income
-	 * @return
-	 */
-	@GetMapping("/calc_tax")
-	@ResponseBody
-	public HashMap<String, Object> calcResult(@RequestParam(name = "income") double income) {
-		double taxableSalary = TaxPlanUtils.calcTaxableSalary(income);
-		double tax = TaxPlanUtils.calcTaxes(taxableSalary);
-		TaxRate taxRate = TaxPlanUtils.getTaxRate(taxableSalary);
+    /**
+     * 提交个税查询
+     *
+     * @param income -
+     * @return -
+     */
+    @GetMapping("/calc_tax")
+    @ResponseBody
+    public HashMap<String, Object> calcResult(@RequestParam(name = "income") double income) {
+        double taxableSalary = TaxPlanUtils.calcTaxableSalary(income);
+        double tax = TaxPlanUtils.calcTaxes(taxableSalary);
+        TaxRate taxRate = TaxPlanUtils.getTaxRate(taxableSalary);
 
-		HashMap<String, Object> result = new HashMap<>(16);
-		result.put("taxes", tax);
-		result.put("taxrate", taxRate);
+        HashMap<String, Object> result = new HashMap<>(16);
+        result.put("taxes", tax);
+        result.put("taxrate", taxRate);
 
-		return result;
-	}
+        return result;
+    }
 
-	@PostMapping("/opt_plan")
-	@ResponseBody
-	public HashMap<String, Object> planSubmit(Double estimatedAnnualSalary, Double alreadyPaidSalary, Integer remainingMonths) {
-		TaxPlan taxplan = TaxPlanUtils.calcBestTaxPlanQuickly(estimatedAnnualSalary, alreadyPaidSalary, remainingMonths);
-		HashMap<String, Object> result = new HashMap<>(16);
-		result.put("taxplan", taxplan);
+    @PostMapping("/opt_plan")
+    @ResponseBody
+    public HashMap<String, Object> planSubmit(Double estimatedAnnualSalary, Double alreadyPaidSalary, Integer remainingMonths) {
+        TaxPlan taxplan = TaxPlanUtils.calcBestTaxPlanQuickly(estimatedAnnualSalary, alreadyPaidSalary, remainingMonths);
+        HashMap<String, Object> result = new HashMap<>(16);
+        result.put("taxplan", taxplan);
 
-		return result;
-	}
+        return result;
+    }
 
-	@GetMapping("/income/{income}")
-	@ResponseBody
-	@ApiOperation(value = "查询收入对应的税率")
-	public TaxRate getRateByIncome(@PathVariable double income) {
-		double taxableSalary = TaxPlanUtils.calcTaxableSalary(income);
-		return taxRateService.getTaxRateByRange(taxableSalary);
-	}
+    @GetMapping("/income/{income}")
+    @ResponseBody
+    @ApiOperation(value = "查询收入对应的税率")
+    public TaxRate getRateByIncome(@PathVariable double income) {
+        double taxableSalary = TaxPlanUtils.calcTaxableSalary(income);
+        return taxRateService.getTaxRateByRange(taxableSalary);
+    }
 
-	/**
-	 * just demo for the usage of environment parameter
-	 * @param userDir
-	 * @return
-	 */
-	@GetMapping("/env")
-	@ResponseBody
-	public String getEnv(@Value("${user.dir:false}") String userDir) {
-		return "user.dir = " + userDir;
-	}
+    /**
+     * just demo for the usage of environment parameter
+     *
+     * @param userDir -
+     * @return -
+     */
+    @GetMapping("/env")
+    @ResponseBody
+    public String getEnv(@Value("${user.dir:false}") String userDir) {
+        return "user.dir = " + userDir;
+    }
 }

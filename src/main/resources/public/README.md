@@ -1,4 +1,17 @@
+目录结构参考： https://juejin.cn/post/6844904054720561165
+
+---
+# 编译
+* dev
+
+  npm install &&npm run dev
+
+* product
+
+  npm install &&npm run build
+
 # 前端包结构描述
+
 * src 为前端根目录
 * src/css .css后缀css文件目录
 * src/scss sass文件目录
@@ -13,9 +26,6 @@
 * src/template 服务端模版文件存放目录
 * src/template/pages 每个页面的模版文件存放此目录
 
-
-
-
 # css命名规则 http://nec.netease.com/standard/css-name.html
 
 * 分类的命名方法：使用单个字母+"-"为前缀
@@ -25,8 +35,6 @@
 * css 尽量采用 scss css预处理器，src/scss/ 为scss根目录 ;src/scss/pages/ 为页面scss目录
 * css 分全局css跟组件css,全局css注意要添加 命名空间防止css污染,组件css 即 .vue组件里的 <code><style lang="scss" scoped>  </style></code>里的样式
 * 每个页面独立引入自己的scss 该scss 需要在入口js import 进来,不建议内敛到 顶级root Vue组件里<code><style lang="scss" > </style></code>
-
-
 
 # 资料
 * vue 插件库 https://github.com/vuejs/awesome-vue

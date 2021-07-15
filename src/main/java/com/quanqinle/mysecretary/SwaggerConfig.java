@@ -33,7 +33,7 @@ public class SwaggerConfig {
 	private ApiInfo getApiInfo() {
 		return new ApiInfoBuilder()
 				.title("MySecretary App API")
-				.description("\"我的秘书APP API for Online Store\"")
+				.description("\"私人助理 APP API for Online Store\"")
 				.version("1.0.0")
 //				.license("Apache License Version 2.0")
 //				.licenseUrl("https://www.apache.org/licenses/LICENSE-2.0")
