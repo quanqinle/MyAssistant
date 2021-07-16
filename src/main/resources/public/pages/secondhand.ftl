@@ -9,11 +9,11 @@ recommend sticking to 'spring' -->
 <head>
     <@meta />
 
-	<script type="text/javascript" src="/dist/js/jquery.min.js"></script>
+	<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 	<link type="text/css" rel="stylesheet" media="all" href="/dist/css/bootstrap.min.css"/>
-	<script type="text/javascript" src="/dist/js/bootstrap.min.js"></script>
-	<script type="text/javascript" src="/dist/js/vue.js"></script>
-	<script type="text/javascript" src="/dist/js/Chart.bundle.js"></script>
+	<script src="/dist/js/bootstrap.min.js"></script>
+	<script src="/dist/js/vue.js"></script>
+	<script src="/dist/js/Chart.bundle.js"></script>
 
 	<script type="text/javascript">
 		function checkInput() {

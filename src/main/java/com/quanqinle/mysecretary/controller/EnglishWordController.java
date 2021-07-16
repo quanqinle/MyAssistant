@@ -7,6 +7,7 @@ import com.quanqinle.mysecretary.entity.po.EnglishWord;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.data.domain.Page;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,8 +18,8 @@ import java.util.List;
  * @author quanql
  * @version 2021/7/9
  */
-@RestController
-@RequestMapping("/api/englishWord")
+@Controller
+@RequestMapping("/english")
 @Api(value = "EnglishWordController", tags = {"英语资料"})
 public class EnglishWordController {
 
@@ -61,13 +62,32 @@ public class EnglishWordController {
         return Result.success(all);
     }
 
+    /**
+     * 获取分页英语资料
+     * @param model -
+     * @param type 资料类型
+     * @param pageNum 当前页数，从0开始
+     * @param limit 每页数据量
+     * @return -
+     */
+    @GetMapping("/list.html")
+    public String getList(Model model,
+                          @RequestParam(name = "type", defaultValue = "4") int type,
+                          @RequestParam(name = "page", defaultValue = "0") int pageNum,
+                          @RequestParam(name = "limit", defaultValue = "10") int limit) {
+        Page<EnglishWord> data = englishWordService.getList(type, pageNum, limit);
+        model.addAttribute("result", Result.success(data.getContent(), new PageInfo(data)));
+        return "/pages/english/list";
+    }
+
     @GetMapping("/list.json")
     @ResponseBody
     @ApiOperation(value = "获取分页英语资料")
-    public Result<Page<EnglishWord>> getList(@RequestParam(name = "type") int type, @RequestParam(name = "page") int pageNum, @RequestParam(name = "limit") int limit) {
-//        int pageNum = (int) model.getAttribute("page");
-//        int limit = (int) model.getAttribute("limit");
+    public Result<List<EnglishWord>> getList(
+                          @RequestParam(name = "type", defaultValue = "4") int type,
+                          @RequestParam(name = "page", defaultValue = "0") int pageNum,
+                          @RequestParam(name = "limit", defaultValue = "10") int limit) {
         Page<EnglishWord> data = englishWordService.getList(type, pageNum, limit);
-        return Result.success(data);
+        return Result.success(data.getContent(), new PageInfo(data));
     }
 }

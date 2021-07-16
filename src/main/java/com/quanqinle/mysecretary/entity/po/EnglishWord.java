@@ -4,6 +4,7 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
 /**
@@ -13,7 +14,7 @@ import java.time.LocalDateTime;
 @Entity
 @Data
 @Table(name = "english_word")
-public class EnglishWord {
+public class EnglishWord implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -39,4 +40,9 @@ public class EnglishWord {
     private LocalDateTime createTime;
     @Column(name = "update_time")
     private LocalDateTime updateTime;
+
+    protected EnglishWord() {
+        // no-args constructor required by JPA spec
+        // this one is protected since it shouldn't be used directly
+    }
 }

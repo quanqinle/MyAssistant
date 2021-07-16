@@ -49,8 +49,11 @@ Change from `Swagger UI` method to `springfox-swagger` method.
 
 ### freemarker (.ftl)
 
-### AdminLTE
-Try out this front-end UI framework [AdminLTE](https://github.com/ColorlibHQ/AdminLTE)
+### AdminLTE 3.1
+Try out this front-end UI framework [AdminLTE (on GitHub)](https://github.com/ColorlibHQ/AdminLTE)
+
+* [live preview](https://adminlte.io/themes/v3)
+* [docs](https://adminlte.io/docs/3.1/)
 
 # Business overview
 
@@ -59,3 +62,7 @@ Try out this front-end UI framework [AdminLTE](https://github.com/ColorlibHQ/Adm
 ## 2. track the listing price of second-hand housing
 
 ## 3. Video porter
+
+## 4. History study for my kid
+
+## 5. English study for my kid

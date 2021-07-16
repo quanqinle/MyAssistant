@@ -58,7 +58,7 @@ public interface EnglishWordService {
     List<EnglishWord> queryAll();
 
     /**
-     *
+     * query list under page
      * @param type
      * @param pageNum
      * @param limit

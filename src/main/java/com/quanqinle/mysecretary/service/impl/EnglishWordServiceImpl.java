@@ -74,11 +74,6 @@ public class EnglishWordServiceImpl implements EnglishWordService {
         return repository.count();
     }
 
-    public Page<EnglishWord> getList() {
-        EnglishWord ew = new EnglishWord();
-        return repository.findAll(Example.of(ew), Pageable.unpaged());
-    }
-
     @Override
     public Page<EnglishWord> getList(int type, int pageNum, int limit) {
         Page<EnglishWord> words = repository.findByType(type, PageRequest.of(pageNum, limit));

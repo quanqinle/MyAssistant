@@ -6,8 +6,8 @@
 <head>
     <@meta/>
 	<link rel="stylesheet" type="text/css" media="all" href="/dist/css/bootstrap.min.css"/>
-	<script type="text/javascript" src="/dist/js/jquery.min.js"></script>
-	<script type="text/javascript" src="/dist/js/bootstrap.min.js"></script>
+	<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+	<script src="/dist/js/bootstrap.min.js"></script>
 
 	<style>
 		th {

@@ -64,7 +64,7 @@ public class Result<T> implements Serializable {
     }
 
     public static <T> Result<T> success(T data, PageInfo pageInfo) {
-        return success(data, ResultCode.SUCCESS.getMessage(), null);
+        return success(data, ResultCode.SUCCESS.getMessage(), pageInfo);
     }
 
     public static <T> Result<T> success(T data, String msg, PageInfo pageInfo) {
@@ -141,6 +141,6 @@ public class Result<T> implements Serializable {
 
     @Override
     public String toString() {
-        return "ResultVo {code=" + code + ", message='" + message +  "\', data=" + data + "}";
+        return "ResultVo {code=" + code + ", message='" + message + "', data=" + data + ", pageInfo=" + pageInfo + "}";
     }
 }
