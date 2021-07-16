@@ -4,10 +4,10 @@ import com.quanqinle.mysecretary.biz.videoporter.VideoUtils;
 import com.quanqinle.mysecretary.biz.videoporter.upload.Post2DaYuByWebDriver;
 import com.quanqinle.mysecretary.biz.videoporter.upload.Post2XiGuaByWebDriver;
 import com.quanqinle.mysecretary.biz.videoporter.upload.Post2YiDianHaoByWebDriver;
+import com.quanqinle.mysecretary.entity.Result;
 import com.quanqinle.mysecretary.entity.po.VideoInfo;
 import com.quanqinle.mysecretary.entity.po.VideoSite;
 import com.quanqinle.mysecretary.entity.po.VideoUpload;
-import com.quanqinle.mysecretary.entity.vo.ResultVo;
 import com.quanqinle.mysecretary.service.VideoService;
 import com.quanqinle.mysecretary.util.SystemCommandUtils;
 import io.swagger.annotations.Api;
@@ -53,80 +53,80 @@ public class VideoController {
     @GetMapping("/site/list")
     @ResponseBody
     @ApiOperation(value = "获取所有网站信息")
-    public ResultVo<List<VideoSite>> allSites() {
+    public Result<List<VideoSite>> allSites() {
         List<VideoSite> sites = videoService.getVideoSites();
-        return new ResultVo<>(200, "ok", sites);
+        return Result.success(sites);
     }
 
     @GetMapping("/site/{siteId}")
     @ResponseBody
     @ApiOperation(value = "获取某个网站信息")
-    public ResultVo<VideoSite> getSite(@PathVariable int siteId) {
+    public Result<VideoSite> getSite(@PathVariable int siteId) {
         VideoSite site = videoService.getVideoSite(siteId);
-        return new ResultVo<>(200, "ok", site);
+        return Result.success(site);
     }
 
     @PostMapping("/site/save")
     @ResponseBody
     @ApiOperation(value = "更新网站信息")
-    public ResultVo<VideoSite> updateCookie(int siteId, String cookie) {
+    public Result<VideoSite> updateCookie(int siteId, String cookie) {
         VideoSite site = videoService.getVideoSite(siteId);
         site.setCookie(cookie);
-        return new ResultVo<>(200, "ok", videoService.addVideoSite(site));
+        return Result.success(videoService.addVideoSite(site));
     }
 
     @GetMapping("/unpublished/{siteId}")
     @ResponseBody
     @ApiOperation(value = "获取尚未上传到某网站的视频信息")
-    public ResultVo<List<VideoInfo>> getUnpublishedVideo(@PathVariable int siteId) {
+    public Result<List<VideoInfo>> getUnpublishedVideo(@PathVariable int siteId) {
         List<VideoInfo> videos = videoService.getVideosUnpublished(siteId);
-        return new ResultVo<>(200, "ok", videos);
+        return Result.success(videos);
     }
 
     @GetMapping("/published/{siteId}")
     @ResponseBody
     @ApiOperation(value = "获取已上传到某网站的视频信息")
-    public ResultVo<List<VideoUpload>> getPublishedVideo(@PathVariable int siteId) {
+    public Result<List<VideoUpload>> getPublishedVideo(@PathVariable int siteId) {
         List<VideoUpload> videos = videoService.getUploadInfos(siteId, 0);
-        return new ResultVo<>(200, "ok", videos);
+        return Result.success(videos);
     }
 
     @PostMapping("/download")
     @ResponseBody
     @ApiOperation(value = "下载视频")
-    public ResultVo<VideoInfo> downloadVideo(@NonNull String videoName) {
+    public Result<VideoInfo> downloadVideo(@NonNull String videoName) {
         if (videoName.isEmpty()) {
-            return new ResultVo<>(400, "parameter shouldn't be null", null);
+            return Result.fail(null, "parameter shouldn't be null");
         }
 
         if (null != videoService.getVideo(videoName)) {
-            return new ResultVo<>(200, "video is existed", null);
+            return Result.success(null, "video is existed");
         }
 
         // TODO
         try {
-            return new ResultVo<>(200, "ok", videoService.addVideo(videoName, VideoUtils.YOUTUBE));
+            return Result.success(videoService.addVideo(videoName, VideoUtils.YOUTUBE));
         } catch (Exception e) {
-            return new ResultVo<>(400, e.toString(), null);
+            return Result.fail(null, e.toString());
         }
     }
 
     @PostMapping("/upload")
     @ResponseBody
     @ApiOperation(value = "上传视频")
-    public ResultVo<VideoUpload> uploadVideo(String videoName, int siteId) {
+    public Result<VideoUpload> uploadVideo(String videoName, int siteId) {
         if (videoName.isEmpty()) {
-            return new ResultVo<>(400, "para is null", null);
+            return Result.fail(null, "para is null");
         }
 
         if (null != videoService.getUploadInfo(videoName, siteId)) {
-            return new ResultVo<>(200, "video is existed", null);
+            return Result.success(null, "video is existed");
         }
 
         try {
-            return new ResultVo<>(200, "ok", videoService.saveUploadInfo(videoName, siteId));
+            return Result.success(videoService.saveUploadInfo(videoName, siteId));
         } catch (Exception e) {
-            return new ResultVo<>(400, e.toString(), null);
+            return Result.fail(null, e.toString());
         }
     }
 
@@ -141,10 +141,10 @@ public class VideoController {
     @GetMapping("/post/{siteId}/{number}")
     @ResponseBody
     @ApiOperation(value = "发布视频")
-    public ResultVo<String> postVideo(@PathVariable int siteId, @PathVariable int number) {
+    public Result<String> postVideo(@PathVariable int siteId, @PathVariable int number) {
         List<VideoInfo> videoList = videoService.getVideosUnpublished(siteId);
         if (videoList == null) {
-            return new ResultVo<>(200, "ok", "no video need to be posted!");
+            return Result.success("no video need to be posted!");
         }
 
         String msg = "post to ";
@@ -198,14 +198,14 @@ public class VideoController {
                 log.error("unknown siteId!");
         }
 
-        return new ResultVo<>(200, "ok", msg);
+        return Result.success(msg);
     }
 
     @GetMapping("/killdriver")
     @ResponseBody
     @ApiOperation(value = "杀掉webdriver系统进程")
-    public ResultVo<String> tearDownDriver() {
+    public Result<String> tearDownDriver() {
         SystemCommandUtils.runCmd("TASKKILL", "/F", "/IM", "chromedriver.exe", "/T");
-        return new ResultVo<>(200, "ok", null);
+        return Result.success();
     }
 }

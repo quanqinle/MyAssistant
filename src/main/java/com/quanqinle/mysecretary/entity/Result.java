@@ -16,7 +16,7 @@ public class Result<T> implements Serializable {
      * 400：客户端输入参数有误导致响应失败
      * 500：服务器错误
      */
-    private Integer code;
+    private int code;
     /**
      * 响应消息
      */
@@ -33,10 +33,21 @@ public class Result<T> implements Serializable {
     public Result() {
     }
 
-    public Result(Integer code, T data, String message, PageInfo pageInfo) {
+    public Result(int code, String message) {
         this.code = code;
         this.message = message;
+    }
+
+    public Result(int code, String message, T data) {
+        this.code = code;
         this.data = data;
+        this.message = message;
+    }
+
+    public Result(int code, String message, T data, PageInfo pageInfo) {
+        this.code = code;
+        this.data = data;
+        this.message = message;
         this.pageInfo = pageInfo;
     }
 
@@ -50,6 +61,10 @@ public class Result<T> implements Serializable {
 
     public static <T> Result<T> success(T data, String msg) {
         return success(data, msg, null);
+    }
+
+    public static <T> Result<T> success(T data, PageInfo pageInfo) {
+        return success(data, ResultCode.SUCCESS.getMessage(), null);
     }
 
     public static <T> Result<T> success(T data, String msg, PageInfo pageInfo) {
@@ -72,11 +87,15 @@ public class Result<T> implements Serializable {
         return fail(data, msg, null);
     }
 
+    public static <T> Result<T> fail(T data, PageInfo pageInfo) {
+        return fail(data, ResultCode.FAIL.getMessage(), pageInfo);
+    }
+
     public static <T> Result<T> fail(T data, String msg, PageInfo pageInfo) {
         return fail(ResultCode.FAIL.getCode(), data, msg, pageInfo);
     }
 
-    public static <T> Result<T> fail(Integer code, T data, String msg, PageInfo pageInfo) {
+    public static <T> Result<T> fail(int code, T data, String msg, PageInfo pageInfo) {
         return new Result<T>()
                 .setCode(code)
                 .setData(data)
@@ -84,11 +103,11 @@ public class Result<T> implements Serializable {
                 .setPage(pageInfo);
     }
 
-    public Integer getCode() {
+    public int getCode() {
         return code;
     }
 
-    public Result<T> setCode(Integer code) {
+    public Result<T> setCode(int code) {
         this.code = code;
         return this;
     }
@@ -118,5 +137,10 @@ public class Result<T> implements Serializable {
     public Result<T> setPage(PageInfo pageInfo) {
         this.pageInfo = pageInfo;
         return this;
+    }
+
+    @Override
+    public String toString() {
+        return "ResultVo {code=" + code + ", message='" + message +  "\', data=" + data + "}";
     }
 }

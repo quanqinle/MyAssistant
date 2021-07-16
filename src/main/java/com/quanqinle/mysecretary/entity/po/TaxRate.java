@@ -20,7 +20,7 @@ import javax.persistence.Id;
 @Data
 public class TaxRate {
 
-	public TaxRate() { //jpa必须的
+	protected TaxRate() { //jpa必须的
 		// no-args constructor required by JPA spec
 		// this one is protected since it shouldn't be used directly
 	}
@@ -76,8 +76,8 @@ public class TaxRate {
 	/**
 	 * 金额是否落入当前税率区间
 	 *
-	 * @param salary
-	 * @return
+	 * @param salary -
+	 * @return -
 	 */
 	public boolean isInRange(double salary) {
 		if (Double.compare(this.rangeLowest, salary) < 0 && Double.compare(salary, this.rangeHighest) <= 0) {
@@ -85,6 +85,5 @@ public class TaxRate {
 		}
 		return false;
 	}
-
 
 }

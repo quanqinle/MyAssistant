@@ -3,17 +3,16 @@ package com.quanqinle.mysecretary;
 import com.quanqinle.mysecretary.biz.videoporter.upload.BaseWebDriver;
 import com.quanqinle.mysecretary.biz.videoporter.upload.Post2XiGuaByWebDriver;
 import com.quanqinle.mysecretary.controller.VideoController;
+import com.quanqinle.mysecretary.entity.Result;
 import com.quanqinle.mysecretary.entity.po.VideoInfo;
 import com.quanqinle.mysecretary.entity.po.VideoSite;
 import com.quanqinle.mysecretary.entity.po.VideoUpload;
-import com.quanqinle.mysecretary.entity.vo.ResultVo;
 import com.quanqinle.mysecretary.service.VideoService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
 
 import java.io.File;
 import java.util.List;
@@ -38,8 +37,8 @@ public class VideoControllerTest {
 		File[] files = new File(dirPath).listFiles();
 		for (File file : files) {
 			if (file.getName().contains(".mp4")) {
-				ResultVo<VideoInfo> resultVo = videoController.downloadVideo(file.getName());
-				log.info(resultVo.toString());
+				Result<VideoInfo> Result = videoController.downloadVideo(file.getName());
+				log.info(Result.toString());
 			}
 		}
 	}
@@ -54,8 +53,8 @@ public class VideoControllerTest {
 		for (File file : files) {
 			if (file.getName().contains(".mp4")) {
 				for (int i = 2; i < 5; i++) {
-					ResultVo<VideoUpload> resultVo = videoController.uploadVideo(file.getName(), i);
-					log.info(resultVo.toString());
+					Result<VideoUpload> Result = videoController.uploadVideo(file.getName(), i);
+					log.info(Result.toString());
 				}
 			}
 		}
@@ -66,8 +65,8 @@ public class VideoControllerTest {
 		List<VideoInfo> videoInfos = videoService.getVideos();
 		for (VideoInfo info: videoInfos) {
 			for (int i = 2; i < 5; i++) {
-				ResultVo<VideoUpload> resultVo = videoController.uploadVideo(info.getVideoName(), i);
-				log.info(resultVo.toString());
+				Result<VideoUpload> Result = videoController.uploadVideo(info.getVideoName(), i);
+				log.info(Result.toString());
 			}
 		}
 	}

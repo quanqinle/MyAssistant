@@ -1,7 +1,7 @@
 package com.quanqinle.mysecretary.controller;
 
+import com.quanqinle.mysecretary.entity.Result;
 import com.quanqinle.mysecretary.entity.po.TaxRate;
-import com.quanqinle.mysecretary.entity.vo.ResultVo;
 import com.quanqinle.mysecretary.entity.vo.TaxPlan;
 import com.quanqinle.mysecretary.service.TaxRateService;
 import com.quanqinle.mysecretary.util.TaxPlanUtils;
@@ -46,16 +46,16 @@ public class TaxRateController {
     public String showTaxCalcPage(Model model) {
         // FIXME 据说：“在渲染页面之前，我们通过model.addAttribute("helloMessage", new HelloMessage());告诉页面绑定到一个空的HelloMessage对象，这样sayHello.html页面初始时就会显示一个空白的表单。”
         // 实测无效，还是显示上次提交的结果
-        model.addAttribute("taxrate", new TaxRate());
+        model.addAttribute("taxrate"/*, new TaxRate()*/);
         return "/pages/tax/ratecalc";
     }
 
     @GetMapping("/list.json")
     @ResponseBody
     @ApiOperation(value = "获取个税税率表")
-    public ResultVo<List<TaxRate>> allRate() {
+    public Result<List<TaxRate>> allRate() {
         List<TaxRate> list = taxRateService.getTaxRateTable();
-        return new ResultVo(200, list);
+        return Result.success(list);
     }
 
     /**
