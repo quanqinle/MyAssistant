@@ -1,6 +1,6 @@
 [简体中文](./README.cn.md) | English
 
-My personal secretary.
+My personal assistant.
 
 The purpose of the project is to integrate all the back-end services I need in daily work and life. Furthermore, in this project, I will practice the skills I learned and accumulate some useful code snippets.
 
@@ -26,7 +26,7 @@ The purpose of the project is to integrate all the back-end services I need in d
 # Technology details
 
 ## 1. Batch processing
-+ Under the package `com.quanqinle.mysecretary.biz.batchjob`, there is an implementation reading data from CVS and writing to DB
++ Under the package `com.quanqinle.myassistant.biz.batchjob`, there is an implementation reading data from CVS and writing to DB
 + In config file, set `spring.batch.job.enabled` to open or shutdown the batch job
 
 ## 2. Redis

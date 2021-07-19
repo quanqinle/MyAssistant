@@ -1,6 +1,6 @@
 简体中文 | [English](./README.md)
 
-# My Secretary
+# My Assistant
 我的私人助理！项目的目的是整合我需要的所有后端服务，练手习得的技术，积累代码块。
 
 > To 路过的看官：  

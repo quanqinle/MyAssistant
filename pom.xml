@@ -9,12 +9,12 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.quanqinle</groupId>
-	<artifactId>mysecretary</artifactId>
+	<artifactId>myassistant</artifactId>
 	<version>1.1.0-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
-	<name>my secretary</name>
-	<description>Put all I need services in one project, so I named it My Secretary</description>
+	<name>my assistant</name>
+	<description>Put all I need services in one project, so I named it My Assistant</description>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
