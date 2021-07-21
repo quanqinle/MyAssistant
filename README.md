@@ -12,13 +12,14 @@ The purpose of the project is to integrate all the back-end services I need in d
 * Spring Boot
 * Maven
 * MySQL
-* slf4j
+* JpaRepository
+* Dozer
+* SLF4J
 * Swagger
 * Batch processing
 * Redis
 * Scheduled Task
 * Freemarker
-* JpaRepository
 * Selenium
 * Lombok
 * AdminLTE
@@ -54,6 +55,18 @@ Try out this front-end UI framework [AdminLTE (on GitHub)](https://github.com/Co
 
 * [live preview](https://adminlte.io/themes/v3)
 * [docs](https://adminlte.io/docs/3.1/)
+
+Two usages of `DataTable`
+1. Client-side processing - where filtering, paging and sorting calculations are all performed in the web-browser.
+    + serverSide=false (By default, more detail to see the [Manual](https://datatables.net/manual/server-side))
+    + queryAll() in EnglishWordController.java
+    + /pages/english/list.html
+
+2. Server-side processing - where filtering, paging and sorting calculations are all performed by a server. It is useful when working with large data sets (typically > 50000 records)
+    + serverSide=true
+    + getList2() in EnglishWordController.java
+    + /pages/english/list2.html
+
 
 # Business overview
 

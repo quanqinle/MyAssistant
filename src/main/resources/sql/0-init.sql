@@ -8,7 +8,7 @@ Target Server Type    : MYSQL
 Date                  : 2021-07-05 10:27:40
 */
 
-CREATE SCHEMA IF NOT EXISTS `mysecretary`
+CREATE SCHEMA IF NOT EXISTS `myassistant`
 DEFAULT CHARACTER SET utf8mb4
 DEFAULT COLLATE utf8mb4_0900_ai_ci;
 

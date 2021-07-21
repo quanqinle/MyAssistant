@@ -13,7 +13,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
   <!-- DataTables -->
   <link rel="stylesheet" href="https://cdn.datatables.net/1.10.25/css/dataTables.bootstrap4.min.css">
-  <!-- DO NOT use jquery.dataTables.css with the above at same time! Tt caused styles wrong! -->
+  <!-- DO NOT use jquery.dataTables.css with the above at same time! It caused styles wrong! -->
   <!--  <link rel="stylesheet" href="https://cdn.datatables.net/1.10.25/css/jquery.dataTables.min.css">-->
   <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.2.9/css/responsive.bootstrap4.min.css">
   <link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.7.0/css/buttons.bootstrap4.min.css">
@@ -45,13 +45,13 @@
 <div class="wrapper">
 
   <!-- Navbar -->
-<!--  <div class="navbarPage"></div>-->
-  <#include "/common/mainNavbar.html">
+  <div class="navbarPage"></div>
+<!--  <#include "/common/mainNavbar.html">-->
   <!-- /.navbarPage -->
 
   <!-- Main Sidebar Container -->
-<!--  <div class="sidebarPage"></div>-->
-  <#include "/common/mainSidebar.html">
+  <div class="sidebarPage"></div>
+<!--  <#include "/common/mainSidebar.html">-->
   <!-- /.sidebarPage -->
 
   <!-- Content Wrapper. Contains page content -->
@@ -72,7 +72,7 @@
               </div>
               <!-- /.card-header -->
               <div class="card-body">
-                <table id="example1" class="table table-bordered table-striped table-hover">
+                <table id="english-table" class="table table-bordered table-striped table-hover">
 
                 </table>
               </div>
@@ -126,20 +126,22 @@
 <!-- PageInfo specific script -->
 <script>
 $(function () {
-  var table = $("#example1")
+  var table = $("#english-table")
       .DataTable ({
+          serverSide: false,
           stateSave: false,
           paging: true,
           pagingType: "full_numbers",
-          lengthChange: true,
+          lengthChange: false,
           lengthMenu: [
               [ 10, 25, 50, 100, -1],
-              [ '10 rows', '25 rows', '50 rows', '100 rows', 'Show all' ]
+              [ '10', '25', '50', '100', 'All' ]
           ],
-          searching: true,
+          searching: false,
           ordering: true,
           responsive: true,
           autoWidth: false,
+          dom: 'B<"clear">lfrtip',
           buttons: ["copy", "excel", "pdf", "print", "colvis", "pageLength"],
           deferRender: true,
           columns: [
@@ -158,20 +160,20 @@ $(function () {
             }
          ],
          ajax: {
-            url: "/english/list.json?type=4&page=0&limit=1000",
+            url: "/english/all.json",
             type: "GET",
             contentType: "application/json",
             dataSrc: "data"
          }
   });
 
-  table.buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+  table.buttons().container().appendTo('#english-table_wrapper .col-md-6:eq(0)');
 
-  var PageInfo = table.page.info();
+  var pageInfo = table.page.info();
 
-  $('<div id="example1"></div> tbody').on( 'click', 'button', function () {
+  $('#english-table tbody').on( 'click', 'button', function () {
       var data = table.row( $(this).parents('tr') ).data();
-      alert( data[0] +"'s salary is: "+ data[ 5 ] );
+      alert( data[0] +" is: "+ data[1] );
   } );
 
 });

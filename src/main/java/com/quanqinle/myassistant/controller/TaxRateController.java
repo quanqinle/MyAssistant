@@ -22,7 +22,7 @@ import java.util.List;
  * @author quanqinle
  */
 @Controller
-@RequestMapping("/pages/tax")
+@RequestMapping("/tax")
 @Api(value = "TaxRateController", tags = {"个人所得税"})
 public class TaxRateController {
     private final Logger log = LoggerFactory.getLogger(TaxRateController.class);

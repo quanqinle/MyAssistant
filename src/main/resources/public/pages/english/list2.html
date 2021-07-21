@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>私人助理</title>
+
+  <!-- Theme style -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/admin-lte/3.1.0/css/adminlte.min.css" integrity="sha512-mxrUXSjrxl8vm5GwafxcqTrEwO1/oBNU25l20GODsysHReZo4uhVISzAKzaABH6/tTfAxZrY2FprmeAP5UZY8A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <!-- Google Font: Source Sans Pro -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+  <!-- Font Awesome: fontawesome-free -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <!-- DataTables -->
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.10.25/css/dataTables.bootstrap4.min.css">
+  <!-- DO NOT use jquery.dataTables.css with the above at same time! It caused styles wrong! -->
+  <!--  <link rel="stylesheet" href="https://cdn.datatables.net/1.10.25/css/jquery.dataTables.min.css">-->
+  <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.2.9/css/responsive.bootstrap4.min.css">
+  <link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.7.0/css/buttons.bootstrap4.min.css">
+
+  <!-- jQuery -->
+  <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+  <script>
+    $(function() {
+        let menuId = "english-menu-sidebar";
+        let childMenuId = "english-list2-menu-sidebar";
+        <!-- Only the above two need to change for specific page! -->
+
+        let pagePath = "/common/";
+
+        $(".navbarPage").load(pagePath + "mainNavbar.html");
+        $(".sidebarPage").load(pagePath + "mainSidebar.html", function() {
+            <!-- to set menu as active status. -->
+            let parentMenu = document.getElementById(menuId);
+            parentMenu.classList.add('menu-open');
+            parentMenu.getElementsByTagName('a')[0].classList.add('active');
+            document.getElementById(childMenuId).classList.add('active');
+        });
+        $(".footerPage").load(pagePath + "mainFooter.html");
+        $(".controlSidebarPage").load(pagePath + "mainControlSidebar.html");
+    });
+  </script>
+</head>
+<body class="hold-transition sidebar-mini">
+<div class="wrapper">
+
+  <!-- Navbar -->
+  <div class="navbarPage"></div>
+<!--  <#include "/common/mainNavbar.html">-->
+  <!-- /.navbarPage -->
+
+  <!-- Main Sidebar Container -->
+  <div class="sidebarPage"></div>
+<!--  <#include "/common/mainSidebar.html">-->
+  <!-- /.sidebarPage -->
+
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <!-- Content Header (PageInfo header) -->
+    <section class="content-header">
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-12">
+
+            <div class="card">
+              <div class="card-header">
+                <h3 class="card-title">English phrases in daily communication</h3>
+              </div>
+              <!-- /.card-header -->
+              <div class="card-body">
+                <table id="english-table2" class="table table-bordered table-striped table-hover">
+
+                </table>
+              </div>
+              <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+          </div>
+          <!-- /.col -->
+        </div>
+        <!-- /.row -->
+      </div>
+      <!-- /.container-fluid -->
+    </section>
+    <!-- /.content -->
+  </div>
+  <!-- /.content-wrapper -->
+
+  <!-- footer -->
+  <div class="footerPage"></div>
+  <!-- /.footerPage -->
+
+  <!-- control sidebar -->
+  <div class="controlSidebarPage"></div>
+  <!-- /.controlSidebarPage -->
+
+</div>
+<!-- ./wrapper -->
+
+<!-- Bootstrap 4 -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns" crossorigin="anonymous"></script>
+
+<!-- DataTables & Plugins -->
+<script src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.25/js/dataTables.bootstrap4.min.js"></script>
+<!-- responsive 2.2.7 -->
+<script src="https://cdn.datatables.net/responsive/2.2.9/js/dataTables.responsive.min.js"></script>
+<script src="https://cdn.datatables.net/responsive/2.2.9/js/responsive.bootstrap4.min.js"></script>
+<!-- buttons 1.7.0 -->
+<script src="https://cdn.datatables.net/buttons/1.7.1/js/dataTables.buttons.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.7.1/js/buttons.bootstrap4.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.7.1/js/buttons.html5.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.7.1/js/buttons.print.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.7.1/js/buttons.colVis.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.6.0/jszip.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.70/pdfmake.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.70/vfs_fonts.js"></script>
+<!-- AdminLTE App -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/admin-lte/3.1.0/js/adminlte.min.js" integrity="sha512-AJUWwfMxFuQLv1iPZOTZX0N/jTCIrLxyZjTRKQostNU71MzZTEPHjajSK20Kj1TwJELpP7gl+ShXw5brpnKwEg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<!-- AdminLTE for demo purposes -->
+<script src="../../dist/js/demo.js"></script>
+<!-- PageInfo specific script -->
+<script>
+//
+// Pipelining function for DataTables. To be used to the `ajax` option of DataTables
+//
+$.fn.dataTable.pipeline = function ( opts ) {
+    // Configuration options
+    var conf = $.extend( {
+        pages: 5,     // number of pages to cache
+        url: '',      // script url
+        data: null,   // function or object with parameters to send to the server
+                      // matching how `ajax.data` works in DataTables
+        method: 'POST' // Ajax HTTP method
+    }, opts );
+
+    // Private variables for storing the cache
+    var cacheLower = -1;
+    var cacheUpper = null;
+    var cacheLastRequest = null;
+    var cacheLastJson = null;
+
+    return function ( request, drawCallback, settings ) {
+        var ajax          = false;
+        var requestStart  = request.start;
+        var drawStart     = request.start;
+        var requestLength = request.length;
+        var requestEnd    = requestStart + requestLength;
+
+        if ( settings.clearCache ) {
+            // API requested that the cache be cleared
+            ajax = true;
+            settings.clearCache = false;
+        }
+        else if ( cacheLower < 0 || requestStart < cacheLower || requestEnd > cacheUpper ) {
+            // outside cached data - need to make a request
+            ajax = true;
+        }
+        else if ( JSON.stringify( request.order )   !== JSON.stringify( cacheLastRequest.order ) ||
+                  JSON.stringify( request.columns ) !== JSON.stringify( cacheLastRequest.columns ) ||
+                  JSON.stringify( request.search )  !== JSON.stringify( cacheLastRequest.search )
+        ) {
+            // properties changed (ordering, columns, searching)
+            ajax = true;
+        }
+
+        // Store the request for checking next time around
+        cacheLastRequest = $.extend( true, {}, request );
+
+        if ( ajax ) {
+            // Need data from the server
+            if ( requestStart < cacheLower ) {
+                requestStart = requestStart - (requestLength*(conf.pages-1));
+
+                if ( requestStart < 0 ) {
+                    requestStart = 0;
+                }
+            }
+
+            cacheLower = requestStart;
+            cacheUpper = requestStart + (requestLength * conf.pages);
+
+            request.start = requestStart;
+            request.length = requestLength*conf.pages;
+
+            // Provide the same `data` options as DataTables.
+            if ( typeof conf.data === 'function' ) {
+                // As a function it is executed with the data object as an arg
+                // for manipulation. If an object is returned, it is used as the
+                // data object to submit
+                var d = conf.data( request );
+                if ( d ) {
+                    $.extend( request, d );
+                }
+            }
+            else if ( $.isPlainObject( conf.data ) ) {
+                // As an object, the data given extends the default
+                $.extend( request, conf.data );
+            }
+
+            return $.ajax( {
+                "type":     conf.method,
+                "url":      conf.url,
+                "data":     request,
+                "dataType": "json",
+                "cache":    false,
+                "success":  function ( json ) {
+                    cacheLastJson = $.extend(true, {}, json);
+
+                    if ( cacheLower != drawStart ) {
+                        json.data.splice( 0, drawStart-cacheLower );
+                    }
+                    if ( requestLength >= -1 ) {
+                        json.data.splice( requestLength, json.data.length );
+                    }
+
+                    drawCallback( json );
+                }
+            } );
+        }
+        else {
+            json = $.extend( true, {}, cacheLastJson );
+            json.draw = request.draw; // Update the echo for each response
+            json.data.splice( 0, requestStart-cacheLower );
+            json.data.splice( requestLength, json.data.length );
+
+            drawCallback(json);
+        }
+    }
+};
+
+// Register an API method that will empty the pipelined data, forcing an Ajax
+// fetch on the next draw (i.e. `table.clearPipeline().draw()`)
+$.fn.dataTable.Api.register( 'clearPipeline()', function () {
+    return this.iterator( 'table', function ( settings ) {
+        settings.clearCache = true;
+    } );
+} );
+
+
+//
+// DataTables initialisation
+//
+$(document).ready(function() {
+    $('#english-table2').DataTable( {
+        "processing": true,
+        "serverSide": true,
+        stateSave: false,
+        paging: true,
+        pagingType: "full_numbers",
+        lengthChange: true,
+        lengthMenu: [
+            [ 10, 25, 50, 100, -1],
+            [ '10', '25', '50', '100', 'All' ]
+        ],
+        searching: true,
+        ordering: true,
+        responsive: true,
+        autoWidth: false,
+        buttons: ["copy", "excel", "pdf", "print", "colvis", "pageLength"],
+        deferRender: true,
+        columns: [
+           { title: "#",        data: "id" },
+           { title: "Word",     data: "word" },
+           { title: "Meaning",  data: "meaning" },
+           { title: "Example",  data: "example" },
+           { title: "Create",   data: "createTime" },
+           { title: "Operation",data: null, orderable: false, searchable: false }
+          ],
+        columnDefs: [
+          {
+             "targets": -1,
+             "data": null,
+             "defaultContent": "<button>Edit</button>"
+          }
+          ],
+        "ajax": $.fn.dataTable.pipeline( {
+            url: '/english/post/list.json',
+            pages: 3 // number of pages to cache
+        } )
+    } );
+} );
+</script>
+</body>
+</html>

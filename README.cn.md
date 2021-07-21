@@ -10,7 +10,7 @@
 * Spring Boot
 * Maven
 * MySQL
-* slf4j
+* SLF4J
 * Swagger
 * Batch processing
 * Redis
