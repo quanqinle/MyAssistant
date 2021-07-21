@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+    <style>
+		th {
+			background-color: #4CAF50;
+			color: black;
+			text-align: center;
+		}
+		td {
+			text-align: right;
+		}
+	</style>
+    <script type="text/javascript">
+		function toDecimal2(val) {
+			return new Number(val).toFixed(2);
+		}
+	</script>
+</head>
+<body>
+<div class="container">
+    <h2>朝代</h2>
+    <table class="table table-bordered table-hover">
+        <tr>
+            <th>ID</th>
+            <th>名称</th>
+            <th>起始</th>
+            <th>终止</th>
+            <th>起~止</th>
+            <th>建国君主</th>
+            <th>国都</th>
+            <th>当今的位置</th>
+            <th>父级朝代名</th>
+            <th>民族</th>
+        </tr>
+        <#list dynastylist as dynasty>
+        <tr>
+            <td style="text-align: center">${dynasty.id}</td>
+            <td>${dynasty.name}</td>
+            <td>${dynasty.yearStart}</td>
+            <td>${dynasty.yearEnd}</td>
+            <td>${dynasty.years}</td>
+            <td>${dynasty.founder}</td>
+            <td>${dynasty.capital}</td>
+            <td>${dynasty.nowLocation}</td>
+            <td>${dynasty.parentName}</td>
+            <td>${dynasty.ethnic}</td>
+        </tr>
+    </#list>
+</table>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>
+</body>
+</html>
