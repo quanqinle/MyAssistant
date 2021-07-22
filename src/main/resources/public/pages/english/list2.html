@@ -135,7 +135,7 @@ $.fn.dataTable.pipeline = function ( opts ) {
         url: '',      // script url
         data: null,   // function or object with parameters to send to the server
                       // matching how `ajax.data` works in DataTables
-        method: 'POST' // Ajax HTTP method
+        method: 'GET' // Ajax HTTP method
     }, opts );
 
     // Private variables for storing the cache
@@ -247,8 +247,8 @@ $.fn.dataTable.Api.register( 'clearPipeline()', function () {
 //
 $(document).ready(function() {
     $('#english-table2').DataTable( {
-        "processing": true,
-        "serverSide": true,
+        processing: true,
+        serverSide: true,
         stateSave: false,
         paging: true,
         pagingType: "full_numbers",
@@ -261,7 +261,6 @@ $(document).ready(function() {
         ordering: true,
         responsive: true,
         autoWidth: false,
-        buttons: ["copy", "excel", "pdf", "print", "colvis", "pageLength"],
         deferRender: true,
         columns: [
            { title: "#",        data: "id" },
@@ -278,8 +277,9 @@ $(document).ready(function() {
              "defaultContent": "<button>Edit</button>"
           }
           ],
-        "ajax": $.fn.dataTable.pipeline( {
+        ajax: $.fn.dataTable.pipeline( {
             url: '/english/post/list.json',
+            method: 'POST',
             pages: 3 // number of pages to cache
         } )
     } );

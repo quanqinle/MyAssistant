@@ -47,6 +47,7 @@ Change from `Swagger UI` method to `springfox-swagger` method.
 + access json: `http://localhost:8080/v2/api-docs`
 
 ## 5. Front-end
+I'm not a big fun of front-end development, so I would prefer to choose the tech which can render HTML page by a server. (At least till 2021.07.22) 
 
 ### freemarker (.ftl)
 
@@ -56,7 +57,7 @@ Try out this front-end UI framework [AdminLTE (on GitHub)](https://github.com/Co
 * [live preview](https://adminlte.io/themes/v3)
 * [docs](https://adminlte.io/docs/3.1/)
 
-Two usages of `DataTable`
+I use [DataTables](https://datatables.net/) to create table, `DataTables` has two usages as below:
 1. Client-side processing - where filtering, paging and sorting calculations are all performed in the web-browser.
     + serverSide=false (By default, more detail to see the [Manual](https://datatables.net/manual/server-side))
     + queryAll() in EnglishWordController.java
@@ -72,7 +73,7 @@ Two usages of `DataTable`
 
 ## 1. Get the best tax plan by arranging monthly salary and annual salary
 
-## 2. track the listing price of second-hand housing
+## 2. Track the listing price of second-hand housing in Hangzhou
 
 ## 3. Video porter
 

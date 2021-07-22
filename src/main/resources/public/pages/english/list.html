@@ -167,13 +167,13 @@ $(function () {
          }
   });
 
-  table.buttons().container().appendTo('#english-table_wrapper .col-md-6:eq(0)');
+<!--  table.buttons().container().appendTo('#english-table_wrapper .col-md-6:eq(0)');-->
 
   var pageInfo = table.page.info();
 
   $('#english-table tbody').on( 'click', 'button', function () {
       var data = table.row( $(this).parents('tr') ).data();
-      alert( data[0] +" is: "+ data[1] );
+      alert( "id=" + data.id +" is "+ data.word );
   } );
 
 });
