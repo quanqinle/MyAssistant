@@ -36,19 +36,20 @@
   <!-- Content Wrapper. Contains pageInfo content -->
   <div class="content-wrapper">
 
-    <!-- Main content -->
-    <section class="content">
-      <div class="container-fluid">
-          <p>There is nothing here!</p>
-      </div><!-- /.container-fluid -->
-    </section>
-    <!-- /.content -->
+    <iframe id="iframe-content" src="#" name="load_iframe" scrolling="no"
+            style="width:100%; min-height: 512px; border: none;"
+            onload=resetHeight()>
+      There is nothing here!
+    </iframe>
+<!--    width="100%" height="100%" frameborder="0" allowfullscreen-->
+<!--    onload="this.style.height=(window.innerHeight)+'px';"-->
+<!--    onload="this.style.height=(this.contentWindow.document.body.scrollHeight+20)+'px';"-->
   </div>
   <!-- /.content-wrapper -->
 
-  <#include "/common/mainFooter.html">
+  <!-- #include "/common/mainFooter.html"-->
 
-  <#include "/common/mainControlSidebar.html">
+  <!-- #include "/common/mainControlSidebar.html"-->
 
 </div>
 <!-- ./wrapper -->
@@ -72,7 +73,12 @@
 <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
 <script src="dist/js/pages/dashboard.js"></script>
 <script>
-
+function resetHeight() {
+  var myIframe = document.querySelector('#iframe-content');
+  var doc = myIframe.contentDocument || myIframe.contentWindow.document;
+  console.log(doc.documentElement.scrollHeight);
+  myIframe.style.height = doc.documentElement.scrollHeight + 'px';
+}
 </script>
 </body>
 </html>

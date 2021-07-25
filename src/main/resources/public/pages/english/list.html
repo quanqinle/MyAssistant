@@ -20,42 +20,9 @@
 
   <!-- jQuery -->
   <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-  <script>
-    $(function() {
-        let menuId = "english-menu-sidebar";
-        let childMenuId = "english-list-menu-sidebar";
-        <!-- Only the above two need to change for specific page! -->
-
-        let pagePath = "/common/";
-
-        $(".navbarPage").load(pagePath + "mainNavbar.html");
-        $(".sidebarPage").load(pagePath + "mainSidebar.html", function() {
-            <!-- to set menu as active status. -->
-            let parentMenu = document.getElementById(menuId);
-            parentMenu.classList.add('menu-open');
-            parentMenu.getElementsByTagName('a')[0].classList.add('active');
-            document.getElementById(childMenuId).classList.add('active');
-        });
-        $(".footerPage").load(pagePath + "mainFooter.html");
-        $(".controlSidebarPage").load(pagePath + "mainControlSidebar.html");
-    });
-  </script>
 </head>
-<body class="hold-transition sidebar-mini">
-<div class="wrapper">
-
-  <!-- Navbar -->
-  <div class="navbarPage"></div>
-<!--  <#include "/common/mainNavbar.html">-->
-  <!-- /.navbarPage -->
-
-  <!-- Main Sidebar Container -->
-  <div class="sidebarPage"></div>
-<!--  <#include "/common/mainSidebar.html">-->
-  <!-- /.sidebarPage -->
-
-  <!-- Content Wrapper. Contains page content -->
-  <div class="content-wrapper">
+<body>
+<div>
     <!-- Content Header (PageInfo header) -->
     <section class="content-header">
     </section>
@@ -87,19 +54,9 @@
       <!-- /.container-fluid -->
     </section>
     <!-- /.content -->
-  </div>
-  <!-- /.content-wrapper -->
-
-  <!-- footer -->
-  <div class="footerPage"></div>
-  <!-- /.footerPage -->
-
-  <!-- control sidebar -->
-  <div class="controlSidebarPage"></div>
-  <!-- /.controlSidebarPage -->
 
 </div>
-<!-- ./wrapper -->
+
 
 <!-- Bootstrap 4 -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns" crossorigin="anonymous"></script>
