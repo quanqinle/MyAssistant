@@ -46,6 +46,9 @@ Change from `Swagger UI` method to `springfox-swagger` method.
 + visit webui: `http://localhost:8080/swagger-ui.html`
 + access json: `http://localhost:8080/v2/api-docs`
 
+### API
+Repository by default exposes REST APIs which we can visit through url/tablename+s/ , such as, http://localhost:8080/chineseRegions
+
 ## 5. Front-end
 I'm not a big fun of front-end development, so I would prefer to choose the tech which can render HTML page by a server. (At least till 2021.07.22) 
 
