@@ -1,37 +1,27 @@
-package com.quanqinle.myassistant.readexcel.converter;
+package com.quanqinle.myassistant.biz.readexcel.converter;
 
 import com.alibaba.excel.converters.Converter;
 import com.alibaba.excel.enums.CellDataTypeEnum;
 import com.alibaba.excel.metadata.CellData;
 import com.alibaba.excel.metadata.GlobalConfiguration;
 import com.alibaba.excel.metadata.property.ExcelContentProperty;
-import com.quanqinle.myassistant.readexcel.ReadExcelConstant;
+import com.quanqinle.myassistant.biz.readexcel.ReadExcelConstant;
 
 import java.text.ParseException;
 
 /**
- * 选取样本特征转换。不转换，只判断值是否合法，即，值在集合中
+ * 发函方式转换。如，"邮寄"-->”1“
  * @author quanqinle
  */
-public class SampleFeatureConverter implements Converter<String> {
-    /**
-     * Back to object types in Java
-     *
-     * @return Support for Java class
-     */
+public class SendTypeConverter implements Converter<String> {
     @Override
     public Class supportJavaTypeKey() {
-        return null;
+        return String.class;
     }
 
-    /**
-     * Back to object enum in excel
-     *
-     * @return Support for {@link CellDataTypeEnum}
-     */
     @Override
     public CellDataTypeEnum supportExcelTypeKey() {
-        return null;
+        return CellDataTypeEnum.STRING;
     }
 
     /**
@@ -46,11 +36,11 @@ public class SampleFeatureConverter implements Converter<String> {
     @Override
     public String convertToJavaData(CellData cellData, ExcelContentProperty contentProperty, GlobalConfiguration globalConfiguration) throws Exception {
         String key = cellData.getStringValue();
-        Integer val = ReadExcelConstant.SAMPLE_FEATURE_MAP.get(key);
+        Integer val = ReadExcelConstant.SEND_TYPE_MAP.get(key);
         if (val == null) {
-            throw new ParseException("fail to check 选取样本特征: " + key, -1);
+            throw new ParseException("fail to convert " + key + " -> 发函方式", -1);
         }
-        return key;
+        return val.toString();
     }
 
     /**
@@ -66,4 +56,5 @@ public class SampleFeatureConverter implements Converter<String> {
     public CellData convertToExcelData(String value, ExcelContentProperty contentProperty, GlobalConfiguration globalConfiguration) throws Exception {
         return null;
     }
+
 }

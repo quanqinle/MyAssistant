@@ -1,4 +1,4 @@
-package com.quanqinle.myassistant.readexcel;
+package com.quanqinle.myassistant.biz.readexcel;
 
 import com.alibaba.excel.annotation.ExcelProperty;
 import com.alibaba.excel.context.AnalysisContext;

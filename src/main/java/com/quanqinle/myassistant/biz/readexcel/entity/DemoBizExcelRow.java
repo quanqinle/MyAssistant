@@ -1,13 +1,13 @@
-package com.quanqinle.myassistant.readexcel.entity;
+package com.quanqinle.myassistant.biz.readexcel.entity;
 
 import com.alibaba.excel.annotation.ExcelIgnore;
 import com.alibaba.excel.annotation.ExcelProperty;
 import com.alibaba.excel.annotation.format.DateTimeFormat;
 import com.alibaba.excel.annotation.format.NumberFormat;
-import com.quanqinle.myassistant.readexcel.converter.DealTypeConverter;
-import com.quanqinle.myassistant.readexcel.converter.SampleFeatureConverter;
-import com.quanqinle.myassistant.readexcel.converter.SendTypeConverter;
-import com.quanqinle.myassistant.readexcel.converter.SubjectConverter;
+import com.quanqinle.myassistant.biz.readexcel.converter.DealTypeConverter;
+import com.quanqinle.myassistant.biz.readexcel.converter.SampleFeatureConverter;
+import com.quanqinle.myassistant.biz.readexcel.converter.SendTypeConverter;
+import com.quanqinle.myassistant.biz.readexcel.converter.SubjectConverter;
 import lombok.Data;
 
 import javax.validation.constraints.NotBlank;

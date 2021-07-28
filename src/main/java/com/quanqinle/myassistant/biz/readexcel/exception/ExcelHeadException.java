@@ -1,4 +1,4 @@
-package com.quanqinle.myassistant.readexcel.exception;
+package com.quanqinle.myassistant.biz.readexcel.exception;
 
 /**
  * 表头异常

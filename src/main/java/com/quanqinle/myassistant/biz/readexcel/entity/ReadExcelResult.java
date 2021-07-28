@@ -1,4 +1,4 @@
-package com.quanqinle.myassistant.readexcel.entity;
+package com.quanqinle.myassistant.biz.readexcel.entity;
 
 import com.alibaba.excel.metadata.CellData;
 import com.alibaba.fastjson.JSON;

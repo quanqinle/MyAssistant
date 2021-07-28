@@ -1,27 +1,38 @@
-package com.quanqinle.myassistant.readexcel.converter;
+package com.quanqinle.myassistant.biz.readexcel.converter;
 
 import com.alibaba.excel.converters.Converter;
 import com.alibaba.excel.enums.CellDataTypeEnum;
 import com.alibaba.excel.metadata.CellData;
 import com.alibaba.excel.metadata.GlobalConfiguration;
 import com.alibaba.excel.metadata.property.ExcelContentProperty;
-import com.quanqinle.myassistant.readexcel.ReadExcelConstant;
+import com.quanqinle.myassistant.biz.readexcel.ReadExcelConstant;
+
 
 import java.text.ParseException;
 
 /**
- * 发函方式转换。如，"邮寄"-->”1“
+ * 交易类型转换。如，"销售商品/提供劳务（营业收入）"-->”26“
  * @author quanqinle
  */
-public class SendTypeConverter implements Converter<String> {
+public class DealTypeConverter implements Converter<String> {
+    /**
+     * Back to object types in Java
+     *
+     * @return Support for Java class
+     */
     @Override
     public Class supportJavaTypeKey() {
-        return String.class;
+        return null;
     }
 
+    /**
+     * Back to object enum in excel
+     *
+     * @return Support for {@link CellDataTypeEnum}
+     */
     @Override
     public CellDataTypeEnum supportExcelTypeKey() {
-        return CellDataTypeEnum.STRING;
+        return null;
     }
 
     /**
@@ -36,9 +47,9 @@ public class SendTypeConverter implements Converter<String> {
     @Override
     public String convertToJavaData(CellData cellData, ExcelContentProperty contentProperty, GlobalConfiguration globalConfiguration) throws Exception {
         String key = cellData.getStringValue();
-        Integer val = ReadExcelConstant.SEND_TYPE_MAP.get(key);
+        Integer val = ReadExcelConstant.DEAL_TYPE_MAP.get(key);
         if (val == null) {
-            throw new ParseException("fail to convert " + key + " -> 发函方式", -1);
+            throw new ParseException("fail to convert 交易类型: " + key, -1);
         }
         return val.toString();
     }
@@ -56,5 +67,4 @@ public class SendTypeConverter implements Converter<String> {
     public CellData convertToExcelData(String value, ExcelContentProperty contentProperty, GlobalConfiguration globalConfiguration) throws Exception {
         return null;
     }
-
 }
