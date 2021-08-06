@@ -1,18 +1,23 @@
 package com.quanqinle.myassistant.entity.po;
 
 import io.swagger.annotations.ApiModelProperty;
-import lombok.Data;
+import lombok.*;
+import org.hibernate.Hibernate;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 /**
  * @author quanql
  * @version 2021/7/9
  */
 @Entity
-@Data
+@Getter
+@Setter
+@ToString
+@RequiredArgsConstructor
 @Table(name = "english_word")
 public class EnglishWord implements Serializable {
 
@@ -41,8 +46,21 @@ public class EnglishWord implements Serializable {
     @Column(name = "update_time")
     private LocalDateTime updateTime;
 
-    protected EnglishWord() {
-        // no-args constructor required by JPA spec
-        // this one is protected since it shouldn't be used directly
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) {
+            return false;
+        }
+        EnglishWord that = (EnglishWord) o;
+
+        return Objects.equals(id, that.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return 1085161827;
     }
 }

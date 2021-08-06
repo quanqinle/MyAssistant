@@ -1,15 +1,20 @@
 package com.quanqinle.myassistant.entity.po;
 
-import lombok.Data;
+import lombok.*;
+import org.hibernate.Hibernate;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 /**
  * @author quanql
  * @version 2021/7/26
  */
-@Data
+@Getter
+@Setter
+@ToString
+@RequiredArgsConstructor
 @Entity
 @Table(name = "chinese_region")
 public class ChineseRegion {
@@ -58,5 +63,23 @@ public class ChineseRegion {
     public String getFullName() {
         return (province == null ? "" : province + " ") + (city == null ? "" : city + " ") + (name == null ? "" : name);
 //        return fullName;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) {
+            return false;
+        }
+        ChineseRegion that = (ChineseRegion) o;
+
+        return Objects.equals(id, that.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return 911724329;
     }
 }
