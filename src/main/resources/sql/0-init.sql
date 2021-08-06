@@ -321,8 +321,8 @@ CREATE TABLE video_upload (
 
 
 /* Chinese history */
-DROP TABLE IF EXISTS Chinese_dynasty;
-CREATE TABLE Chinese_dynasty (
+DROP TABLE IF EXISTS chinese_dynasty;
+CREATE TABLE chinese_dynasty (
   id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
   name varchar(16) NOT NULL COMMENT '朝代名',
   year_start varchar(16) NOT NULL COMMENT '起始年份',
@@ -340,8 +340,8 @@ CREATE TABLE Chinese_dynasty (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='中国朝代';
 
 /* 英语单词、短语、句型、句子 */
-DROP TABLE IF EXISTS English_word;
-CREATE TABLE English_word (
+DROP TABLE IF EXISTS english_word;
+CREATE TABLE english_word (
   id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
   word varchar(256) NOT NULL COMMENT '字词句',
   type TINYINT UNSIGNED DEFAULT 0 COMMENT '类型 0未分类 1单词 2词组 3句型 4谚语成语 5单词对比 6词组对比 7句子 8语法',
@@ -350,9 +350,27 @@ CREATE TABLE English_word (
   example TEXT DEFAULT NULL COMMENT '示例。如果和 meaning 必须有一个为空，请让 example 为空',
   category varchar(32) DEFAULT NULL COMMENT '分类。重要性，难度水平，来源集合 等',
   others varchar(32) DEFAULT NULL COMMENT '其他',
-  state TINYINT UNSIGNED DEFAULT 1 COMMENT '0删除，1有效',
+  state TINYINT UNSIGNED DEFAULT 1 COMMENT '状态：0删除，1有效',
   create_time datetime DEFAULT NULL COMMENT '创建时间',
   update_time datetime DEFAULT NULL COMMENT '更新时间',
   CONSTRAINT pk_english PRIMARY KEY (id),
   CONSTRAINT uc_english UNIQUE (word)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='英语字、词、句';
+
+/* 中国行政区划代码 */
+DROP TABLE IF EXISTS chinese_region;
+CREATE TABLE chinese_region (
+  id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
+  code varchar(6) NOT NULL COMMENT '编码。GB2260',
+  name varchar(32) DEFAULT NULL COMMENT '名称。GB2260',
+  type TINYINT UNSIGNED NOT NULL COMMENT '类型：1省 2市 3区县',
+  revision varchar(16) DEFAULT NULL COMMENT '修订版本号',
+  province varchar(16) DEFAULT NULL COMMENT '省',
+  city varchar(32) DEFAULT NULL COMMENT '市',
+  full_name varchar(128) DEFAULT NULL COMMENT '完整名称',
+  state TINYINT UNSIGNED DEFAULT 1 COMMENT '0删除，1有效',
+  create_time datetime DEFAULT NULL COMMENT '创建时间',
+  update_time datetime DEFAULT NULL COMMENT '更新时间',
+  CONSTRAINT pk_ch_region PRIMARY KEY (id),
+  CONSTRAINT uc_ch_region UNIQUE (code,revision)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='中国行政区划代码';

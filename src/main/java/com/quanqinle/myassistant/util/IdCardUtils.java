@@ -228,7 +228,7 @@ public class IdCardUtils {
      * Calculate the checksum which is the last digit of ID card number
      *
      * @param top17OfIdNumber The top 17 digits of ID card number
-     * @return the one digits checksum, or null if fail
+     * @return the 1-digit checksum, or null if fail
      */
     public static String calculateChecksum(String top17OfIdNumber) {
         if (top17OfIdNumber == null || top17OfIdNumber.isEmpty() || top17OfIdNumber.isBlank()) {
@@ -276,7 +276,8 @@ public class IdCardUtils {
     }
 
     /**
-     * Check if it is a male's id. It is supposed that the id is valid.
+     * Check if it is a male's id.
+     * The param must be a valid ID first.
      *
      * @param id a valid ID card number, 18-digit or 15-digit
      * @return -

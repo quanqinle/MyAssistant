@@ -71,6 +71,9 @@ I use [DataTables](https://datatables.net/) to create table, `DataTables` has tw
     + getList2() in EnglishWordController.java
     + /pages/english/list2.html
 
+## Dozer
+Demos in `DynastyServiceImpl.java` and `DynastyVO.java`
+
 
 # Business overview
 
