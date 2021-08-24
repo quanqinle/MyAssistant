@@ -316,7 +316,8 @@ CREATE TABLE video_upload (
   state TINYINT NOT NULL COMMENT '状态 0发布成功1发布中2发布失败3删除',
   create_time datetime DEFAULT NULL COMMENT '创建时间',
   update_time datetime DEFAULT NULL COMMENT '更新时间',
-  CONSTRAINT pk_upload PRIMARY KEY (id)
+  CONSTRAINT pk_upload PRIMARY KEY (id),
+  CONSTRAINT uc_vid_sid UNIQUE KEY (video_id, site_id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='视频上传情况表';
 
 

@@ -24,6 +24,7 @@ public interface ChineseRegionRepository extends JpaRepository<ChineseRegion, Lo
 
     /**
      * Find by revision and type
+     *
      * @param revision -
      * @param type -
      * @return
@@ -31,7 +32,8 @@ public interface ChineseRegionRepository extends JpaRepository<ChineseRegion, Lo
     List<ChineseRegion> findByRevisionAndType(String revision, int type);
 
     /**
-     * 查询 revision 列表
+     * Query revision list
+     *
      * @return revision list
      */
     @Query("select DISTINCT cr.revision from ChineseRegion cr order by cr.revision desc")
@@ -39,16 +41,18 @@ public interface ChineseRegionRepository extends JpaRepository<ChineseRegion, Lo
 
     /**
      * Get code data by filtering the latest revision
+     *
      * @return -
      */
-    @Query("SELECT cr.* \n" +
+    @Query(value="SELECT cr.* \n" +
             "FROM\n" +
-            "\tChineseRegion cr,\n" +
+            "\tchinese_region cr,\n" +
             "\t(SELECT MAX(c.revision) as max_revision, c.code\n" +
-            "\tfrom ChineseRegion c\n" +
+            "\tfrom chinese_region c\n" +
             "\tgroup by c.code) maxcr\n" +
             "WHERE\n" +
             "\tcr.code = maxcr.code\n" +
-            "\tAND cr.revision = maxcr.max_revision;")
+            "\tAND cr.revision = maxcr.max_revision",
+            nativeQuery = true)
     List<ChineseRegion> getAllWithLatestRevision();
 }
